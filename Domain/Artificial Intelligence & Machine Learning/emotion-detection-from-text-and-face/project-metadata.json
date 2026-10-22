@@ -1,0 +1,14 @@
+﻿{
+    "id":  "emotion-detection-from-text-and-face",
+    "name":  "Emotion Detection from Text and Face",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/SekhSujonHaque2005/MoodTunes-AI-Emotion-Detection-and-Music-Recommendation-System",
+    "stack":  "Python; transformers; OpenCV",
+    "goal":  "Two-modality demo: sentiment model on text, FER model on webcam.",
+    "license":  "MIT",
+    "licenseWarning":  null,
+    "entry":  "backend/app.py",
+    "expectedFileCount":  23,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  53
+}

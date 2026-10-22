@@ -1,0 +1,14 @@
+﻿{
+    "id":  "abstractive-text-summarizer",
+    "name":  "Abstractive Text Summarizer",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/salesforce/factCC",
+    "stack":  "Python; T5/BART; Streamlit",
+    "goal":  "Compare extractive vs abstractive, ROUGE evaluation and length control.",
+    "license":  "BSD-3-Clause",
+    "licenseWarning":  null,
+    "entry":  "modeling/model.py",
+    "expectedFileCount":  6,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  21
+}

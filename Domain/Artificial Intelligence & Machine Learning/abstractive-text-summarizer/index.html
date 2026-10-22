@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FactCheck Studio — Factual Consistency Verification (FactCC)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="masthead-kicker">Salesforce Research &middot; FactCC repository &middot; BSD-3-Clause</p>
+    <h1>FactCheck&nbsp;Studio</h1>
+    <p class="masthead-sub">Factual Consistency Verification desk &mdash; check whether a summary claim is
+      supported by its source document, using the FactCC pointer&ndash;BERT research codebase.</p>
+    <div class="masthead-meta">
+      <span class="chip chip-warn">
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="chip-icon"><path d="M8 1.5 15 14H1L8 1.5Zm0 3.5a.9.9 0 0 0-.9.95l.2 3.6h1.4l.2-3.6A.9.9 0 0 0 8 5Zm0 5.6a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Z" fill="currentColor"/></svg>
+        Model: not loaded (backend required)
+      </span>
+      <span class="chip">Entry point: <code>modeling/run.py</code> (CLI)</span>
+      <span class="chip">Checkpoints: external download</span>
+    </div>
+  </div>
+</header>
+
+<main class="desk" id="desk">
+
+  <!-- ============ Desk controls ============ -->
+  <section class="controls-strip" aria-label="Desk controls">
+    <div class="control">
+      <label for="model-select">Model</label>
+      <select id="model-select">
+        <option value="factcc">FactCC &mdash; BERT classifier (checkpoint required)</option>
+        <option value="factccx">FactCCX &mdash; pointer BERT (checkpoint required)</option>
+      </select>
+    </div>
+    <div class="control control-btns">
+      <button type="button" id="btn-run" class="btn btn-primary">
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="btn-icon"><path d="M3 2.2v11.6c0 .5.55.8.97.53l9.1-5.8a.63.63 0 0 0 0-1.06l-9.1-5.8A.63.63 0 0 0 3 2.2Z" fill="currentColor"/></svg>
+        Run consistency check
+      </button>
+      <button type="button" id="btn-sample" class="btn btn-stamp">
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="btn-icon"><path d="M4 1.5h8a1 1 0 0 1 1 1v3.1c0 2.2-1.6 4.1-3.7 4.6L8 14.5l-1.3-3.3C4.6 10.7 3 8.8 3 6.6V2.5a1 1 0 0 1 1-1Zm2 3h4M8 4.5V9" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/></svg>
+        Sample walkthrough
+        <span class="btn-tag">demo</span>
+      </button>
+      <button type="button" id="btn-copy-result" class="btn btn-ghost" disabled>
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="btn-icon"><path d="M5.5 5.5h7v8h-7v-8Zm-2 8V2.5h7" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Copy result
+      </button>
+      <button type="button" id="btn-reset" class="btn btn-ghost">
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="btn-icon"><path d="M2.5 8a5.5 5.5 0 1 1 1.7 3.97M2.2 12.9l.4-2.2 2.2.4" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Reset desk
+      </button>
+    </div>
+    <p class="control-note">The model selector is a <strong>visual preference only</strong> &mdash; no checkpoint is
+      bundled with this repository, so nothing is executed in the browser.</p>
+  </section>
+
+  <!-- ============ Two manuscript panels ============ -->
+  <div class="panels">
+
+    <section class="manuscript panel-source" aria-labelledby="h-source">
+      <div class="manuscript-head">
+        <h2 id="h-source">Source document</h2>
+        <span class="folio">Panel I</span>
+      </div>
+      <p class="panel-hint">Paste the original article (the <code>text</code> field of the FactCC
+        <code>jsonl</code> format), or drop a <code>.txt</code> file onto this panel.</p>
+      <div class="dropzone" id="source-drop">
+        <textarea id="source-text" aria-label="Source document text" aria-describedby="source-error source-counters" placeholder="Paste the source document here&hellip;"></textarea>
+        <div class="drop-veil" aria-hidden="true"><span>Release to load <code>.txt</code></span></div>
+      </div>
+      <div class="panel-foot">
+        <p class="counters" id="source-counters"><span id="src-chars">0</span> characters &middot; <span id="src-words">0</span> words</p>
+        <p class="inline-error" id="source-error" hidden></p>
+      </div>
+    </section>
+
+    <section class="manuscript panel-claims" aria-labelledby="h-claims">
+      <div class="manuscript-head">
+        <h2 id="h-claims">Claim / summary to verify</h2>
+        <span class="folio">Panel II</span>
+      </div>
+      <p class="panel-hint">One summary sentence per claim row (the <code>claim</code> field). Batch up to three
+        claims; select which one sits in the verdict focus below.</p>
+      <div class="claims-list" id="claims-list"></div>
+      <div class="claims-actions">
+        <button type="button" id="btn-add-claim" class="btn btn-ghost btn-small">
+          <svg viewBox="0 0 16 16" aria-hidden="true" class="btn-icon"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Add claim row
+        </button>
+        <span class="claims-count" id="claims-count">1 / 3 rows</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ Verdict area ============ -->
+  <div class="verdict-row">
+
+    <section class="verdict-card" aria-labelledby="h-verdict" aria-live="polite">
+      <div class="manuscript-head">
+        <h2 id="h-verdict">Verdict</h2>
+        <div class="focus-control">
+          <label for="focus-claim">Claim in focus</label>
+          <select id="focus-claim"></select>
+        </div>
+      </div>
+
+      <!-- empty state -->
+      <div class="verdict-state" id="verdict-empty">
+        <div class="empty-glyph" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><rect x="8" y="6" width="32" height="36" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M14 15h20M14 22h20M14 29h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <p>No check has been run on this desk yet.</p>
+        <p class="muted">The FactCC weights are <strong>not included in this repository</strong>, so the
+          &ldquo;Run consistency check&rdquo; button will explain the backend requirement instead of inventing a
+          result. For a look at how a verdict renders, run the clearly-labelled
+          <strong>Sample walkthrough</strong>.</p>
+      </div>
+
+      <!-- loading state -->
+      <div class="verdict-state notice-card" id="verdict-loading" hidden>
+        <div class="notice-head">
+          <svg viewBox="0 0 20 20" aria-hidden="true" class="notice-icon"><path d="M10 2a8 8 0 1 0 8 8h-2a6 6 0 1 1-6-6V2Z" fill="currentColor"/></svg>
+          <h3>Checking consistency&hellip;</h3>
+        </div>
+        <p>Contacting the consistency service at <code>POST /verify</code>.</p>
+      </div>
+
+      <!-- backend-required notice -->
+      <div class="verdict-state notice-card" id="verdict-backend" hidden>
+        <div class="notice-head">
+          <svg viewBox="0 0 20 20" aria-hidden="true" class="notice-icon"><path d="M10 2 19 18H1L10 2Zm0 5.5a.9.9 0 0 0-.9.95l.2 4.1h1.4l.2-4.1A.9.9 0 0 0 10 7.5Zm0 6.9a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z" fill="currentColor"/></svg>
+          <h3 id="backend-notice-title">Consistency backend unavailable</h3>
+        </div>
+        <p class="inline-error" id="backend-error-msg" hidden></p>
+        <p>This project ships a lightweight consistency service (<code>src/api.py</code>, engine:
+          <strong>lexical entailment heuristic</strong>) that answers the UI&rsquo;s
+          <code>POST /verify</code> contract. The neural FactCC/FactCCX pointer&ndash;BERT
+          <strong>checkpoints are not bundled</strong> with the repository and require the pinned 2020
+          dependency stack, so the service does not load them.</p>
+        <ol class="notice-steps">
+          <li>Start the service:
+            <button type="button" class="inline-copy" data-copy="python src/api.py">copy command</button>
+            <pre class="code-block">python src\api.py</pre></li>
+          <li>Install its (lightweight) dependency if needed: <code>pip install flask</code></li>
+          <li>Then press <strong>Run consistency check</strong> again.</li>
+        </ol>
+        <p class="muted">For a real neural verdict you would install the pinned Python dependencies
+          (<code>pip3 install -r requirements.txt</code>), download an external checkpoint
+          (<code>factcc-checkpoint.tar.gz</code> / <code>factccx-checkpoint.tar.gz</code>), and run
+          <code>modeling/run.py</code> — see the API contract panel at the bottom of this page.</p>
+      </div>
+
+      <!-- verification result -->
+      <div class="verdict-state" id="verdict-result" hidden>
+        <p class="demo-banner" role="note">
+          <span class="demo-flag" id="result-flag">Backend result</span>
+          <span id="result-flag-text">lexical entailment engine — not a neural checkpoint</span>
+        </p>
+        <div class="stamp-row">
+          <div class="stamp stamp-inconsistent" id="verdict-stamp"><span>Incorrect</span></div>
+          <div class="confidence">
+            <svg viewBox="0 0 120 70" class="arc" aria-hidden="true">
+              <path class="arc-track" d="M 12 62 A 48 48 0 0 1 108 62" />
+              <path class="arc-fill" id="arc-fill" d="M 12 62 A 48 48 0 0 1 108 62" />
+              <text x="60" y="58" text-anchor="middle" class="arc-num" id="arc-num">0.91</text>
+            </svg>
+            <p class="confidence-label">confidence <strong id="conf-value">0.91</strong>
+              <span class="muted" id="engine-note" hidden></span></p>
+          </div>
+        </div>
+        <dl class="verdict-facts">
+          <div><dt>Binary label</dt><dd><code id="fact-label">INCORRECT</code> <span class="muted">&mdash; FactCC label space is CORRECT / INCORRECT</span></dd></div>
+          <div><dt>Claim under focus</dt><dd id="fact-claim-index">Claim 1</dd></div>
+          <div><dt>Source of data</dt><dd id="result-source">Consistency service response</dd></div>
+        </dl>
+
+        <h3 class="spans-title">Highlighted claim</h3>
+        <div class="span-view span-view-claim" id="claim-span-view"></div>
+        <h3 class="spans-title">Source document with supporting span</h3>
+        <div class="span-view span-view-source" id="source-span-view"></div>
+
+        <ul class="span-legend">
+          <li><span class="swatch swatch-support"></span> supporting span (entailed by source)</li>
+          <li><span class="swatch swatch-inconsistent"></span> inconsistent span (conflicts with source)</li>
+          <li><span class="swatch swatch-user"></span> user-marked span (your annotation, not a model output)</li>
+        </ul>
+
+        <div class="verdict-actions">
+          <button type="button" id="btn-copy-sample" class="btn btn-ghost btn-small">Copy result JSON</button>
+          <span class="muted">This result was written to the check history below.</span>
+        </div>
+      </div>
+    </section>
+
+    <aside class="desk-notes" aria-labelledby="h-notes">
+      <h2 id="h-notes">Desk notes</h2>
+      <div class="note-block">
+        <h3>What FactCC does</h3>
+        <p>A weakly-supervised model that (1) classifies whether a summary sentence stays factually consistent
+          with its source, (2) extracts a <em>supporting span</em> in the source, and (3) extracts the
+          <em>inconsistent span</em> in the summary if one exists. Trained on synthetically transformed
+          CNN/DailyMail sentences.</p>
+      </div>
+      <div class="note-block">
+        <h3>How this desk treats honesty</h3>
+        <p>No checkpoint ships in the repo, so the run button only explains what a real backend needs. The
+          walkthrough is a hand-authored example whose spans are computed from your live text &mdash; it is
+          always stamped <strong>demo</strong> and never presented as a model prediction.</p>
+      </div>
+      <div class="note-block">
+        <h3>Paper</h3>
+        <p>Kryściński, McCann, Xiong, Socher &mdash;
+          <em>Evaluating the Factual Consistency of Abstractive Text Summarization</em>,
+          arXiv:1910.12840 (2019).</p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ============ History ============ -->
+  <section class="history" aria-labelledby="h-history">
+    <div class="manuscript-head">
+      <h2 id="h-history">Check history</h2>
+      <div class="history-actions">
+        <button type="button" id="btn-export" class="btn btn-ghost btn-small">Download history JSON</button>
+        <button type="button" id="btn-copy-history" class="btn btn-ghost btn-small">Copy history</button>
+        <button type="button" id="btn-clear-history" class="btn btn-ghost btn-small btn-danger-ghost">Clear history</button>
+      </div>
+    </div>
+    <p class="muted history-note">Stored in this browser only (localStorage). Only user-initiated sample
+      walkthroughs are recorded, always labelled <strong>sample</strong> &mdash; no backend exists to record
+      real runs.</p>
+    <div class="history-scroll">
+      <table class="history-table">
+        <thead>
+          <tr><th scope="col">Time</th><th scope="col">Model</th><th scope="col">Claim</th><th scope="col">Verdict</th><th scope="col">Confidence</th><th scope="col">Mode</th></tr>
+        </thead>
+        <tbody id="history-body"></tbody>
+      </table>
+    </div>
+    <p class="history-empty" id="history-empty">No checks recorded yet &mdash; run the sample walkthrough to see how a history entry looks.</p>
+    <p class="inline-error" id="history-error" hidden></p>
+  </section>
+
+  <!-- ============ API contract ============ -->
+  <details class="api-contract" id="api-contract">
+    <summary>
+      <h2>API contract &amp; real CLI reference</h2>
+      <span class="summary-hint" aria-hidden="true"></span>
+    </summary>
+    <div class="api-body">
+      <p class="muted">This repository contains <strong>no HTTP server</strong>. Everything below documents the
+        data format the code actually reads, the CLI that actually runs, and &mdash; clearly separated &mdash; a
+        <em>proposed</em> contract for a future wrapper service.</p>
+
+      <h3>1. Data format consumed by the repository (real)</h3>
+      <p>One JSON object per line in a <code>jsonl</code> file, with keys <code>id</code>,
+        <code>text</code> (source document) and <code>claim</code> (summary sentence). Evaluation scripts
+        expect the dev file to be named <code>data-dev.jsonl</code>:</p>
+      <pre class="code-block">{"id": "example-001", "text": "&lt;source document&gt;", "claim": "&lt;summary sentence&gt;"}</pre>
+
+      <h3>2. Proposed HTTP contract for a future backend (not implemented here)</h3>
+      <pre class="code-block">POST /verify
+Content-Type: application/json
+
+{
+  "text":  "&lt;source document&gt;",
+  "claim": "&lt;summary sentence&gt;"
+}
+
+&#8594; 200 OK
+{
+  "label": "CORRECT" | "INCORRECT",   // FactCC label space (utils.py)
+  "confidence": 0.0-1.0,
+  "supporting_spans":    [ { "start": 0, "end": 0, "text": "..." } ],
+  "inconsistent_spans":  [ { "start": 0, "end": 0, "text": "..." } ]
+}</pre>
+
+      <h3>3. The real CLI (what actually executes today)</h3>
+      <p>Entry point: <code>modeling/run.py</code> (argparse). The repository's
+        <code>modeling/scripts/</code> ships quickstart shell scripts; the evaluation script for FactCC is
+        <code>factcc-eval.sh</code>:</p>
+      <pre class="code-block">python3 modeling/run.py \
+  --task_name factcc_annotated \
+  --do_eval --eval_all_checkpoints --do_lower_case --overwrite_cache \
+  --max_seq_length 512 --per_gpu_train_batch_size 12 --model_type bert \
+  --model_name_or_path bert-base-uncased \
+  --data_dir &lt;DATA_PATH&gt; --output_dir &lt;CKPT_PATH&gt;</pre>
+      <ul class="api-list">
+        <li><strong>FactCC</strong> uses <code>--model_type bert</code>; <strong>FactCCX</strong> uses
+          <code>--model_type pbert</code> (pointer&ndash;BERT, the span-extracting variant).</li>
+        <li>Task names in <code>modeling/utils.py</code>: <code>factcc_generated</code> (synthetic training
+          data) and <code>factcc_annotated</code> (manually annotated validation/test data).</li>
+        <li>Checkpoints are external downloads (Google Cloud Storage links in the README):
+          <code>factcc-checkpoint.tar.gz</code> / <code>factccx-checkpoint.tar.gz</code>.</li>
+        <li>Install deps with <code>pip3 install -r requirements.txt</code>; datasets must be paired with
+          original CNN/DailyMail stories via <code>data_pairing/pair_data.py</code>.</li>
+      </ul>
+    </div>
+  </details>
+</main>
+
+<footer class="colophon">
+  <p>FactCheck Studio &mdash; a static front-end for the FactCC research repository. No model runs in this
+    page; no data leaves your browser. Checkpoints and datasets are external downloads described in
+    <code>README.md</code>.</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

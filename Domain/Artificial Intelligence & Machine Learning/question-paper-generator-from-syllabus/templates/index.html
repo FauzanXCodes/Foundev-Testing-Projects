@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ExamForge — AI Question Paper, OMR &amp; FIB Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/qp-style.css" />
+</head>
+<body class="qp-page">
+  <header class="qp-masthead">
+    <div class="qp-masthead-inner">
+      <div class="qp-masthead-top">
+        <span class="qp-stamp">Confidential</span>
+        <span class="qp-mast-meta">Question Paper Forge &middot; Flask + Ollama &middot; Set A</span>
+      </div>
+      <h1 class="qp-title">Exam<em>Forge</em></h1>
+      <p class="qp-subtitle">LLM-assisted MCQ/OMR/FIB paper generation via Ollama</p>
+      <div class="qp-bubbles" aria-hidden="true">
+        <span class="qp-bubble">a</span>
+        <span class="qp-bubble qp-bubble-filled">b</span>
+        <span class="qp-bubble">c</span>
+        <span class="qp-bubble">d</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="qp-shell">
+    <section class="qp-section" aria-labelledby="quick-h">
+      <div class="qp-section-head">
+        <h2 id="quick-h">Quick start</h2>
+        <p class="qp-eyebrow">Requirements &middot; quoted from README</p>
+      </div>
+      <ol class="qp-quick-list">
+        <li class="qp-quick-item">
+          <span class="qp-num">1</span>
+          <div>
+            <h3>Install Python dependencies</h3>
+            <code>pip install -r requirements.txt</code>
+            <p>Python 3.8+ required. Use the provided <code>requirements.txt</code>.</p>
+          </div>
+        </li>
+        <li class="qp-quick-item">
+          <span class="qp-num">2</span>
+          <div>
+            <h3>Install Ollama, then run the model</h3>
+            <code>ollama run llama3</code>
+            <p>Ensure <code>ollama</code> is working from your terminal. The app uses it to generate prerequisites and questions.</p>
+          </div>
+        </li>
+        <li class="qp-quick-item">
+          <span class="qp-num">3</span>
+          <div>
+            <h3>Run the application</h3>
+            <code>python app.py</code>
+            <p>Visit the web app at <code>http://127.0.0.1:5000</code>.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="qp-section" aria-labelledby="modes-h">
+      <div class="qp-section-head">
+        <h2 id="modes-h">Choose a paper mode</h2>
+        <p class="qp-eyebrow">Three entry points &middot; one syllabus picker</p>
+      </div>
+      <div class="qp-mode-grid">
+        <a class="qp-mode" href="#start" data-qp-hint="Question paper: pick board, class and subjects below, then on the chapter screen choose 'See Pre-requisites and Generate Questions' or 'Generate Questions Without Prerequisites'.">
+          <span class="qp-mode-tag">Mode 01</span>
+          <h3>Question Paper (MCQ)</h3>
+          <p>Select syllabus, detect prerequisite knowledge with the LLM, review the drafted questions and export the paper as PDF.</p>
+          <ol class="qp-mode-steps">
+            <li>1 Board</li>
+            <li>2 Subjects</li>
+            <li>3 Chapters</li>
+            <li>4 Generate</li>
+          </ol>
+          <span class="qp-mode-cta">Start selection &rarr;</span>
+        </a>
+        <a class="qp-mode" href="#start" data-qp-hint="FIB worksheet: pick board, class and subjects below, then press 'Create FIB Worksheet' on the chapter screen and choose one topic.">
+          <span class="qp-mode-tag">Mode 02</span>
+          <h3>FIB Worksheet</h3>
+          <p>Fill-in-the-blanks worksheets generated from your selected chapters, exported as separate student copy and answer key PDFs.</p>
+          <ol class="qp-mode-steps">
+            <li>1 Syllabus</li>
+            <li>2 Topic</li>
+            <li>3 Worksheet</li>
+          </ol>
+          <span class="qp-mode-cta">Start selection &rarr;</span>
+        </a>
+        <a class="qp-mode" href="/svg_generator">
+          <span class="qp-mode-tag">Mode 03</span>
+          <h3>SVG Diagrams</h3>
+          <p>Educational diagrams fetched from Wikimedia Commons, enhanced with metadata and AI-generated explanations, previewable in the browser.</p>
+          <ol class="qp-mode-steps">
+            <li>1 Open page</li>
+            <li>2 Generate</li>
+            <li>3 Preview</li>
+          </ol>
+          <span class="qp-mode-cta">Open the SVG generator &rarr;</span>
+        </a>
+        <div class="qp-mode qp-mode-alt">
+          <span class="qp-badge">Separate app</span>
+          <div class="qp-mode-body">
+            <h3>OMR answer sheet</h3>
+            <p>The OMR sheet generator ships as its own Flask script in this repo and is not wired into this page. Run it separately with <code>python omr_generator_app.py</code>.</p>
+          </div>
+          <span class="qp-badge qp-badge-red">Not linked here</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="qp-section" aria-labelledby="flow-h">
+      <div class="qp-section-head">
+        <h2 id="flow-h">How the flow works</h2>
+        <p class="qp-eyebrow">Syllabus in &middot; PDF out</p>
+      </div>
+      <ol class="qp-stepper">
+        <li>
+          <span class="qp-num">1</span>
+          <span class="qp-step-label">Select syllabus</span>
+          <span class="qp-step-note">board / class / subjects / chapters</span>
+        </li>
+        <li>
+          <span class="qp-num">2</span>
+          <span class="qp-step-label">Prerequisites</span>
+          <span class="qp-step-note">LLM-detected prior knowledge</span>
+        </li>
+        <li>
+          <span class="qp-num">3</span>
+          <span class="qp-step-label">Generate</span>
+          <span class="qp-step-note">MCQs drafted by llama3</span>
+        </li>
+        <li>
+          <span class="qp-num">4</span>
+          <span class="qp-step-label">Review</span>
+          <span class="qp-step-note">verify and pick questions</span>
+        </li>
+        <li>
+          <span class="qp-num">5</span>
+          <span class="qp-step-label">Export PDF</span>
+          <span class="qp-step-note">download paper or CSV</span>
+        </li>
+      </ol>
+    </section>
+
+    <section class="qp-section" aria-labelledby="req-h">
+      <div class="qp-reqs">
+        <p class="qp-eyebrow">From requirements.txt</p>
+        <h2 id="req-h">Requirements</h2>
+        <ul class="qp-chips">
+          <li>flask</li>
+          <li>fpdf</li>
+          <li>requests</li>
+          <li>python-dotenv</li>
+          <li>Pillow</li>
+          <li>reportlab</li>
+        </ul>
+        <p class="qp-note"><strong>Honest note:</strong> generation needs the local LLM (Ollama running with <code>llama3</code>); the UI is served by Flask. Pages open without Ollama, but prerequisite and question generation will fail until it is running.</p>
+      </div>
+    </section>
+
+    <section class="qp-section" id="start" aria-labelledby="start-h">
+      <div class="qp-card">
+        <div class="qp-card-head">
+          <p class="qp-step-of">Step 1 of 5 &middot; Select syllabus</p>
+          <h2 id="start-h">Select Board, Class, Subject</h2>
+        </div>
+        <p class="qp-hint" id="qp-mode-hint">Pick a mode above or dive straight in — you choose the exact generation action on the chapter screen.</p>
+
+        <form method="post" action="{{ url_for('select') }}">
+          <div class="qp-field">
+            <label for="boardSelect">Board:</label>
+            <select name="board" id="boardSelect"></select>
+          </div>
+
+          <div class="qp-field">
+            <label for="classSelect">Class:</label>
+            <select name="class" id="classSelect"></select>
+          </div>
+
+          <div class="qp-field">
+            <span class="qp-legend">Subjects: <span class="qp-label-note">tick all that apply</span></span>
+            <div id="subjectsContainer" class="qp-subjects"></div>
+          </div>
+
+          <button type="submit" class="qp-btn qp-btn-red qp-btn-block">Next</button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="qp-colophon">
+      <span>ExamForge &middot; question paper generator UI</span>
+      <span>Served by Flask &middot; generation requires Ollama + llama3</span>
+    </footer>
+  </main>
+
+  <script>
+    const textbooks = {{ textbooks_json | safe }};
+
+    const boardSelect = document.getElementById('boardSelect');
+    const classSelect = document.getElementById('classSelect');
+    const subjectsContainer = document.getElementById('subjectsContainer');
+
+    const uniqueBoards = [...new Set(textbooks.map(b => b.board))];
+    const uniqueClasses = [...new Set(textbooks.map(b => b.class))];
+
+    uniqueBoards.forEach(board => {
+      const opt = document.createElement('option');
+      opt.value = board;
+      opt.textContent = board;
+      boardSelect.appendChild(opt);
+    });
+
+    uniqueClasses.forEach(cls => {
+      const opt = document.createElement('option');
+      opt.value = cls;
+      opt.textContent = cls;
+      classSelect.appendChild(opt);
+    });
+
+    function updateSubjects() {
+      const selectedBoard = boardSelect.value;
+      const selectedClass = classSelect.value;
+
+      const filteredSubjects = textbooks
+        .filter(book => book.board === selectedBoard && book.class === selectedClass)
+        .map(book => book.subject);
+
+      const uniqueSubjects = [...new Set(filteredSubjects)];
+
+      subjectsContainer.innerHTML = '';
+      uniqueSubjects.forEach(subject => {
+        const label = document.createElement('label');
+        label.className = 'qp-subject-opt';
+        label.innerHTML = `
+          <input type="checkbox" name="subject" value="${subject}">
+          <span>${subject}</span>
+        `;
+        subjectsContainer.appendChild(label);
+      });
+    }
+
+    boardSelect.addEventListener('change', updateSubjects);
+    classSelect.addEventListener('change', updateSubjects);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (uniqueBoards.length) boardSelect.value = uniqueBoards[0];
+      if (uniqueClasses.length) classSelect.value = uniqueClasses[0];
+      updateSubjects();
+    });
+  </script>
+  <script src="/static/js/qp-style.js"></script>
+</body>
+</html>

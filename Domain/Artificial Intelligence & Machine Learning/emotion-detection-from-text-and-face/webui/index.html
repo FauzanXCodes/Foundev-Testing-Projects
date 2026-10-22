@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MoodTunes Sessions — Emotion-Driven Music Player</title>
+<meta name="description" content="Immersive emotion-driven music player wired to the emotion-detection FastAPI backend (/health, /predict, /predict-text).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="bg-wash" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="brand">
+    <span class="brand-orb" aria-hidden="true"></span>
+    <div class="brand-text">
+      <h1>MoodTunes Sessions</h1>
+      <p class="brand-sub">emotion in · music out · FastAPI <code>/predict-text</code> &amp; <code>/predict</code></p>
+    </div>
+  </div>
+
+  <div class="head-controls">
+    <div class="ctl api-ctl">
+      <label for="apiBase">Backend URL</label>
+      <input id="apiBase" type="text" value="http://127.0.0.1:8000" spellcheck="false" autocomplete="off">
+    </div>
+    <div class="ctl health-ctl">
+      <span class="pill" id="healthPill" data-state="checking">
+        <span class="pill-dot" aria-hidden="true"></span>
+        <span id="healthText">checking…</span>
+      </span>
+      <span class="health-detail" id="healthDetail"></span>
+      <button type="button" class="btn btn-ghost btn-sm" id="recheckBtn">Recheck</button>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <section class="offline" id="offlinePanel" hidden aria-live="polite">
+    <h2>Backend offline — start the FastAPI server</h2>
+    <p>This page shows only what the real API returns, so nothing renders until it answers.
+       From the project's <code>backend/</code> directory (per <code>HOW_TO_RUN.md</code>):</p>
+    <pre class="cmd">cd backend
+python -m venv venv
+# Windows: venv\Scripts\activate   ·   macOS/Linux: source venv/bin/activate
+pip install -r ../requirements.txt
+uvicorn app:app --reload</pre>
+    <p class="offline-notes">Notes quoted from the project docs:</p>
+    <ul>
+      <li>On the first run the system automatically downloads the <strong>~200MB emotion model</strong> from HuggingFace — give it time and keep the connection stable.</li>
+      <li><strong>Redis</strong> on port <code>6379</code> is optional; without it the API degrades gracefully and skips caching.</li>
+      <li>Equivalent start command from the README: <code>python -m uvicorn app:app --reload --host 0.0.0.0 --port 8000</code>.</li>
+      <li>Verify with <code>GET http://127.0.0.1:8000/health</code> → <code>{"status": "ok"}</code>, then press <em>Recheck</em>.</li>
+    </ul>
+  </section>
+
+  <div class="seg" role="tablist" aria-label="Analysis mode">
+    <button type="button" class="seg-btn is-active" id="tabText" role="tab" aria-selected="true" aria-controls="pane-text" data-tab="text">Text mood</button>
+    <button type="button" class="seg-btn" id="tabFace" role="tab" aria-selected="false" aria-controls="pane-face" data-tab="face">Face mood</button>
+  </div>
+
+  <div class="session">
+    <!-- ══════════ stage (shared) ══════════ -->
+    <section class="stage" aria-label="Mood stage" aria-live="polite">
+      <div class="orb-wrap">
+        <div class="orb" id="orb" aria-hidden="true"></div>
+        <div class="orb-overlay" id="orbOverlay" hidden>
+          <div class="spinner" aria-hidden="true"></div>
+          <p id="orbMsg">analyzing…</p>
+        </div>
+      </div>
+      <div class="stage-readout">
+        <p class="kicker" id="stageKicker">TEXT SESSION · IDLE</p>
+        <h2 class="emotion-title" id="emotionTitle">Awaiting your mood</h2>
+        <div class="conf-row" id="confRow" hidden>
+          <div class="conf-track" role="progressbar" aria-label="Model confidence" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="confBar">
+            <div class="conf-fill" id="confFill"></div>
+          </div>
+          <span class="conf-num" id="confNum">0%</span>
+        </div>
+        <div class="chip-row">
+          <span class="chip chip-mood" id="moodChip" hidden></span>
+          <span class="chip" id="rawChip" hidden></span>
+          <span class="chip chip-warn" id="faceChip" hidden></span>
+        </div>
+        <p class="stage-hint" id="stageHint">Type how you feel and press “Read my mood”. Results appear only when the backend answers.</p>
+      </div>
+    </section>
+
+    <!-- ══════════ text pane ══════════ -->
+    <section class="pane" id="pane-text" role="tabpanel" aria-labelledby="tabText">
+      <div class="pane-head">
+        <h2>Text mood</h2>
+        <span class="pane-tag">POST /predict-text</span>
+      </div>
+
+      <label class="field-label" for="textInput">What's going on inside your head?</label>
+      <textarea id="textInput" rows="6" maxlength="2000"
+        placeholder="e.g. The sunset today was breathtakingly beautiful, I feel so at peace."></textarea>
+      <div class="pane-meta">
+        <span id="charCount">0 / 2000</span>
+        <span class="meta-note">min 3 characters</span>
+      </div>
+
+      <div class="err" id="textError" role="alert" hidden></div>
+
+      <div class="pane-actions">
+        <label class="lang-label" for="langText">Music region
+          <select id="langText">
+            <option>Any</option><option>English</option><option>Hindi</option>
+            <option>Bengali</option><option>Spanish</option><option>Punjabi</option>
+            <option>Tamil</option><option>Telugu</option><option>K-Pop</option>
+            <option>Anime/J-Pop</option>
+          </select>
+        </label>
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary" id="textBtn">Read my mood</button>
+          <button type="button" class="btn btn-ghost" id="textClear">Clear</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ face pane ══════════ -->
+    <section class="pane" id="pane-face" role="tabpanel" aria-labelledby="tabFace" hidden>
+      <div class="pane-head">
+        <h2>Face mood</h2>
+        <span class="pane-tag">POST /predict · multipart</span>
+      </div>
+
+      <div class="drop" id="dropZone" tabindex="0" role="button" aria-label="Drop a photo here or press Enter to browse">
+        <input type="file" id="fileInput" accept="image/*" hidden>
+        <img id="preview" alt="Selected face preview" hidden>
+        <video id="webcam" playsinline muted hidden></video>
+        <div class="drop-copy" id="dropCopy">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="drop-ico">
+            <rect x="3" y="4" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="9" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M4.5 18 c1.8 -3.4 7.2 -3.4 9 0 M15 9 h5 M17.5 6.5 v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <span>Drag &amp; drop a photo — or click to browse</span>
+        </div>
+      </div>
+
+      <div class="pane-actions wrap-actions">
+        <button type="button" class="btn btn-ghost" id="camBtn">Use webcam</button>
+        <button type="button" class="btn btn-ghost" id="captureBtn" hidden>Capture frame</button>
+        <button type="button" class="btn btn-ghost" id="removeImg" hidden>Remove image</button>
+        <label class="lang-label" for="langFace">Music region
+          <select id="langFace">
+            <option>Any</option><option>English</option><option>Hindi</option>
+            <option>Bengali</option><option>Spanish</option><option>Punjabi</option>
+            <option>Tamil</option><option>Telugu</option><option>K-Pop</option>
+            <option>Anime/J-Pop</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="err" id="faceError" role="alert" hidden></div>
+
+      <div class="pane-actions">
+        <button type="button" class="btn btn-primary" id="faceBtn">Analyze face</button>
+        <button type="button" class="btn btn-ghost" id="faceClear">Clear</button>
+      </div>
+
+      <div class="emo-chart" id="emoChart" hidden>
+        <h3>Model output — all emotions</h3>
+        <div id="emoBars"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ══════════ now playing band ══════════ -->
+  <section class="player" id="playerBand" hidden aria-label="Now playing">
+    <button type="button" class="nav-btn" id="prevBtn" aria-label="Previous song">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 l7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <img class="np-thumb" id="npThumb" alt="" hidden>
+    <div class="np-info">
+      <p class="kicker">NOW PLAYING <span id="npPos"></span></p>
+      <h3 class="np-title" id="npTitle">—</h3>
+      <p class="np-meta"><span id="npChannel"></span><span id="npDuration"></span></p>
+    </div>
+    <a class="btn btn-primary" id="npLink" href="#" target="_blank" rel="noopener noreferrer">Open on YouTube</a>
+    <button type="button" class="nav-btn" id="nextBtn" aria-label="Next song">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5 L16 12 l-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </section>
+
+  <!-- ══════════ reel ══════════ -->
+  <section class="reel-wrap" id="reelWrap" hidden aria-label="Session reel">
+    <div class="reel-head">
+      <h2>Session reel <span class="reel-count" id="reelCount"></span></h2>
+      <button type="button" class="btn btn-ghost btn-sm" id="copyPlaylist">Copy playlist</button>
+    </div>
+    <div class="reel" id="reel"></div>
+  </section>
+
+  <footer class="foot">
+    <p>Every emotion label, confidence value and track shown here is a genuine response from the
+       FastAPI backend in <code>backend/app.py</code> — nothing is generated in the browser, and no
+       results appear while the backend is offline.</p>
+  </footer>
+</main>
+
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+﻿{
+    "id":  "crop-yield-prediction",
+    "name":  "Crop Yield Prediction",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/gabrieltseng/pycrop-yield-prediction",
+    "stack":  "Python; XGBoost",
+    "goal":  "State/season/area/rainfall features, regression benchmarking and error analysis.",
+    "license":  "MIT",
+    "licenseWarning":  null,
+    "entry":  "cyp/models/__init__.py",
+    "expectedFileCount":  15,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  24
+}

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Underwriting Desk — Loan Default Prediction (demo worksheet)</title>
+<meta name="description" content="Underwriting Desk: a demo worksheet UI for the loan-default-prediction Kaggle solution. Heuristic scorecard only — the real two-stage GBM pipeline runs with python train_predict.py.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Spectral:wght@400;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to worksheet</a>
+
+<div class="boot" id="boot" aria-hidden="true">
+  <div class="boot-mark"></div>
+  <p class="mono">Opening case file…</p>
+</div>
+
+<header class="desk-header">
+  <div class="hdr-left">
+    <p class="eyebrow mono">Loan Default Prediction &middot; Kaggle prize solution &middot; repo: models.py + train_predict.py</p>
+    <h1>Underwriting Desk</h1>
+    <p class="hdr-sub">Two-stage GradientBoosting pipeline &mdash; stage&nbsp;1 <span class="mono">DefaultClassifier</span> &rarr; P(default), stage&nbsp;2 <span class="mono">PartialRegressor</span> &rarr; loss severity.</p>
+  </div>
+  <div class="hdr-right">
+    <div class="case-strip">
+      <span class="case-label mono">CASE NO.</span>
+      <span class="case-no mono" id="caseNo">UD-000001</span>
+      <button class="btn tiny" id="newCaseBtn" type="button">New case</button>
+    </div>
+    <p class="badge demo-badge">Demo scorecard &mdash; heuristic only, not the trained GBM</p>
+  </div>
+</header>
+
+<div class="honesty-banner" role="note">
+  <span class="flag">DEMO / SAMPLE</span>
+  <span><strong>Not a live model output.</strong> Every number on this page comes from a transparent JavaScript heuristic (formula shown under &ldquo;Show formula&rdquo;). The trained pipeline needs <code>python train_predict.py &lt;data&gt;</code> with the Kaggle <code>train_v2.csv</code> / <code>test_v2.csv</code> files, which are <em>not</em> in this repository.</span>
+</div>
+
+<nav class="tabs" role="tablist" aria-label="Desk sections">
+  <button class="tab" role="tab" id="tab-single" aria-controls="panel-single" aria-selected="true" type="button">Single case</button>
+  <button class="tab" role="tab" id="tab-ledger" aria-controls="panel-ledger" aria-selected="false" tabindex="-1" type="button">Portfolio ledger</button>
+  <button class="tab" role="tab" id="tab-batch" aria-controls="panel-batch" aria-selected="false" tabindex="-1" type="button">Batch</button>
+  <button class="tab" role="tab" id="tab-about" aria-controls="panel-about" aria-selected="false" tabindex="-1" type="button">About the pipeline</button>
+</nav>
+
+<main id="main">
+
+<!-- ============================== SINGLE CASE ============================== -->
+<section id="panel-single" role="tabpanel" aria-labelledby="tab-single" class="panel">
+  <div class="worksheet">
+
+    <form class="pane pane-app" id="caseForm" novalidate>
+      <div class="pane-head">
+        <h2>Application</h2>
+        <span class="mono muted">worksheet &middot; in&#8209;house</span>
+      </div>
+
+      <fieldset>
+        <legend>1 &middot; Applicant summary</legend>
+        <div class="field-grid three">
+          <div class="field" data-field="amount">
+            <label for="fAmount">Loan amount (USD)</label>
+            <input id="fAmount" name="amount" type="number" min="500" max="400000" step="100" value="18000" inputmode="decimal" aria-describedby="err-amount">
+            <p class="err mono" id="err-amount" hidden></p>
+          </div>
+          <div class="field" data-field="term">
+            <label for="fTerm">Term (months)</label>
+            <input id="fTerm" name="term" type="number" min="6" max="120" step="1" value="36" inputmode="numeric" aria-describedby="err-term">
+            <p class="err mono" id="err-term" hidden></p>
+          </div>
+          <div class="field" data-field="rate">
+            <label for="fRate">Interest rate (APR %)</label>
+            <input id="fRate" name="rate" type="number" min="0" max="60" step="0.1" value="11.9" inputmode="decimal" aria-describedby="err-rate">
+            <p class="err mono" id="err-rate" hidden></p>
+          </div>
+          <div class="field">
+            <label for="fPlanned">Planned principal / month</label>
+            <input id="fPlanned" name="planned" type="text" value="—" readonly aria-readonly="true">
+            <p class="hint mono">= amount &divide; term</p>
+          </div>
+          <div class="field">
+            <label for="fPayment">Scheduled payment (USD)</label>
+            <input id="fPayment" name="payment" type="text" value="—" readonly aria-readonly="true">
+            <p class="hint mono">= amortization at APR</p>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="perf" aria-hidden="true"></div>
+
+      <fieldset>
+        <legend>2 &middot; Credit profile</legend>
+        <div class="field-grid three">
+          <div class="field" data-field="age">
+            <label for="fAge">Age</label>
+            <input id="fAge" name="age" type="number" min="18" max="100" step="1" value="34" inputmode="numeric" aria-describedby="err-age">
+            <p class="err mono" id="err-age" hidden></p>
+          </div>
+          <div class="field" data-field="income">
+            <label for="fIncome">Annual income (USD)</label>
+            <input id="fIncome" name="income" type="number" min="0" max="3000000" step="500" value="64000" inputmode="decimal" aria-describedby="err-income">
+            <p class="err mono" id="err-income" hidden></p>
+          </div>
+          <div class="field" data-field="dti">
+            <label for="fDti">Debt-to-income (%)</label>
+            <input id="fDti" name="dti" type="number" min="0" max="100" step="0.5" value="38" inputmode="decimal" aria-describedby="err-dti">
+            <p class="err mono" id="err-dti" hidden></p>
+          </div>
+          <div class="field" data-field="lines">
+            <label for="fLines">Credit lines open</label>
+            <input id="fLines" name="lines" type="number" min="0" max="60" step="1" value="9" inputmode="numeric" aria-describedby="err-lines">
+            <p class="err mono" id="err-lines" hidden></p>
+          </div>
+          <div class="field" data-field="derog">
+            <label for="fDerog">Derogatory reports</label>
+            <input id="fDerog" name="derog" type="number" min="0" max="20" step="1" value="0" inputmode="numeric" aria-describedby="err-derog">
+            <p class="err mono" id="err-derog" hidden></p>
+          </div>
+          <div class="field" data-field="late30">
+            <label for="fLate30">Late 30 days</label>
+            <input id="fLate30" name="late30" type="number" min="0" max="60" step="1" value="1" inputmode="numeric" aria-describedby="err-late30">
+            <p class="err mono" id="err-late30" hidden></p>
+          </div>
+          <div class="field" data-field="late60">
+            <label for="fLate60">Late 60 days</label>
+            <input id="fLate60" name="late60" type="number" min="0" max="60" step="1" value="0" inputmode="numeric" aria-describedby="err-late60">
+            <p class="err mono" id="err-late60" hidden></p>
+          </div>
+          <div class="field" data-field="late90">
+            <label for="fLate90">Late 90+ days</label>
+            <input id="fLate90" name="late90" type="number" min="0" max="60" step="1" value="0" inputmode="numeric" aria-describedby="err-late90">
+            <p class="err mono" id="err-late90" hidden></p>
+          </div>
+        </div>
+        <p class="note">In production these map to anonymized features <span class="mono">f1..f777</span> &mdash; the repo&rsquo;s <span class="mono">FeatureSelector</span> engineering in <span class="mono">models.py</span>: strong terms <span class="mono">f528&#8209;f527</span>, <span class="mono">f528&#8209;f274</span>, <span class="mono">f527&#8209;f274</span>, <span class="mono">hasnull</span>, <span class="mono">f271</span>, <span class="mono">f2</span> &hellip; plus the 300-column tail exclusion list.</p>
+      </fieldset>
+
+      <div class="perf" aria-hidden="true"></div>
+
+      <fieldset>
+        <legend>3 &middot; Feature health</legend>
+
+        <div class="health-top">
+          <div class="hasnull-chip" id="hasnullChip" data-null="0">
+            <span class="mono">hasnull</span>
+            <strong class="mono" id="hasnullValue">0</strong>
+            <span class="chip-note" id="hasnullNote">all demo f&#8209;fields present</span>
+          </div>
+          <button class="btn tiny ghost" id="resetFBtn" type="button">Reset f&#8209;fields</button>
+        </div>
+        <p class="note tight"><span class="mono">hasnull</span> is computed exactly like <span class="mono">models.py</span>: <span class="mono">1</span> if any row value is missing. Blank f&#8209;fields are median&#8209;imputed to <span class="mono">0</span> here (the repo uses <span class="mono">sklearn.preprocessing.Imputer(strategy=&#39;median&#39;)</span>, now removed from scikit&#8209;learn).</p>
+
+        <div class="combo" data-combo="comb">
+          <div class="combo-head">
+            <h3 class="mono">comb</h3>
+            <output class="combo-val mono" id="val-comb">0.00</output>
+          </div>
+          <label class="slider-label" for="blend-comb">Blend weight in demo score <span class="mono" id="pct-comb">100%</span></label>
+          <input class="blend" type="range" id="blend-comb" min="0" max="100" step="1" value="100">
+          <div class="formula-scroll mono" id="formula-comb"></div>
+        </div>
+
+        <div class="combo" data-combo="comb1">
+          <div class="combo-head">
+            <h3 class="mono">comb1</h3>
+            <output class="combo-val mono" id="val-comb1">0.00</output>
+          </div>
+          <label class="slider-label" for="blend-comb1">Blend weight in demo score <span class="mono" id="pct-comb1">100%</span></label>
+          <input class="blend" type="range" id="blend-comb1" min="0" max="100" step="1" value="100">
+          <div class="formula-scroll mono" id="formula-comb1"></div>
+        </div>
+
+        <div class="combo" data-combo="comb2">
+          <div class="combo-head">
+            <h3 class="mono">comb2</h3>
+            <output class="combo-val mono" id="val-comb2">0.00</output>
+          </div>
+          <label class="slider-label" for="blend-comb2">Blend weight in demo score <span class="mono" id="pct-comb2">100%</span></label>
+          <input class="blend" type="range" id="blend-comb2" min="0" max="100" step="1" value="100">
+          <div class="formula-scroll mono" id="formula-comb2"></div>
+        </div>
+
+        <p class="note tight">Coefficients above are the <strong>actual weights read from <span class="mono">models.py</span></strong> (<span class="mono">_make_new_feature</span> calls). The blend sliders only scale each combo&rsquo;s contribution to this page&rsquo;s demo score.</p>
+
+        <details class="f-details">
+          <summary class="mono">Anonymized demo f&#8209;fields (16)</summary>
+          <div class="f-grid" id="fGrid">
+            <label class="f-cell"><span class="mono">f528</span><input class="f-input mono" type="number" data-f="f528" value="1" step="0.1" aria-label="f528"></label>
+            <label class="f-cell"><span class="mono">f527</span><input class="f-input mono" type="number" data-f="f527" value="1" step="0.1" aria-label="f527"></label>
+            <label class="f-cell"><span class="mono">f274</span><input class="f-input mono" type="number" data-f="f274" value="1" step="0.1" aria-label="f274"></label>
+            <label class="f-cell"><span class="mono">f271</span><input class="f-input mono" type="number" data-f="f271" value="1" step="0.1" aria-label="f271"></label>
+            <label class="f-cell"><span class="mono">f2</span><input class="f-input mono" type="number" data-f="f2" value="1" step="0.1" aria-label="f2"></label>
+            <label class="f-cell"><span class="mono">f332</span><input class="f-input mono" type="number" data-f="f332" value="1" step="0.1" aria-label="f332"></label>
+            <label class="f-cell"><span class="mono">f776</span><input class="f-input mono" type="number" data-f="f776" value="1" step="0.1" aria-label="f776"></label>
+            <label class="f-cell"><span class="mono">f336</span><input class="f-input mono" type="number" data-f="f336" value="1" step="0.1" aria-label="f336"></label>
+            <label class="f-cell"><span class="mono">f777</span><input class="f-input mono" type="number" data-f="f777" value="1" step="0.1" aria-label="f777"></label>
+            <label class="f-cell"><span class="mono">f4</span><input class="f-input mono" type="number" data-f="f4" value="1" step="0.1" aria-label="f4"></label>
+            <label class="f-cell"><span class="mono">f5</span><input class="f-input mono" type="number" data-f="f5" value="1" step="0.1" aria-label="f5"></label>
+            <label class="f-cell"><span class="mono">f647</span><input class="f-input mono" type="number" data-f="f647" value="1" step="0.1" aria-label="f647"></label>
+            <label class="f-cell"><span class="mono">f67</span><input class="f-input mono" type="number" data-f="f67" value="1" step="0.1" aria-label="f67"></label>
+            <label class="f-cell"><span class="mono">f670</span><input class="f-input mono" type="number" data-f="f670" value="1" step="0.1" aria-label="f670"></label>
+            <label class="f-cell"><span class="mono">f598</span><input class="f-input mono" type="number" data-f="f598" value="1" step="0.1" aria-label="f598"></label>
+            <label class="f-cell"><span class="mono">f596</span><input class="f-input mono" type="number" data-f="f596" value="1" step="0.1" aria-label="f596"></label>
+          </div>
+        </details>
+      </fieldset>
+    </form>
+
+    <div class="pane pane-decision">
+      <div class="pane-head">
+        <h2>Decision</h2>
+        <span class="mono muted" id="stampTime">not scored</span>
+      </div>
+
+      <div class="stamp-plate" id="stampPlate" data-verdict="review">
+        <div class="stamp" id="stamp"><span id="stampText">REVIEW</span></div>
+        <p class="stamp-sub mono" id="stampSub">P(default) &mdash; &middot; loss cut 0.60</p>
+      </div>
+
+      <div class="dial-block">
+        <svg class="dial" id="riskDial" viewBox="0 0 300 176" role="img" aria-label="Semicircular risk dial showing probability of default"></svg>
+        <div class="dial-read">
+          <span class="dial-num mono" id="pRead">0.00</span>
+          <span class="dial-cap mono">P(default)</span>
+        </div>
+      </div>
+
+      <div class="loss-grid">
+        <div class="loss-cell">
+          <span class="loss-label">Expected loss</span>
+          <strong class="mono" id="lossRead">$0</strong>
+        </div>
+        <div class="loss-cell">
+          <span class="loss-label">Demo severity (1&ndash;100)</span>
+          <strong class="mono" id="sevRead">0.00</strong>
+        </div>
+        <div class="loss-cell">
+          <span class="loss-label">Submission rule</span>
+          <strong class="mono" id="appliedRead">P &le; 0.60 &rarr; 0</strong>
+        </div>
+      </div>
+
+      <section class="reasons">
+        <h3>Reason codes</h3>
+        <p class="note tight">Horizontal contribution bars for the <strong>demo scorecard</strong> factors only (red = pushes toward default, green = protective).</p>
+        <ul id="reasonList" class="reason-list"></ul>
+      </section>
+
+      <details class="formula-panel" id="formulaPanel">
+        <summary>Show formula &mdash; demo scorecard</summary>
+        <div class="formula-inner">
+          <p class="note tight"><strong>Demo scorecard &mdash; heuristic only.</strong> The real GBM pipeline requires <span class="mono">python train_predict.py &lt;data&gt;</span> with the Kaggle CSVs, which are not included in this repo. Nothing on this page is output of the trained model.</p>
+          <table class="formula-table mono">
+            <thead><tr><th>factor</th><th>term</th><th>value</th><th>contribution</th></tr></thead>
+            <tbody id="formulaBody"></tbody>
+          </table>
+          <p class="note tight">logit = intercept + &Sigma; contributions; P(default) = 1/(1+e<sup>&minus;logit</sup>). Verdict bands and the loss application cut are <em>informed by <span class="mono">train_predict.py</span></span>, where <span class="mono">loss = pred_loss * (P &gt; 0.6)</span>.</p>
+        </div>
+      </details>
+
+      <div class="actions">
+        <button class="btn primary" id="fileBtn" type="button">File decision to ledger</button>
+        <button class="btn ghost" id="resetBtn" type="button">Reset case</button>
+      </div>
+      <p class="msg" id="caseMsg" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== LEDGER ============================== -->
+<section id="panel-ledger" role="tabpanel" aria-labelledby="tab-ledger" class="panel" hidden>
+  <div class="panel-head">
+    <div>
+      <h2>Portfolio ledger</h2>
+      <p class="note">Decisions filed from the Single case tab, stored in this browser&rsquo;s <span class="mono">localStorage</span>.</p>
+    </div>
+    <div class="toolbar">
+      <span class="mono muted" id="ledgerCount">0 entries</span>
+      <button class="btn ghost" id="exportLedgerCsv" type="button">Export CSV</button>
+      <button class="btn ghost" id="exportLedgerJson" type="button">Export JSON</button>
+      <button class="btn ghost danger" id="clearLedgerBtn" type="button">Clear ledger</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="ledger-table" id="ledgerTable">
+      <caption class="sr-only">Filed decisions. Column headers sort the table.</caption>
+      <thead>
+        <tr>
+          <th scope="col"><button class="sort-btn mono" type="button" data-key="case">Case</button></th>
+          <th scope="col"><button class="sort-btn mono" type="button" data-key="ts">Filed</button></th>
+          <th scope="col" class="num"><button class="sort-btn mono" type="button" data-key="amount">Amount</button></th>
+          <th scope="col" class="num"><button class="sort-btn mono" type="button" data-key="p">P(default)</button></th>
+          <th scope="col" class="num"><button class="sort-btn mono" type="button" data-key="loss">Exp. loss</button></th>
+          <th scope="col"><button class="sort-btn mono" type="button" data-key="verdict">Verdict</button></th>
+          <th scope="col" class="num">Band</th>
+          <th scope="col"><span class="sr-only">Row actions</span></th>
+        </tr>
+      </thead>
+      <tbody id="ledgerBody"></tbody>
+    </table>
+    <div class="empty" id="ledgerEmpty">
+      <p class="mono">Ledger empty</p>
+      <p>Score a case in <em>Single case</em>, then press <strong>File decision to ledger</strong>. Filed rows persist across reloads.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== BATCH ============================== -->
+<section id="panel-batch" role="tabpanel" aria-labelledby="tab-batch" class="panel" hidden>
+  <div class="panel-head">
+    <div>
+      <h2>Batch scoring</h2>
+      <p class="note">Paste <span class="mono">test_v2</span>-style rows or drop a small CSV. Every row is scored with the same demo heuristic &mdash; never with the trained GBM.</p>
+    </div>
+    <div class="toolbar">
+      <button class="btn ghost" id="loadSampleBtn" type="button">Load sample rows</button>
+      <button class="btn ghost" id="batchClearBtn" type="button">Clear</button>
+      <button class="btn primary" id="scoreBatchBtn" type="button">Score batch</button>
+    </div>
+  </div>
+
+  <div class="batch-grid">
+    <div class="batch-inputs">
+      <label class="field-label mono" for="batchInput">CSV input (header row required)</label>
+      <div class="drop" id="batchDrop">
+        <textarea id="batchInput" class="mono" rows="10" spellcheck="false" placeholder="id,amount,term,rate,age,income,dti,lines,derog,late30,late60,late90&#10;T-1001,24000,48,14.9,41,72000,44,12,1,2,1,0" aria-describedby="batchHelp"></textarea>
+        <label class="drop-hint" for="batchFile">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3l5 5h-3v6h-4V8H7l5-5zm-7 15h14v3H5v-3z"/></svg>
+          <span>Drop a .csv here or <span class="linkish">browse</span></span>
+          <input type="file" id="batchFile" class="file-hidden" accept=".csv,text/csv">
+        </label>
+        <p class="drop-file mono" id="batchFileName" hidden></p>
+      </div>
+      <p class="note tight" id="batchHelp">Required columns: <span class="mono">id, amount</span>. Optional: <span class="mono">term, rate, age, income, dti, lines, derog, late30, late60, late90</span> (missing cells are treated as null &rarr; <span class="mono">hasnull=1</span>, imputed to 0, mirroring the repo&rsquo;s median imputer). Quoted fields are supported. The <span class="mono">comb/comb1/comb2</span> terms reuse the f-field context from the <em>Single case</em> worksheet, since Kaggle&rsquo;s f-columns are not in this CSV.</p>
+      <p class="msg" id="batchMsg" role="status" aria-live="polite"></p>
+      <div class="progress" id="batchProgress" hidden><span class="bar" id="batchBar"></span></div>
+    </div>
+
+    <div class="batch-output">
+      <div class="stat-row" id="batchStats" hidden>
+        <div class="stat"><span class="mono">rows</span><strong class="mono" id="statRows">0</strong></div>
+        <div class="stat"><span class="mono">mean P</span><strong class="mono" id="statMean">0.00</strong></div>
+        <div class="stat"><span class="mono">P &gt; 0.60</span><strong class="mono" id="statOver">0</strong></div>
+        <div class="stat"><span class="mono">losses applied</span><strong class="mono" id="statApplied">0</strong></div>
+      </div>
+      <div class="hist-box">
+        <h3 class="mono">P(default) histogram</h3>
+        <canvas id="histCanvas" width="640" height="240" aria-label="Histogram of batch P(default) values"></canvas>
+        <p class="empty inline" id="histEmpty">Score a batch to draw the distribution.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="panel-subhead">
+      <h3>Submission preview</h3>
+      <div class="toolbar">
+        <button class="btn ghost" id="exportSubmissionBtn" type="button" disabled>Download submission.csv</button>
+      </div>
+    </div>
+    <table class="ledger-table submission">
+      <caption class="sr-only">Demo batch results formatted like the repository submission file</caption>
+      <thead><tr><th scope="col" class="mono">id</th><th scope="col" class="mono num">loss</th><th scope="col" class="mono num">P(default)</th><th scope="col" class="mono">applied?</th></tr></thead>
+      <tbody id="batchTableBody"></tbody>
+    </table>
+    <div class="empty" id="batchEmpty">
+      <p class="mono">No rows yet</p>
+      <p>Load the sample or paste your own CSV, then press <strong>Score batch</strong>. <span class="mono">loss = demo severity &times; 1[P(default) &gt; 0.60]</span> exactly like <span class="mono">train_predict.py</span>, but with heuristic inputs.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== ABOUT ============================== -->
+<section id="panel-about" role="tabpanel" aria-labelledby="tab-about" class="panel" hidden>
+  <div class="about-grid">
+    <article class="doc">
+      <h2>About the pipeline</h2>
+      <p class="lede">A Kaggle prize solution for the <a href="https://www.kaggle.com/c/loan-default-prediction" rel="noopener">Loan Default Prediction</a> competition: a <strong>two-stage scikit-learn GradientBoosting pipeline</strong> over anonymized features <span class="mono">f1..f777</span>.</p>
+
+      <h3>Stage 1 &mdash; Default classifier</h3>
+      <p><span class="mono">models.DefaultClassifier</span> wraps <span class="mono">GradientBoostingClassifier</span> and binarizes the target (<span class="mono">y &gt; 0 &rarr; 1</span>) to estimate <strong>P(default)</strong>. Hyper-parameters from <span class="mono">train_predict.py</span>:</p>
+      <pre class="code" id="cmd1">GradientBoostingClassifier(
+    loss='deviance', learning_rate=0.01, n_estimators=3000,
+    subsample=0.6, min_samples_split=12, min_samples_leaf=12,
+    max_depth=6, random_state=1357)
+# steps: FeatureSelector -> Imputer(median) -> StandardScaler -> clf</pre>
+      <button class="btn tiny copy-btn" type="button" data-copy="cmd1">Copy</button>
+
+      <h3>Stage 2 &mdash; Loss regressor</h3>
+      <p><span class="mono">models.PartialRegressor</span> fits <span class="mono">GradientBoostingRegressor</span> on <span class="mono">log(loss)</span> for <strong>defaulters only</strong>, exponentiates, and clips predictions to <span class="mono">[1, 100]</span> severity units.</p>
+      <pre class="code" id="cmd2">GradientBoostingRegressor(
+    loss='ls', learning_rate=0.0075, n_estimators=5000,
+    subsample=0.5, min_samples_split=20, min_samples_leaf=20,
+    max_leaf_nodes=30, random_state=9753)
+# y = log(y[y &gt; 0]); pred = clip(exp(pred), 1, 100)</pre>
+      <button class="btn tiny copy-btn" type="button" data-copy="cmd2">Copy</button>
+
+      <h3>Submission rule &mdash; the 0.60 cut</h3>
+      <pre class="code" id="cmd3">submission['loss'] = pred_loss * (prob_default_test.values &gt; 0.6)</pre>
+      <button class="btn tiny copy-btn" type="button" data-copy="cmd3">Copy</button>
+      <p>Loss is applied <strong>only when P(default) &gt; 0.6</strong>. The verdict bands on this desk are <em>informed by that cut</em>, but the numbers themselves are the page&rsquo;s demo heuristic.</p>
+    </article>
+
+    <aside class="doc-side">
+      <div class="warn-card">
+        <h3>Legacy Python 2 pipeline &mdash; not runnable as-is on modern Python</h3>
+        <ul>
+          <li><strong>Python 2 syntax:</strong> <span class="mono">print</span> statements in <span class="mono">train_predict.py</span> fail on Python 3.</li>
+          <li><strong>Removed API:</strong> <span class="mono">sklearn.preprocessing.Imputer</span> was deprecated and removed (use <span class="mono">SimpleImputer</span>).</li>
+          <li><strong>Renamed losses:</strong> <span class="mono">loss='deviance'</span> / <span class="mono">'ls'</span> are now <span class="mono">'log_loss'</span> / <span class="mono">'squared_error'</span>.</li>
+          <li><strong>Old pandas:</strong> <span class="mono">dtype.iteritems()</span> and <span class="mono">np.float</span> are gone in current versions.</li>
+          <li><strong>No data:</strong> <span class="mono">train_v2.csv</span> / <span class="mono">test_v2.csv</span> come from Kaggle and are not in the repo.</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3>How to run (real command)</h3>
+        <pre class="code" id="cmd4">python train_predict.py path/to/data/folder
+# expects train_v2.csv and test_v2.csv in that folder
+# writes test_proba.csv and submission.csv</pre>
+        <button class="btn tiny copy-btn" type="button" data-copy="cmd4">Copy</button>
+        <p class="note tight">Requires an old pandas + a scikit-learn build from 2015 (README pins dev commit <span class="mono">884889a4</span>). Expect to port the code before it runs today.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Repository map</h3>
+        <ul class="mono map-list">
+          <li>models.py &mdash; FeatureSelector, DefaultClassifier, PartialRegressor</li>
+          <li>train_predict.py &mdash; two pipelines, submission writer</li>
+          <li>tools/lr_clf.py &mdash; auxiliary script</li>
+          <li>README.md, LICENSE (MIT)</li>
+        </ul>
+        <p class="note tight">Heads-up: <span class="mono">project-metadata.json</span> claims a &ldquo;Python; XGBoost; Streamlit&rdquo; stack. That metadata is <strong>wrong</strong> &mdash; the repo contains no Streamlit app, no XGBoost, no server, and no saved weights. This page is a static worksheet with vanilla JS only.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+</main>
+
+<footer class="desk-footer">
+  <p class="mono">Underwriting Desk &middot; static demo UI &middot; vanilla HTML/CSS/JS &middot; no backend, no model weights</p>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

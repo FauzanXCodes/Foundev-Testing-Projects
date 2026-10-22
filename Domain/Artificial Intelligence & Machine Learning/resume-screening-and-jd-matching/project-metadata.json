@@ -1,0 +1,14 @@
+﻿{
+    "id":  "resume-screening-and-jd-matching",
+    "name":  "Resume Screening \u0026 JD Matching",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/thrinathpolanki/resume_screening_ai",
+    "stack":  "Python; spaCy; FastAPI",
+    "goal":  "Parse PDFs, extract skills, cosine similarity to JD and ranked shortlist.",
+    "license":  "MIT",
+    "licenseWarning":  null,
+    "entry":  "app.py",
+    "expectedFileCount":  7,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  13
+}

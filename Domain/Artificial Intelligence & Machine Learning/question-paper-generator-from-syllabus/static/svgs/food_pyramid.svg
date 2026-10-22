@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="780"
+   height="420"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.45"
+   sodipodi:docbase="/Users/madeleine"
+   sodipodi:docname="vegan_food_pyramid.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:modified="true">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3687">
+      <stop
+         id="stop3689"
+         offset="0"
+         style="stop-color:#edf1b3;stop-opacity:1;" />
+      <stop
+         id="stop3691"
+         offset="1"
+         style="stop-color:#fcfeef;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3659">
+      <stop
+         style="stop-color:#f4e49d;stop-opacity:1;"
+         offset="0"
+         id="stop3661" />
+      <stop
+         style="stop-color:#fdfbee;stop-opacity:1;"
+         offset="1"
+         id="stop3663" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3415">
+      <stop
+         style="stop-color:#b8ff91;stop-opacity:1;"
+         offset="0"
+         id="stop3417" />
+      <stop
+         style="stop-color:#efffe6;stop-opacity:1;"
+         offset="1"
+         id="stop3419" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3250">
+      <stop
+         style="stop-color:#ffebeb;stop-opacity:1;"
+         offset="0"
+         id="stop3252" />
+      <stop
+         style="stop-color:#ffcdcd;stop-opacity:1;"
+         offset="1"
+         id="stop3254" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3175">
+      <stop
+         id="stop3177"
+         offset="0"
+         style="stop-color:#ffff7f;stop-opacity:1;" />
+      <stop
+         id="stop3179"
+         offset="1"
+         style="stop-color:#ffffe6;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3175"
+       id="linearGradient3173"
+       x1="370"
+       y1="112.36218"
+       x2="370"
+       y2="32.362183"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(90.06642,-24.499994)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3175"
+       id="linearGradient3214"
+       gradientUnits="userSpaceOnUse"
+       x1="430"
+       y1="93.076469"
+       x2="380"
+       y2="32.362183"
+       gradientTransform="translate(90.06642,-24.499992)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3250"
+       id="linearGradient3248"
+       x1="319.28571"
+       y1="112.36218"
+       x2="320.71429"
+       y2="192.36218"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(90.06642,-24.499994)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3250"
+       id="linearGradient3264"
+       x1="430.71429"
+       y1="92.362183"
+       x2="482.14285"
+       y2="148.07646"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(90.06642,-24.499994)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3415"
+       id="linearGradient3413"
+       x1="278.7919"
+       y1="272.36218"
+       x2="278.77658"
+       y2="192.36218"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(90.06642,-24.499994)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3415"
+       id="linearGradient3429"
+       x1="534.75128"
+       y1="206.50432"
+       x2="480.19797"
+       y2="153.97638"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(90.06642,-24.499994)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3659"
+       id="linearGradient3657"
+       x1="285.46198"
+       y1="352.36218"
+       x2="285.44156"
+       y2="272.36218"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(90.06642,-24.499994)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3659"
+       id="linearGradient3673"
+       x1="584.28577"
+       y1="263.79077"
+       x2="528.57147"
+       y2="216.64789"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(90.06642,-24.499994)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3687"
+       id="linearGradient3685"
+       x1="142.85715"
+       y1="432.36218"
+       x2="142.85715"
+       y2="352.36218"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(90.06642,-24.499994)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3687"
+       id="linearGradient3701"
+       x1="634.28577"
+       y1="320.93362"
+       x2="575.71429"
+       y2="283.79074"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(90.06642,-24.499994)" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="253.57144"
+     inkscape:cy="163.69232"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="697"
+     inkscape:window-height="581"
+     inkscape:window-x="19"
+     inkscape:window-y="22" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:url(#linearGradient3701);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 630.06642,327.86218 L 670.06642,407.86218 L 770.06642,207.86218 L 710.06642,167.86218 L 630.06642,327.86218 z "
+       id="path3693" />
+    <path
+       style="fill:url(#linearGradient3673);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 590.06642,247.86218 L 630.06642,327.86218 L 710.06642,167.86218 L 650.06642,127.86218 L 590.06642,247.86218 z "
+       id="path3665" />
+    <path
+       style="fill:url(#linearGradient3685);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 230.06642,327.86218 L 170.06642,407.86218 L 670.06642,407.86218 L 630.06642,327.86218 L 230.06642,327.86218 z "
+       id="path3677" />
+    <path
+       style="fill:url(#linearGradient3657);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 290.06642,247.86218 L 230.06642,327.86218 L 630.06642,327.86218 L 590.06642,247.86218 L 290.06642,247.86218 z "
+       id="path3649" />
+    <path
+       style="fill:url(#linearGradient3429);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 550.06642,167.86218 L 590.06642,247.86218 L 650.06642,127.86218 L 590.06642,87.862186 L 550.06642,167.86218 z "
+       id="path3421" />
+    <path
+       style="fill:url(#linearGradient3413);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 350.06642,167.86218 L 290.06642,247.86218 L 590.06642,247.86218 L 550.06642,167.86218 L 350.06642,167.86218 z "
+       id="path3405" />
+    <path
+       style="fill:url(#linearGradient3248);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 410.06642,87.862186 L 350.06642,167.86218 L 550.06642,167.86218 L 510.06642,87.862186 L 410.06642,87.862186 z "
+       id="path3240" />
+    <path
+       style="fill:url(#linearGradient3214);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 470.06642,7.862192 L 510.06642,87.862186 L 530.06642,47.862192 L 470.06642,7.862192 z "
+       id="path3181" />
+    <path
+       style="fill:url(#linearGradient3173);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 470.06642,7.862189 L 410.06642,87.862186 L 510.06642,87.862186 L 470.06642,7.862189 z "
+       id="path3165" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 470.06642,7.862189 L 410.06642,87.862186 L 510.06642,87.862186 L 530.06642,47.862189 L 470.06642,7.862189 z "
+       id="path2164" />
+    <text
+       xml:space="preserve"
+       style="font-size:24px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Lucida Bright"
+       x="536.40906"
+       y="60.433613"
+       id="text3139"><tspan
+         sodipodi:role="line"
+         id="tspan3141"
+         x="536.40906"
+         y="60.433613" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans"
+       x="464.00586"
+       y="53.547737"
+       id="text3147"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3149"
+         x="464.00586"
+         y="53.547737"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">oil,</tspan><tspan
+         sodipodi:role="line"
+         x="464.00586"
+         y="68.547737"
+         id="tspan3151"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">margarine</tspan><tspan
+         sodipodi:role="line"
+         x="464.00586"
+         y="81.814513"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3159">1 tsp (5 ml)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;font-stretch:normal;font-variant:normal;text-anchor:end;text-align:end;writing-mode:lr"
+       x="414.97266"
+       y="38.952034"
+       id="text3153"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3155"
+         x="414.97266"
+         y="38.952034"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;font-family:Sans">Fats</tspan><tspan
+         sodipodi:role="line"
+         x="414.97266"
+         y="66.452034"
+         id="tspan3157"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;font-family:Sans">2 servings</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 410.06642,87.862186 L 350.06642,167.86218 L 550.06642,167.86218 L 590.06642,87.862186 L 530.06642,47.862189 L 510.06642,87.862186 L 410.06642,87.862186 z "
+       id="path3205" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 350.06642,167.86218 L 290.06642,247.86218 L 590.06642,247.86218 L 650.06642,127.86218 L 590.06642,87.862186 L 550.06642,167.86218 L 350.06642,167.86218 z "
+       id="path3207" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 290.06642,247.86218 L 230.06642,327.86218 L 630.06642,327.86218 L 710.06642,167.86218 L 650.06642,127.86218 L 590.06642,247.86218 L 290.06642,247.86218 z "
+       id="path3209" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 230.06642,327.86218 L 170.06642,407.86218 L 670.06642,407.86218 L 770.06642,207.86218 L 710.06642,167.86218 L 630.06642,327.86218 L 230.06642,327.86218 z "
+       id="path3211" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1, 4;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 670.06642,407.86218 L 470.06642,7.862189 L 470.06642,7.862189"
+       id="path3216" />
+    <text
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;font-stretch:normal;font-variant:normal;text-anchor:end;text-align:end;writing-mode:lr"
+       x="356.97266"
+       y="114.95203"
+       id="text3218"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3220"
+         x="356.97266"
+         y="114.95203"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;font-family:Sans">Fruits</tspan><tspan
+         sodipodi:role="line"
+         x="356.97266"
+         y="142.45203"
+         id="tspan3222"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;font-family:Sans">2 servings</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:120.00000477%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans"
+       x="457.22656"
+       y="107.54773"
+       id="text3224"
+       sodipodi:linespacing="120%"><tspan
+         sodipodi:role="line"
+         x="457.22656"
+         y="107.54773"
+         id="tspan3228"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:120.00000477%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">one medium fruit</tspan><tspan
+         sodipodi:role="line"
+         x="457.22656"
+         y="121.94773"
+         id="tspan3232"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:120.00000477%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">cut up or cooked fruit</tspan><tspan
+         sodipodi:role="line"
+         x="457.22656"
+         y="134.68384"
+         id="tspan3234"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:120.00000477%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">1/2 cup (125 ml)</tspan><tspan
+         sodipodi:role="line"
+         x="457.22656"
+         y="148.34773"
+         id="tspan3236"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:120.00000477%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">fruit juice <tspan
+   style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:120.00000477%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3391">1/2 cup (125 ml)</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="457.22656"
+         y="162.74773"
+         id="tspan3238"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:120.00000477%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">dried fruit <tspan
+   style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:120.00000477%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3393">1/4 cup (60ml)</tspan></tspan></text>
+    <path
+       style="fill:url(#linearGradient3264);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 510.06642,87.862186 L 550.06642,167.86218 L 590.06642,87.862186 L 530.06642,47.862189 L 510.06642,87.862186 z "
+       id="path3256" />
+    <text
+       xml:space="preserve"
+       style="font-size:11.00003815px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans"
+       x="199.43381"
+       y="508.76422"
+       id="text3266"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.515038,-0.8571674,0.8571674,0.515038,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3268"
+         x="199.43381"
+         y="508.76422"
+         style="font-size:11.00003815px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">fortified</tspan><tspan
+         sodipodi:role="line"
+         x="199.43381"
+         y="522.51427"
+         id="tspan3270"
+         style="font-size:11.00003815px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">fruit juice</tspan><tspan
+         sodipodi:role="line"
+         x="199.43381"
+         y="533.66445"
+         style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3276">1/2 c. (125 ml)</tspan><tspan
+         sodipodi:role="line"
+         x="199.43381"
+         y="546.26432"
+         id="tspan3274"
+         style="font-size:11.00003815px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">5 figs</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Monaco"
+       x="459.54199"
+       y="202.65613"
+       id="text3282"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3284"
+         x="459.54199"
+         y="202.65613"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">cooked vegetables <tspan
+   style="font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3399">1/2 cup (125 ml)</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="459.54199"
+         y="220.15613"
+         id="tspan3286"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">raw vegetables <tspan
+   style="font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3401">1 cup (250 ml)</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="459.54199"
+         y="237.65613"
+         id="tspan3288"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">vegetable juice <tspan
+   style="font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3403">1/2 cup (125 ml)</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans"
+       x="139.26434"
+       y="575.75031"
+       id="text3290"
+       sodipodi:linespacing="110%"
+       transform="matrix(0.4539903,-0.8910066,0.8910066,0.4539903,0,0)"><tspan
+         sodipodi:role="line"
+         x="140.53778"
+         y="575.75031"
+         id="tspan3296"
+         style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">      bok choy, broccoli, </tspan><tspan
+         sodipodi:role="line"
+         x="140.53778"
+         y="584.55031"
+         id="tspan3300"
+         style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">      collards, Chinese </tspan><tspan
+         sodipodi:role="line"
+         x="140.53778"
+         y="593.35031"
+         style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3316">cabbage, kale, mustard  </tspan><tspan
+         sodipodi:role="line"
+         x="140.53778"
+         y="602.15031"
+         style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3318">greens, or okra      </tspan><tspan
+         sodipodi:role="line"
+         x="140.3786"
+         y="610.18769"
+         id="tspan3308"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">1 c (250 ml) cooked </tspan><tspan
+         sodipodi:role="line"
+         x="139.26434"
+         y="617.88769"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3042">or 2 c. (500 ml) raw</tspan><tspan
+         sodipodi:role="line"
+         x="140.53778"
+         y="626.35031"
+         style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3345">fortified tomato juice      </tspan><tspan
+         sodipodi:role="line"
+         x="140.53778"
+         y="635.15031"
+         style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3352">1/2 cup (125 ml)         </tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;font-stretch:normal;font-variant:normal;text-anchor:end;text-align:end;writing-mode:lr"
+       x="300.97266"
+       y="190.95203"
+       id="text3431"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3433"
+         x="300.97266"
+         y="190.95203"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;font-family:Sans">Vegetables</tspan><tspan
+         sodipodi:role="line"
+         x="300.97266"
+         y="218.45203"
+         id="tspan3435"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;font-family:Sans">4 servings</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Monaco"
+       x="451.01562"
+       y="281.95007"
+       id="text3441"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3443"
+         x="451.01562"
+         y="281.95007"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">cooked beans, peas or lentils <tspan
+   style="font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3445">1/2 cup (125 ml)</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="451.01562"
+         y="299.45007"
+         id="tspan3447"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">tofu or tempeh <tspan
+   style="font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3449">1/2 cup (125 ml), <tspan
+   style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3460">nuts</tspan> 1/4 cup (60 ml)</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="451.01562"
+         y="316.95007"
+         id="tspan3451"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">nut or seed butter <tspan
+   style="font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3453">2 tbsp (30 ml), <tspan
+   style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3456">meat analog</tspan> 1 oz (28 g)</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans"
+       x="107.16349"
+       y="647.31982"
+       id="text3462"
+       sodipodi:linespacing="110%"
+       transform="matrix(0.4539905,-0.8910065,0.8910065,0.4539905,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3464"
+         x="108.27775"
+         y="647.31982"
+         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">almonds <tspan
+   style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3601">1/4 cup (60 ml), </tspan></tspan><tspan
+         sodipodi:role="line"
+         x="107.16349"
+         y="657.21982"
+         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3595">soynuts <tspan
+   style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3603">1/4 cup (60 ml)</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="107.16349"
+         y="667.11982"
+         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3598">fortified soy milk <tspan
+   style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3578">1/2 cup (125 ml)</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="107.16349"
+         y="677.01982"
+         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3502">cooked soybeans <tspan
+   style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3580">1/2 cup (125 ml)</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="107.16349"
+         y="686.91983"
+         id="tspan3468"
+         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">calcium-rich tempeh or tofu</tspan><tspan
+         sodipodi:role="line"
+         x="108.59611"
+         y="696.81983"
+         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3540"><tspan
+   style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3582"> 1/2 cup (125 ml),</tspan> almond butter </tspan><tspan
+         sodipodi:role="line"
+         x="107.16349"
+         y="706.71983"
+         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+         id="tspan3574">or sesame tahini <tspan
+   style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:110.00000238%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3584">2 tbsp (30 ml)</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;font-stretch:normal;font-variant:normal;text-anchor:end;text-align:end;writing-mode:lr"
+       x="265.45703"
+       y="262.95203"
+       id="text3605"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="265.45703"
+         y="262.95203"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;font-family:Sans"
+         id="tspan3731">Legumes, nuts, &amp; other</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Monaco"
+       x="433.68359"
+       y="352.53406"
+       id="text3617"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3619"
+         x="433.68359"
+         y="352.53406"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">bread <tspan
+   style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3625">1 slice</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="433.68359"
+         y="372.53406"
+         id="tspan3621"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">cooked grain or cereal <tspan
+   style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3627">1/2 cup (125 ml)</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="433.68359"
+         y="392.53406"
+         id="tspan3623"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans">ready-to-eat cereal <tspan
+   style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3629">1 oz (28 g)</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans"
+       x="57.358585"
+       y="749.16064"
+       id="text3631"
+       sodipodi:linespacing="100%"
+       transform="matrix(0.4383712,-0.898794,0.898794,0.4383712,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3633"
+         x="59.587101"
+         y="749.16064">calcium-fortified </tspan><tspan
+         sodipodi:role="line"
+         x="59.268742"
+         y="763.16064"
+         id="tspan3635">breakfast cereal <tspan
+   style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;font-family:Sans"
+   id="tspan3637">1 oz (28 g) </tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;font-stretch:normal;font-variant:normal;text-anchor:end;text-align:end;writing-mode:lr"
+       x="163.32031"
+       y="361.63953"
+       id="text3639"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3641"
+         x="163.32031"
+         y="361.63953"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;font-family:Sans">Grains</tspan><tspan
+         sodipodi:role="line"
+         x="163.32031"
+         y="389.13953"
+         id="tspan3643"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;font-family:Sans">6 servings</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:24.00000191px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:LucidaBright"
+       x="494.50055"
+       y="-262.07013"
+       id="text3645"
+       sodipodi:linespacing="100%"
+       transform="matrix(0.8386705,0.5446391,-0.5446391,0.8386705,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3647"
+         x="494.50055"
+         y="-262.07013">calcium-rich foods</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-weight:normal;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;font-stretch:normal;font-variant:normal;text-anchor:end;text-align:end;writing-mode:lr"
+       x="231.39453"
+       y="289.08984"
+       id="text3028"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="231.39453"
+         y="289.08984"
+         id="tspan3032"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;font-family:Sans">protein-rich foods</tspan><tspan
+         sodipodi:role="line"
+         x="231.39453"
+         y="316.58984"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;font-family:Sans"
+         id="tspan3034">5 servings</tspan></text>
+  </g>
+</svg>

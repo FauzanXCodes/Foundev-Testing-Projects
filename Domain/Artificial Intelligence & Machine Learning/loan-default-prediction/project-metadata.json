@@ -1,0 +1,14 @@
+﻿{
+    "id":  "loan-default-prediction",
+    "name":  "Loan Default Prediction",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/songgc/loan-default-prediction",
+    "stack":  "Python; XGBoost; Streamlit",
+    "goal":  "Application data pipeline, risk bands and reason codes.",
+    "license":  "MIT",
+    "licenseWarning":  null,
+    "entry":  "models.py",
+    "expectedFileCount":  3,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  6
+}

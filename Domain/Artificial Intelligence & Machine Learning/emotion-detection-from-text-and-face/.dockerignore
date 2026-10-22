@@ -1,0 +1,43 @@
+# Dependencies & Environments (The Heavy Lifters)
+venv/
+.venv/
+env/
+node_modules/
+backend/venv/
+frontend/node_modules/
+
+# Local Build Outputs
+.next/
+dist/
+build/
+out/
+backend/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+
+# Large Data & Training Files (Not needed for production runtime)
+training/
+data/
+datasets/
+*.zip
+*.tar.gz
+
+# IDE & Hidden Files
+.git/
+.gitignore
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+backend/.ipynb_checkpoints/
+
+# Project Specific
+.gemini/
+.agents/
+.agent/
+**/*.log
+t.jpg
+test_face.jpg
+test_img.jpg
+webcam.jpg

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SignBridge Studio — translation pipeline lab</title>
+<meta name="description" content="SignBridge Studio: an interactive lab for the sign-language-to-text-translation rule-based text-to-sign pipeline — tokenize, gloss-restructure, select signs, export gloss.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the pipeline</a>
+
+<header class="topbar">
+  <div class="brand">
+    <p class="kicker">Text &#8594; Sign &#183; rule-based</p>
+    <h1>SignBridge Studio</h1>
+    <p class="sub">Translation pipeline lab for the <code>sign-language-translator</code> framework</p>
+  </div>
+  <div class="topbar-right">
+    <span class="chip">Library mode — no server</span>
+    <button type="button" class="btn btn-ghost" id="reset-all">Reset lab</button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ================= PIPELINE RAIL ================= -->
+  <section class="rail-section" aria-labelledby="rail-title">
+    <div class="section-head">
+      <h2 id="rail-title">Translation pipeline</h2>
+      <p class="section-note">Five connected stations. Stages 1&#8211;4 run live in your browser as a transparent demo of the library&#8217;s flow: <code>preprocess &#8594; tokenize &#8594; get_tags &#8594; restructure_sentence &#8594; tokens_to_sign_dicts &#8594; concatenate</code>. Stage 5 needs the Python library.</p>
+      <p class="pipeline-status" id="pipeline-status" role="status" aria-live="polite">Waiting for input&#8230;</p>
+    </div>
+
+    <ol class="rail" id="rail">
+
+      <!-- STAGE 1 -->
+      <li class="station is-active" id="stage-1" data-stage="1">
+        <button type="button" class="station-head" data-target="panel-1" aria-current="true">
+          <span class="station-num" aria-hidden="true">01</span>
+          <span class="station-name">Input text</span>
+        </button>
+        <div class="station-body" id="panel-1">
+          <label class="field-label" for="input-text">Sentence to translate</label>
+          <textarea id="input-text" rows="3" spellcheck="true"
+            placeholder="Type a sentence&#8230;">What is your name?</textarea>
+          <p class="counters">
+            <span id="char-count">18 characters</span>
+            <span id="word-count">4 words</span>
+          </p>
+
+          <fieldset class="lang-picker">
+            <legend>Text language</legend>
+            <label class="radio">
+              <input type="radio" name="text-lang" value="en" checked>
+              <span>English <code>en</code></span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="text-lang" value="ur">
+              <span>Urdu <code>ur</code></span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="text-lang" value="hi">
+              <span>Hindi <code>hi</code></span>
+            </label>
+          </fieldset>
+          <p class="note" id="dir-note">Direction: left-to-right.</p>
+        </div>
+      </li>
+
+      <!-- STAGE 2 -->
+      <li class="station" id="stage-2" data-stage="2">
+        <button type="button" class="station-head" data-target="panel-2">
+          <span class="station-num" aria-hidden="true">02</span>
+          <span class="station-name">Tokenizer</span>
+        </button>
+        <div class="station-body" id="panel-2">
+          <p class="stage-note">Demo tagger: regex rules that mirror the library&#8217;s <code>Tags</code> enum (<code>WORD</code>, <code>NUMBER</code>, <code>PUNCTUATION</code>, <code>SUPPORTED_WORD</code>). No part-of-speech guesses are invented.</p>
+          <div class="chips" id="token-chips">
+            <p class="empty-state">Tokens appear here. Type a sentence in station 01.</p>
+          </div>
+          <ul class="legend">
+            <li><span class="tag tag-supp">SUPPORTED_WORD</span> known in the demo lexicon</li>
+            <li><span class="tag tag-word">WORD</span> ordinary word token</li>
+            <li><span class="tag tag-num">NUMBER</span> digits / commas</li>
+            <li><span class="tag tag-punct">PUNCTUATION</span> dropped later by gloss rules</li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- STAGE 3 -->
+      <li class="station" id="stage-3" data-stage="3">
+        <button type="button" class="station-head" data-target="panel-3">
+          <span class="station-num" aria-hidden="true">03</span>
+          <span class="station-name">Gloss restructure</span>
+        </button>
+        <div class="station-body" id="panel-3">
+          <p class="stage-note stage-note-key"><strong>Demo gloss rules — illustrative subset of the library&#8217;s mapping_rules.</strong> The real reordering happens in <code>SignLanguage.restructure_sentence</code>; these rules mirror its behaviour (stopword &amp; punctuation drops from <code>PakistanSignLanguage</code>) plus common gloss word order.</p>
+
+          <ul class="rule-list" id="rule-list"></ul>
+
+          <div class="order-compare">
+            <div class="order-row">
+              <h4>Original order</h4>
+              <div class="chips" id="tokens-before">
+                <p class="empty-state">Nothing yet.</p>
+              </div>
+            </div>
+            <p class="order-arrow" aria-hidden="true">&#8595;</p>
+            <div class="order-row">
+              <h4>Gloss order</h4>
+              <div class="chips" id="tokens-after">
+                <p class="empty-state">Nothing yet.</p>
+              </div>
+            </div>
+          </div>
+          <p class="note" id="gloss-note" hidden></p>
+        </div>
+      </li>
+
+      <!-- STAGE 4 -->
+      <li class="station" id="stage-4" data-stage="4">
+        <button type="button" class="station-head" data-target="panel-4">
+          <span class="station-num" aria-hidden="true">04</span>
+          <span class="station-name">Sign selection</span>
+        </button>
+        <div class="station-body" id="panel-4">
+          <p class="stage-note">Token &#8594; candidate sign clip, using the same three strategies as <code>PakistanSignLanguage</code>: direct word mapping, digit-by-digit numbers, character-by-character spelling fallback.</p>
+
+          <div class="table-wrap">
+            <table class="map-table">
+              <caption class="visually-hidden">Mapping from gloss tokens to demo sign clip identifiers</caption>
+              <thead>
+                <tr><th scope="col">Token</th><th scope="col">Rule</th><th scope="col">Sign clip id</th></tr>
+              </thead>
+              <tbody id="mapping-body">
+                <tr><td colspan="3" class="empty-cell">No tokens yet — type in station 01.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="panel-title">Demo lexicon — placeholder sign cards</h4>
+          <p class="stage-note">Assets download at runtime through the library (<code>slt.assets</code>), so the cards below are labelled placeholders, not real footage.</p>
+          <div class="lexicon" id="lexicon-grid"></div>
+        </div>
+      </li>
+
+      <!-- STAGE 5 -->
+      <li class="station" id="stage-5" data-stage="5">
+        <button type="button" class="station-head" data-target="panel-5">
+          <span class="station-num" aria-hidden="true">05</span>
+          <span class="station-name">Stage output</span>
+        </button>
+        <div class="station-body" id="panel-5">
+          <div class="video-frame">
+            <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" class="frame-glyph">
+              <rect x="3" y="10" width="58" height="44" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+              <path d="M26 22v20l17-10z" fill="currentColor"/>
+            </svg>
+            <p class="frame-label">Synthesized sign video</p>
+            <p class="frame-sub">placeholder frame — nothing is rendered in the browser</p>
+          </div>
+
+          <div class="notice">
+            <span class="chip chip-alert">Requires library (<code>slt</code> CLI)</span>
+            <p>Concatenation, asset download and video writing all happen in the Python package. Assets auto-download on first use. Copy the command for your current input:</p>
+            <div class="cmd">
+              <code id="cli-cmd">slt translate --model-code rule-based --text-lang english --sign-lang pk-sl --sign-format video "What is your name?"</code>
+              <button type="button" class="btn btn-solid btn-sm" id="copy-cli">Copy</button>
+            </div>
+            <p class="fine">Sign clips are chosen with <code>random.choices</code> weighted by usage frequency in the library, so two runs can pick different clips for an ambiguous word.</p>
+          </div>
+
+          <div class="export-row">
+            <button type="button" class="btn btn-outline" id="copy-gloss">Copy gloss</button>
+            <button type="button" class="btn btn-outline" id="download-txt">Download .txt</button>
+            <button type="button" class="btn btn-outline" id="download-csv">Download .csv</button>
+          </div>
+          <p class="export-status" id="export-status" role="status" aria-live="polite"></p>
+        </div>
+      </li>
+
+    </ol>
+  </section>
+
+  <!-- ================= SIDE PANELS ================= -->
+  <div class="panels">
+
+    <section class="panel-card" aria-labelledby="zoo-h">
+      <h2 id="zoo-h">Model zoo</h2>
+      <p class="panel-source">Verbatim from <code>sign_language_translator/config/enums.py</code> and the README language tables (package v0.8.1).</p>
+
+      <h3>Text languages <span class="enum">TextLanguages</span></h3>
+      <ul class="zoo-list">
+        <li><code>en</code> English — 1591 words+phrases, 167 ambiguous, 776 signs</li>
+        <li><code>ur</code> Urdu — 2080 words+phrases, 227 ambiguous, 776 signs</li>
+        <li><code>hi</code> Hindi — 137 words+phrases, 5 ambiguous, 84 signs</li>
+      </ul>
+
+      <h3>Sign language <span class="enum">SignLanguages</span></h3>
+      <ul class="zoo-list">
+        <li><code>pakistan-sign-language</code> — short codes <code>pk-sl</code>, <code>psl</code>; 776 signs, 23 h dataset</li>
+      </ul>
+
+      <h3>Sign formats <span class="enum">SignFormats</span></h3>
+      <ul class="zoo-list">
+        <li><code>video</code> — sequence of RGB frames</li>
+        <li><code>landmarks</code> — sequence of body points (needs a sign embedding model)</li>
+      </ul>
+
+      <h3>Translation model <span class="enum">ModelCodes</span></h3>
+      <ul class="zoo-list">
+        <li><code>concatenative-synthesis</code> — aliases <code>rule-based</code>, <code>concat-synth</code></li>
+      </ul>
+
+      <h3>Embedding &amp; language models <span class="enum">ModelCodes</span></h3>
+      <ul class="zoo-list">
+        <li>Video embedding: <code>mediapipe-pose-2-hand-1</code>, <code>mediapipe-pose-1-hand-1</code>, <code>mediapipe-pose-0-hand-1</code></li>
+        <li>Sign embeddings: <code>mediapipe-world</code>, <code>mediapipe-image</code></li>
+        <li>Language models: <code>urdu-mixed-ngram</code>, <code>ur-supported-gpt</code> (<code>tlm_14.0M.pt</code>), <code>unigram-names</code>, <code>bigram-names</code>, <code>trigram-names</code></li>
+        <li>Text embedding: <code>lookup-ur-fasttext-cc</code></li>
+      </ul>
+
+      <h3>Sign collections <span class="enum">SignCollections</span></h3>
+      <ul class="zoo-list">
+        <li><code>pk-hfad-1</code> — 788 dictionary videos</li>
+        <li><code>pk-hfad-2</code></li>
+      </ul>
+    </section>
+
+    <section class="panel-card" aria-labelledby="cli-h">
+      <h2 id="cli-h">CLI quickstart</h2>
+      <p class="panel-source">Real commands from <code>cli.py</code> and the README. <code>slt</code> is the console script defined in <code>pyproject.toml</code>.</p>
+
+      <ul class="cmd-list">
+        <li>
+          <p class="cmd-label">List commands <span>— cli.py</span></p>
+          <div class="cmd"><code>slt</code><button type="button" class="btn btn-solid btn-sm copy-generic">Copy</button></div>
+        </li>
+        <li>
+          <p class="cmd-label">Inspect downloaded assets <span>— cli.py help for <code>slt assets tree</code></span></p>
+          <div class="cmd"><code>slt assets tree</code><button type="button" class="btn btn-solid btn-sm copy-generic">Copy</button></div>
+        </li>
+        <li>
+          <p class="cmd-label">Translate a sentence <span>— README example (Urdu)</span></p>
+          <div class="cmd"><code>slt translate --model-code rule-based --text-lang urdu --sign-lang pk-sl --sign-format video "ایک سیب اچھا ہے۔"</code><button type="button" class="btn btn-solid btn-sm copy-generic">Copy</button></div>
+        </li>
+        <li>
+          <p class="cmd-label">Complete a sequence with language models <span>— README example</span></p>
+          <div class="cmd"><code>slt complete '&lt;' --model-code urdu-mixed-ngram --join ''</code><button type="button" class="btn btn-solid btn-sm copy-generic">Copy</button></div>
+        </li>
+        <li>
+          <p class="cmd-label">Embed videos <span>— cli.py help for <code>slt embed</code></span></p>
+          <div class="cmd"><code>slt embed dataset/*.mp4 --model-code mediapipe-pose-2-hand-1 --embedding-type all --processes 4 --save-format csv</code><button type="button" class="btn btn-solid btn-sm copy-generic">Copy</button></div>
+        </li>
+      </ul>
+
+      <p class="fine">Install first: <code>pip install sign-language-translator</code> (or <code>pip install -e ".[all]"</code> in a clone). Heavy extras — <code>torch</code>, <code>mediapipe</code> — are optional and only needed for embeddings.</p>
+    </section>
+  </div>
+
+  <!-- ================= BUILD YOUR OWN ================= -->
+  <section class="panel-card panel-wide" aria-labelledby="build-h">
+    <h2 id="build-h">Build your own translator</h2>
+    <p>The framework is designed for extension — the README&#8217;s recipe, in order:</p>
+    <ol class="build-list">
+      <li>Collect a word-level dictionary of sign videos plus a JSON mapping from text tokens to those video filenames.</li>
+      <li>Subclass <code>slt.languages.TextLanguage</code> — implement <code>preprocess</code>, <code>tokenize</code>, <code>sentence_tokenize</code> and token classification.</li>
+      <li>Subclass <code>slt.languages.SignLanguage</code> — implement <code>tokens_to_sign_dicts</code> (token &#8594; clip labels) and <code>restructure_sentence</code> (your sign language&#8217;s grammar).</li>
+      <li>Pass both objects to <code>slt.models.ConcatenativeSynthesis(text_language=..., sign_language=..., sign_format=...)</code> and call <code>.translate(text)</code>.</li>
+      <li>Register short codes in <code>config/enums.py</code> and the factory functions (<code>get_model()</code>, <code>get_text_language()</code>), then generate synthetic training data for deep models.</li>
+    </ol>
+    <p class="fine">README, verbatim: &#8220;To create a rule-based translation system for your regional language, you can inherit the TextLanguage and SignLanguage classes and pass them as arguments to the ConcatenativeSynthesis class.&#8221;</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Static lab for the <strong>sign-language-to-text-translation</strong> repository (package v0.8.1). Stages 1&#8211;4 are a labelled browser demo; no model runs here and no sign video is fabricated.</p>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

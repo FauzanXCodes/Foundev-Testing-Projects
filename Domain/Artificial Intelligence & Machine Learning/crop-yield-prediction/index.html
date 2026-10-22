@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YieldSight — Soybean Yield Forecast Console (PyCrop)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="console-head">
+  <div class="head-inner">
+    <div class="head-brand">
+      <svg class="head-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M4 32c6-2 8-10 12-14s10-4 16-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M4 37c8-2 12-9 18-12s10-2 14-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
+        <path d="M20 4v9m0 0-4-3m4 3 4-3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <p class="head-kicker">PyCrop &middot; Deep Gaussian Process pipeline &middot; CLI-only repository</p>
+        <h1>YieldSight</h1>
+        <p class="head-sub">Soybean yield forecasting console for the PyCrop remote-sensing pipeline
+          (You et al., 2017).</p>
+      </div>
+    </div>
+    <div class="head-chips">
+      <span class="chip chip-warn">No backend &mdash; pipeline runs via <code>python run.py</code> only</span>
+      <span class="chip chip-sample">Charts show an illustrative sample series</span>
+    </div>
+  </div>
+</header>
+
+<div class="console-grid">
+
+  <!-- ============ Left control rail ============ -->
+  <aside class="rail" aria-label="Forecast controls">
+    <h2 class="rail-title">Field controls</h2>
+
+    <div class="field">
+      <label for="region-input">Region <span class="req-chip">sample lookup</span></label>
+      <input type="text" id="region-input" list="region-list" autocomplete="off"
+             placeholder="County, state (e.g. Story County, Iowa)">
+      <datalist id="region-list"></datalist>
+      <p class="field-hint">Any US county or state name works &mdash; it seeds the illustrative series only.</p>
+    </div>
+
+    <div class="field">
+      <label for="year-from">Year range</label>
+      <div class="range-pair">
+        <input type="range" id="year-from" min="2000" max="2024" step="1" value="2008"
+               aria-label="First year">
+        <input type="range" id="year-to" min="2000" max="2024" step="1" value="2024"
+               aria-label="Last year">
+      </div>
+      <p class="range-readout"><span id="year-from-label">2008</span> &ndash; <span id="year-to-label">2024</span></p>
+      <p class="field-hint">The paper's models were trained on years 2009&ndash;2015
+        (<code>pred_years</code> default in <code>run.py</code>).</p>
+    </div>
+
+    <div class="field">
+      <label for="model-select">Model architecture</label>
+      <select id="model-select">
+        <option value="cnn">CNN (ConvModel)</option>
+        <option value="rnn">RNN / LSTM (RNNModel)</option>
+      </select>
+    </div>
+
+    <div class="field field-check">
+      <label class="check-label">
+        <input type="checkbox" id="gp-toggle" checked>
+        <span>Gaussian Process head (<code>use_gp=True</code>)</span>
+      </label>
+      <p class="field-hint">When enabled, the pipeline trains the deep GP on top of the network and
+        also saves the non-GP results for comparison.</p>
+    </div>
+
+    <div class="field">
+      <label for="bins-select">Histogram bins <span class="req-chip">engineer step</span></label>
+      <select id="bins-select">
+        <option value="16">16 bins</option>
+        <option value="32" selected>32 bins (repo default)</option>
+        <option value="64">64 bins</option>
+      </select>
+    </div>
+
+    <button type="button" id="btn-run" class="btn btn-primary">
+      <svg viewBox="0 0 16 16" aria-hidden="true" class="btn-icon"><path d="M3 2.2v11.6c0 .5.55.8.97.53l9.1-5.8a.63.63 0 0 0 0-1.06l-9.1-5.8A.63.63 0 0 0 3 2.2Z" fill="currentColor"/></svg>
+      Run prediction
+    </button>
+    <p class="rail-note">
+      <span class="req-chip req-chip-strong">requires backend</span>
+      No server or trained weights ship with this repository &mdash; clicking explains what a real run needs.
+    </p>
+    <p class="inline-error" id="run-error" hidden></p>
+  </aside>
+
+  <!-- ============ Main tabbed area ============ -->
+  <main class="main">
+
+    <div class="tabs" role="tablist" aria-label="Console sections">
+      <button type="button" class="tab" id="tab-forecast" role="tab" aria-selected="true"
+              aria-controls="panel-forecast">Forecast</button>
+      <button type="button" class="tab" id="tab-pipeline" role="tab" aria-selected="false"
+              aria-controls="panel-pipeline" tabindex="-1">Pipeline</button>
+      <button type="button" class="tab" id="tab-method" role="tab" aria-selected="false"
+              aria-controls="panel-method" tabindex="-1">Method</button>
+    </div>
+
+    <!-- ---------- Forecast panel ---------- -->
+    <section class="panel" id="panel-forecast" role="tabpanel" aria-labelledby="tab-forecast">
+      <div class="sample-banner" role="note">
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="banner-icon"><path d="M8 1.5 15 14H1L8 1.5Zm0 3.4a.9.9 0 0 0-.9.95l.17 3.4h1.46L8.9 5.85A.9.9 0 0 0 8 4.9Zm0 5.5a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Z" fill="currentColor"/></svg>
+        <strong>Illustrative sample series &mdash; real predictions require running the pipeline.</strong>
+        <span>Numbers below are generated in your browser from a deterministic pseudo-random model.
+          They are not outputs of the CNN, RNN, or GP.</span>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <h2>Yield forecast</h2>
+            <p class="chart-sub" id="chart-subtitle">Story County, Iowa &middot; bushels per acre</p>
+          </div>
+          <div class="chart-legend" role="group" aria-label="Series toggles">
+            <button type="button" class="legend-toggle is-on" data-series="actual" aria-pressed="true">
+              <span class="legend-swatch swatch-actual"></span>Actual (sample)
+            </button>
+            <button type="button" class="legend-toggle is-on" data-series="predicted" aria-pressed="true">
+              <span class="legend-swatch swatch-predicted"></span>Predicted (sample)
+            </button>
+            <button type="button" class="legend-toggle is-on" data-series="band" aria-pressed="true">
+              <span class="legend-swatch swatch-band"></span>Uncertainty band (sample)
+            </button>
+          </div>
+        </div>
+        <div class="chart-frame" id="chart-frame">
+          <canvas id="yield-chart" aria-label="Sample yield forecast chart" role="img"></canvas>
+          <div class="chart-loading" id="chart-loading" hidden><span class="spinner"></span>Preparing illustrative series&hellip;</div>
+          <div class="chart-tip" id="chart-tip" hidden></div>
+          <div class="chart-fallback" id="chart-fallback" hidden>
+            <canvas id="yield-chart-fallback" aria-label="Sample yield forecast chart (simple renderer)" role="img"></canvas>
+          </div>
+        </div>
+        <p class="chart-foot">Uncertainty band widens away from the 2009&ndash;2015 training window used in the
+          paper &mdash; in the real pipeline that band comes from the Gaussian Process posterior.</p>
+      </div>
+
+      <div class="metrics-strip" aria-label="Sample series metrics">
+        <div class="metric">
+          <span class="metric-label">RMSE</span>
+          <span class="metric-value" id="metric-rmse">&mdash;</span>
+          <span class="metric-unit">bu/ac</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">MAE</span>
+          <span class="metric-value" id="metric-mae">&mdash;</span>
+          <span class="metric-unit">bu/ac</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">R&sup2;</span>
+          <span class="metric-value" id="metric-r2">&mdash;</span>
+          <span class="metric-unit">sample fit</span>
+        </div>
+        <p class="metrics-note">Metrics describe the <strong>illustrative series only</strong> &mdash;
+          they are not model evaluation results. Real RMSE values are produced by
+          <code>python run.py train_cnn</code> / <code>train_rnn</code>.</p>
+      </div>
+
+      <div class="forecast-actions">
+        <button type="button" id="btn-csv" class="btn btn-ghost">
+          <svg viewBox="0 0 16 16" aria-hidden="true" class="btn-icon"><path d="M8 2v8m0 0 3.2-3.2M8 10 4.8 6.8M3 12.5h10" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download forecast CSV
+        </button>
+        <span class="muted small">Exports whatever series are currently charted, marked as sample data.</span>
+      </div>
+
+      <div class="compare-card">
+        <h2>Model comparison &mdash; reported RMSE</h2>
+        <p class="compare-note">Values below are copied from the repository README
+          (average of two runs, early stopping with patience 10, bushels per acre). They are
+          <strong>published results from the authors</strong>, not computed by this page.</p>
+        <div class="table-scroll">
+          <table class="compare-table">
+            <thead>
+              <tr><th scope="col">Year</th><th scope="col">LSTM</th><th scope="col">LSTM + GP</th><th scope="col">CNN</th><th scope="col">CNN + GP</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">2009</th><td class="best">5.18</td><td>6.37</td><td>6.07</td><td>5.56</td></tr>
+              <tr><th scope="row">2010</th><td>7.27</td><td>7.30</td><td class="best">6.75</td><td>7.03</td></tr>
+              <tr><th scope="row">2011</th><td>6.82</td><td>6.72</td><td>6.77</td><td class="best">6.40</td></tr>
+              <tr><th scope="row">2012</th><td>7.01</td><td>6.46</td><td>5.91</td><td class="best">5.72</td></tr>
+              <tr><th scope="row">2013</th><td>5.91</td><td class="best">5.83</td><td>6.41</td><td>6.00</td></tr>
+              <tr><th scope="row">2014</th><td>5.99</td><td class="best">4.65</td><td>5.28</td><td>4.87</td></tr>
+              <tr><th scope="row">2015</th><td>6.14</td><td class="best">5.13</td><td>6.18</td><td>5.36</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Pipeline panel ---------- -->
+    <section class="panel" id="panel-pipeline" role="tabpanel" aria-labelledby="tab-pipeline" hidden>
+
+      <div class="backend-card" id="backend-card" tabindex="-1">
+        <div class="backend-head">
+          <svg viewBox="0 0 20 20" aria-hidden="true" class="backend-icon"><path d="M10 2 19 18H1L10 2Zm0 5.5a.9.9 0 0 0-.9.95l.2 4.1h1.4l.2-4.1A.9.9 0 0 0 10 7.5Zm0 6.9a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z" fill="currentColor"/></svg>
+          <h2>Prediction requires the local pipeline</h2>
+        </div>
+        <p>This repository has <strong>no HTTP server and no trained weights</strong>. &ldquo;Run
+          prediction&rdquo; cannot execute here. A real forecast needs:</p>
+        <ul class="backend-list">
+          <li>Google Earth Engine credentials &mdash; <code>earthengine authenticate</code>, then verify with
+            <code>python -c "import ee; ee.Initialize()"</code></li>
+          <li>Roughly <strong>110&nbsp;GB</strong> of storage for the MODIS export of the top 11 soybean
+            states (processed files alone are ~97&nbsp;GB)</li>
+          <li>The engineered histogram <code>data/img_output/histogram_all_full.npz</code> &mdash;
+            <strong>absent from this repository</strong>; produced by the <code>engineer</code> stage</li>
+          <li>The conda environment: <code>conda env create -f environment.yml</code>, then
+            <code>conda activate crop_yield_prediction</code></li>
+        </ul>
+        <p>Then run the four stages below in order from the project root.</p>
+      </div>
+
+      <ol class="stepper" id="stepper">
+        <li class="step" data-step="1">
+          <div class="step-badge"><span>1</span></div>
+          <div class="step-body">
+            <h3>Export <span class="step-sub">MODIS imagery from Earth Engine to Google Drive</span></h3>
+            <div class="cmd-row">
+              <code class="cmd" id="cmd-export">python run.py export</code>
+              <button type="button" class="btn btn-copy" data-copy-cmd="cmd-export">Copy</button>
+            </div>
+            <p class="step-note">All bands for a county across export years are concatenated to reduce file
+              count; supports checkpointing via <code>check_if_done=True</code>.</p>
+          </div>
+        </li>
+        <li class="step" data-step="2">
+          <div class="step-badge"><span>2</span></div>
+          <div class="step-body">
+            <h3>Process <span class="step-sub">split by year, merge tif files, apply farmland mask</span></h3>
+            <div class="cmd-row">
+              <code class="cmd" id="cmd-process">python run.py process</code>
+              <button type="button" class="btn btn-copy" data-copy-cmd="cmd-process">Copy</button>
+            </div>
+            <p class="step-note">Writes <code>.npy</code> files to <code>data/img_output</code> (~97&nbsp;GB);
+              <code>delete_when_done=True</code> removes the original tif files as it goes.</p>
+          </div>
+        </li>
+        <li class="step" data-step="3">
+          <div class="step-badge"><span>3</span></div>
+          <div class="step-body">
+            <h3>Engineer <span class="step-sub">build per-county reflectance histograms</span></h3>
+            <div class="cmd-row">
+              <code class="cmd" id="cmd-engineer">python run.py engineer --num_bins 32</code>
+              <button type="button" class="btn btn-copy" data-copy-cmd="cmd-engineer">Copy</button>
+            </div>
+            <p class="step-note">9 bands &times; <span id="engineer-bins-note">32</span> bins, capped at
+              <code>max_bin_val=4999</code> &rarr; <code>histogram_all_full.npz</code>, the models' input.</p>
+          </div>
+        </li>
+        <li class="step" data-step="4">
+          <div class="step-badge"><span>4</span></div>
+          <div class="step-body">
+            <h3>Train <span class="step-sub">fit CNN or RNN, optionally with the deep GP</span></h3>
+            <div class="cmd-row">
+              <code class="cmd" id="cmd-train">python run.py train_cnn --use_gp True</code>
+              <button type="button" class="btn btn-copy" data-copy-cmd="cmd-train">Copy</button>
+            </div>
+            <p class="step-note">Models save to <code>data/models/&lt;model_type&gt;</code> with per-year
+              result CSVs. With <code>use_gp=True</code> the non-GP results are also kept for analysis.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ---------- Method panel ---------- -->
+    <section class="panel" id="panel-method" role="tabpanel" aria-labelledby="tab-method" hidden>
+      <div class="method-intro">
+        <h2>About the method</h2>
+        <p>Facts below are taken from the repository README, <code>run.py</code> and
+          <code>data/README.md</code>.</p>
+      </div>
+
+      <details class="method-fold" open>
+        <summary>The paper</summary>
+        <div class="method-body">
+          <p>This repository is a PyTorch implementation of Jiaxuan You's 2017 project:
+            <em>Deep Gaussian Process for Crop Yield Prediction Based on Remote Sensing Data</em>
+            (AAAI 2017). The work won the Food Security category of the World Bank's 2017 Big Data
+            Innovation Challenge. It predicts <strong>soybean yields in US counties</strong>.</p>
+        </div>
+      </details>
+
+      <details class="method-fold">
+        <summary>The nine MODIS bands</summary>
+        <div class="method-body">
+          <p>Satellite input comes from MODIS aboard NASA's Terra satellite. Three products are combined:</p>
+          <ul>
+            <li><strong>MOD09A1 (surface reflectance)</strong> &mdash; spectral reflectance for bands 1
+              through 7, effectively a multi-spectral image of the county.</li>
+            <li><strong>MYD11A2 (land surface temperature)</strong> &mdash; two additional bands used as
+              model input.</li>
+            <li><strong>MCD12Q1 (land cover type)</strong> &mdash; used as a <em>mask</em> so that only
+              farmland pixels are considered.</li>
+          </ul>
+          <p>Seven reflectance bands plus two temperature bands give the
+            <code>in_channels=9</code> used by both models. The <code>engineer</code> stage turns each
+            county-year image into a histogram over these bands
+            (<code>num_bins</code>, default 32; <code>max_bin_val=4999</code>).</p>
+        </div>
+      </details>
+
+      <details class="method-fold">
+        <summary>Deep Gaussian Process &amp; uncertainty</summary>
+        <div class="method-body">
+          <p>Deep Gaussian Processes combine the expressivity of deep neural networks with a Gaussian
+            Process's ability to leverage <strong>spatial and temporal correlations</strong> between data
+            points &mdash; neighbouring counties and neighbouring years inform each other. When
+            <code>use_gp=True</code> (the default in <code>run.py</code>), the GP sits on top of the
+            network's features, and the pipeline also saves the plain non-GP results for analysis.</p>
+          <p>The GP kernel hyperparameters exposed in <code>run.py</code>: length scales for location
+            (<code>r_loc=0.5</code>) and year (<code>r_year=1.5</code>), noise variance
+            <code>sigma_e=0.32</code>, parameter variance <code>sigma_b=0.01</code>, kernel variance
+            <code>sigma=1</code>.</p>
+        </div>
+      </details>
+
+      <details class="method-fold">
+        <summary>Pipeline &amp; data requirements</summary>
+        <div class="method-body">
+          <p>The entry point is <code>run.py</code> (Python Fire). Four stages &mdash; export, process,
+            engineer, train &mdash; each read the previous stage's files from the <code>data</code>
+            folder. USDA yield data (<code>yield_data.csv</code>, bushels per acre) and county centroids
+            (<code>county_data.csv</code>) ship with the repo; the MODIS imagery must be exported from
+            Earth Engine yourself (~110&nbsp;GB for the paper's top-11-states setting,
+            <code>major_states_only=True</code>).</p>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <!-- ============ Right rail: pipeline status ============ -->
+  <aside class="status-rail" aria-label="Pipeline status">
+    <h2 class="rail-title">Pipeline status</h2>
+    <p class="status-note">All four stages run locally. Nothing has been executed for this session.</p>
+    <ol class="mini-stepper">
+      <li class="mini-step">
+        <span class="mini-dot" aria-hidden="true"></span>
+        <div><strong>Export</strong><code>python run.py export</code><span class="mini-state">not started</span></div>
+      </li>
+      <li class="mini-step">
+        <span class="mini-dot" aria-hidden="true"></span>
+        <div><strong>Process</strong><code>python run.py process</code><span class="mini-state">not started</span></div>
+      </li>
+      <li class="mini-step">
+        <span class="mini-dot" aria-hidden="true"></span>
+        <div><strong>Engineer</strong><code id="mini-engineer-cmd">python run.py engineer --num_bins 32</code><span class="mini-state">not started</span></div>
+      </li>
+      <li class="mini-step">
+        <span class="mini-dot" aria-hidden="true"></span>
+        <div><strong>Train</strong><code id="mini-train-cmd">python run.py train_cnn --use_gp True</code><span class="mini-state">not started</span></div>
+      </li>
+    </ol>
+    <button type="button" id="btn-goto-pipeline" class="btn btn-ghost btn-block">View stage commands</button>
+    <div class="status-foot">
+      <h3>Session settings</h3>
+      <dl class="session-dl">
+        <div><dt>Region</dt><dd id="session-region">&mdash;</dd></div>
+        <div><dt>Years</dt><dd id="session-years">&mdash;</dd></div>
+        <div><dt>Model</dt><dd id="session-model">&mdash;</dd></div>
+        <div><dt>GP head</dt><dd id="session-gp">&mdash;</dd></div>
+      </dl>
+    </div>
+  </aside>
+</div>
+
+<footer class="colophon">
+  <p>YieldSight &mdash; a static front-end for the PyCrop repository
+    (<code>crop-yield-prediction</code>). No server, no credentials, and no weights are used by this page;
+    charts render a deterministic in-browser sample series that is always labelled as such. Real forecasts
+    come from the four-stage <code>python run.py</code> pipeline with Earth Engine access.</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

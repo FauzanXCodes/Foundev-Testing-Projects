@@ -1,0 +1,14 @@
+﻿{
+    "id":  "helmet-seatbelt-violation-detection",
+    "name":  "Helmet / Seatbelt Violation Detection",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/3TInfoTinker/traffic_violation_detection",
+    "stack":  "Python; YOLOv8",
+    "goal":  "Custom-labelled dataset, detection + plate crop pipeline and evidence log.",
+    "license":  "MIT",
+    "licenseWarning":  null,
+    "entry":  "source/main_app.py",
+    "expectedFileCount":  51,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  780
+}

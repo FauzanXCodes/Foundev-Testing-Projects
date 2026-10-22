@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal Control Room — Traffic Violation Detection UI Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Saira+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-role="officer">
+
+<header class="masthead">
+  <div class="brand-row">
+    <div class="brand">
+      <svg class="brand-lamp" viewBox="0 0 28 56" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="54" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="14" cy="12" r="5" class="lamp-dot lamp-dot-red"/>
+        <circle cx="14" cy="28" r="5" class="lamp-dot lamp-dot-amber"/>
+        <circle cx="14" cy="44" r="5" class="lamp-dot lamp-dot-green"/>
+      </svg>
+      <div>
+        <h1>Signal Control Room</h1>
+        <p class="subtitle">Traffic violation detection &mdash; Tkinter desktop companion UI</p>
+      </div>
+    </div>
+    <div class="clock-block" aria-live="off">
+      <span class="clock" id="clockTime">--:--:--</span>
+      <span class="clock-date" id="clockDate">&nbsp;</span>
+    </div>
+  </div>
+
+  <section class="role-switch" aria-label="UI role preview switcher">
+    <p class="role-switch-note">UI role preview &mdash; real SHA-256 auth lives in the desktop app (<code>source/user_authentication_v1.py</code>)</p>
+    <div class="role-cards">
+      <button type="button" class="role-card" data-role-btn="officer" aria-pressed="true">
+        <span class="role-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        </span>
+        <span class="role-name">Traffic Officer</span>
+        <span class="role-desc">Manual entry &middot; export &middot; detection toggles</span>
+      </button>
+      <button type="button" class="role-card" data-role-btn="admin" aria-pressed="false">
+        <span class="role-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9h4M7 13h10"/></svg>
+        </span>
+        <span class="role-name">Administrator</span>
+        <span class="role-desc">Stats &middot; camera config &middot; full controls</span>
+      </button>
+      <button type="button" class="role-card" data-role-btn="public" aria-pressed="false">
+        <span class="role-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </span>
+        <span class="role-name">Public</span>
+        <span class="role-desc">View only &mdash; no export, no manual entry</span>
+      </button>
+    </div>
+  </section>
+
+  <div class="status-strip" role="status">
+    <div class="status-item">
+      <span class="status-key">YOLO model</span>
+      <span class="status-val">yolov8x.pt &mdash; not included (auto-download on first desktop run)</span>
+    </div>
+    <div class="status-item">
+      <span class="status-key">Database</span>
+      <span class="status-val">SQLite <strong>traffic_violations.db</strong> via desktop app</span>
+    </div>
+    <div class="status-item">
+      <span class="status-key">Active role</span>
+      <span class="status-val status-role" id="activeRoleLabel">Traffic Officer</span>
+    </div>
+  </div>
+
+  <div class="gauges" aria-label="Violation counters">
+    <div class="lamp-gauge" data-gauge="no_helmet">
+      <div class="lamps" aria-hidden="true">
+        <span class="lamp lamp-red" data-lamp="red"></span>
+        <span class="lamp lamp-amber"></span>
+        <span class="lamp lamp-green"></span>
+      </div>
+      <div class="gauge-meta">
+        <span class="gauge-name">Helmets</span>
+        <span class="gauge-count" id="countNoHelmet">0</span>
+      </div>
+    </div>
+    <div class="lamp-gauge" data-gauge="seatbelt">
+      <div class="lamps" aria-hidden="true">
+        <span class="lamp lamp-red" data-lamp="red"></span>
+        <span class="lamp lamp-amber"></span>
+        <span class="lamp lamp-green"></span>
+      </div>
+      <div class="gauge-meta">
+        <span class="gauge-name">Seatbelts</span>
+        <span class="gauge-count" id="countSeatbelt">0</span>
+      </div>
+    </div>
+    <div class="lamp-gauge" data-gauge="wrong_turn">
+      <div class="lamps" aria-hidden="true">
+        <span class="lamp lamp-red" data-lamp="red"></span>
+        <span class="lamp lamp-amber"></span>
+        <span class="lamp lamp-green"></span>
+      </div>
+      <div class="gauge-meta">
+        <span class="gauge-name">Wrong-turn</span>
+        <span class="gauge-count" id="countWrongTurn">0</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="center">
+    <nav class="tabs" role="tablist" aria-label="Main views">
+      <button type="button" class="tab active" data-tab="wall" role="tab" aria-selected="true" id="tabWall">Wall</button>
+      <button type="button" class="tab" data-tab="log" role="tab" aria-selected="false" id="tabLog">Log</button>
+      <button type="button" class="tab tab-admin" data-tab="stats" role="tab" aria-selected="false" id="tabStats">Stats</button>
+    </nav>
+
+    <div class="tab-panel active" id="panelWall" role="tabpanel" aria-labelledby="tabWall">
+      <div class="cam-grid">
+        <article class="cam-tile" data-cam="1">
+          <div class="cam-scan" aria-hidden="true"></div>
+          <div class="cam-vignette" aria-hidden="true"></div>
+          <div class="cam-tag cam-tag-tl">CAM 1 &middot; North Gate</div>
+          <div class="cam-tag cam-tag-tr"><span class="led led-off" aria-hidden="true"></span>OFFLINE</div>
+          <div class="cam-center">
+            <svg viewBox="0 0 24 24" class="cam-off-icon" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/><path d="M3 3l18 18"/></svg>
+            <p class="cam-off-title">No signal &mdash; live feeds need the desktop app</p>
+            <code class="cam-cmd">python source/main_app.py</code>
+          </div>
+          <div class="cam-chips">
+            <button type="button" class="chip chip-helmet on gate-officer" data-cam="1" data-det="helmet" title="Mirrors the Helmet detection toggle in the desktop app">Helmet ON</button>
+            <button type="button" class="chip chip-stub gate-officer" data-cam="1" data-det="seatbelt" title="detector stub in repo — seatbelt_detection_v2 is a commented import">Seatbelt &middot; stub</button>
+            <button type="button" class="chip chip-stub gate-officer" data-cam="1" data-det="roundabout" title="detector stub in repo — roundabout_detection_v2 is a commented import">Roundabout &middot; stub</button>
+          </div>
+        </article>
+
+        <article class="cam-tile" data-cam="2">
+          <div class="cam-scan" aria-hidden="true"></div>
+          <div class="cam-vignette" aria-hidden="true"></div>
+          <div class="cam-tag cam-tag-tl">CAM 2 &middot; Roundabout</div>
+          <div class="cam-tag cam-tag-tr"><span class="led led-off" aria-hidden="true"></span>OFFLINE</div>
+          <div class="cam-center">
+            <svg viewBox="0 0 24 24" class="cam-off-icon" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/><path d="M3 3l18 18"/></svg>
+            <p class="cam-off-title">No signal &mdash; live feeds need the desktop app</p>
+            <code class="cam-cmd">python source/main_app.py</code>
+          </div>
+          <div class="cam-chips">
+            <button type="button" class="chip chip-helmet on gate-officer" data-cam="2" data-det="helmet" title="Mirrors the Helmet detection toggle in the desktop app">Helmet ON</button>
+            <button type="button" class="chip chip-stub gate-officer" data-cam="2" data-det="seatbelt" title="detector stub in repo — seatbelt_detection_v2 is a commented import">Seatbelt &middot; stub</button>
+            <button type="button" class="chip chip-stub gate-officer" data-cam="2" data-det="roundabout" title="detector stub in repo — roundabout_detection_v2 is a commented import">Roundabout &middot; stub</button>
+          </div>
+        </article>
+
+        <article class="cam-tile" data-cam="3">
+          <div class="cam-scan" aria-hidden="true"></div>
+          <div class="cam-vignette" aria-hidden="true"></div>
+          <div class="cam-tag cam-tag-tl">CAM 3 &middot; Highway</div>
+          <div class="cam-tag cam-tag-tr"><span class="led led-off" aria-hidden="true"></span>OFFLINE</div>
+          <div class="cam-center">
+            <svg viewBox="0 0 24 24" class="cam-off-icon" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/><path d="M3 3l18 18"/></svg>
+            <p class="cam-off-title">No signal &mdash; live feeds need the desktop app</p>
+            <code class="cam-cmd">python source/main_app.py</code>
+          </div>
+          <div class="cam-chips">
+            <button type="button" class="chip chip-helmet on gate-officer" data-cam="3" data-det="helmet" title="Mirrors the Helmet detection toggle in the desktop app">Helmet ON</button>
+            <button type="button" class="chip chip-stub gate-officer" data-cam="3" data-det="seatbelt" title="detector stub in repo — seatbelt_detection_v2 is a commented import">Seatbelt &middot; stub</button>
+            <button type="button" class="chip chip-stub gate-officer" data-cam="3" data-det="roundabout" title="detector stub in repo — roundabout_detection_v2 is a commented import">Roundabout &middot; stub</button>
+          </div>
+        </article>
+
+        <article class="cam-tile" data-cam="4">
+          <div class="cam-scan" aria-hidden="true"></div>
+          <div class="cam-vignette" aria-hidden="true"></div>
+          <div class="cam-tag cam-tag-tl">CAM 4 &middot; Parking</div>
+          <div class="cam-tag cam-tag-tr"><span class="led led-off" aria-hidden="true"></span>OFFLINE</div>
+          <div class="cam-center">
+            <svg viewBox="0 0 24 24" class="cam-off-icon" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/><path d="M3 3l18 18"/></svg>
+            <p class="cam-off-title">No signal &mdash; live feeds need the desktop app</p>
+            <code class="cam-cmd">python source/main_app.py</code>
+          </div>
+          <div class="cam-chips">
+            <button type="button" class="chip chip-helmet on gate-officer" data-cam="4" data-det="helmet" title="Mirrors the Helmet detection toggle in the desktop app">Helmet ON</button>
+            <button type="button" class="chip chip-stub gate-officer" data-cam="4" data-det="seatbelt" title="detector stub in repo — seatbelt_detection_v2 is a commented import">Seatbelt &middot; stub</button>
+            <button type="button" class="chip chip-stub gate-officer" data-cam="4" data-det="roundabout" title="detector stub in repo — roundabout_detection_v2 is a commented import">Roundabout &middot; stub</button>
+          </div>
+        </article>
+      </div>
+
+      <section class="admin-panel gate-admin" aria-label="Camera configuration">
+        <h2 class="panel-title">Camera configuration <span class="badge badge-admin">Administrator</span></h2>
+        <p class="panel-note">Default rows from <code>database_manager.py</code> (SQLite <code>cameras</code> table). Runtime settings are managed by the desktop app &mdash; the System Settings window in <code>main_app.py</code> is currently a stub.</p>
+        <table class="cam-config-table">
+          <thead><tr><th>ID</th><th>Name</th><th>Location</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Main Entrance Camera</td><td>North Gate</td><td><span class="pill pill-green">active</span></td></tr>
+            <tr><td>2</td><td>Roundabout Camera</td><td>Central Roundabout</td><td><span class="pill pill-green">active</span></td></tr>
+            <tr><td>3</td><td>Highway Camera</td><td>Highway Junction</td><td><span class="pill pill-green">active</span></td></tr>
+            <tr><td>4</td><td>Parking Area Camera</td><td>Parking Entrance</td><td><span class="pill pill-green">active</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+    <div class="tab-panel" id="panelLog" role="tabpanel" aria-labelledby="tabLog" hidden>
+      <div class="log-toolbar">
+        <div class="field field-inline">
+          <label for="logSearch">Search</label>
+          <input type="search" id="logSearch" placeholder="ID, camera, note&hellip;" autocomplete="off">
+        </div>
+        <div class="field field-inline">
+          <label for="logFilterType">Type</label>
+          <select id="logFilterType">
+            <option value="">All types</option>
+            <option value="no_helmet">no_helmet</option>
+            <option value="seatbelt">seatbelt</option>
+            <option value="wrong_turn">wrong_turn</option>
+          </select>
+        </div>
+        <div class="field field-inline">
+          <label for="logFilterSource">Source</label>
+          <select id="logFilterSource">
+            <option value="">All sources</option>
+            <option value="demo">Demo feed</option>
+            <option value="manual">Manual entry</option>
+          </select>
+        </div>
+        <div class="log-actions">
+          <button type="button" class="btn btn-ghost gate-officer" id="btnExportJson" title="Available to Traffic Officer / Administrator">Export JSON</button>
+          <button type="button" class="btn btn-ghost gate-officer" id="btnExportCsv" title="Available to Traffic Officer / Administrator">Export CSV</button>
+          <button type="button" class="btn btn-ghost gate-officer" id="btnCopyLog" title="Available to Traffic Officer / Administrator">Copy JSON</button>
+          <button type="button" class="btn btn-danger-ghost gate-officer" id="btnClearLog" title="Available to Traffic Officer / Administrator">Clear log</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="log-table">
+          <thead>
+            <tr><th>Incident ID</th><th>Camera</th><th>Type</th><th>Conf.</th><th>Timestamp</th><th>Officer</th><th>Source</th></tr>
+          </thead>
+          <tbody id="logTableBody">
+          </tbody>
+        </table>
+      </div>
+      <p class="empty-note" id="logEmptyNote">Log is empty. Play the demo feed or record a manual violation.</p>
+    </div>
+
+    <div class="tab-panel" id="panelStats" role="tabpanel" aria-labelledby="tabStats" hidden>
+      <div class="gate-admin-wrap">
+        <section class="stats-block">
+          <h2 class="panel-title">By violation type</h2>
+          <div class="bars" id="statsTypeBars"></div>
+        </section>
+        <section class="stats-block">
+          <h2 class="panel-title">By camera</h2>
+          <div class="bars" id="statsCameraBars"></div>
+        </section>
+        <p class="panel-note" id="statsNote">Statistics computed from the local incident log (demo + manual entries). The desktop app computes its own statistics from SQLite via <code>DatabaseManager.get_violation_statistics()</code>.</p>
+      </div>
+      <div class="gate-blocked" id="statsBlocked">
+        <p><strong>Stats are an Administrator view.</strong> Switch to the Administrator role card above to inspect per-type / per-camera counts.</p>
+      </div>
+    </div>
+  </section>
+
+  <aside class="ticker" aria-label="Violation ticker">
+    <section class="demo-block">
+      <div class="demo-banner">
+        <span class="demo-dot" aria-hidden="true"></span>
+        Demo incidents &mdash; sample data, not model output
+      </div>
+      <div class="demo-controls">
+        <button type="button" class="btn btn-amber" id="btnDemoToggle">
+          <svg viewBox="0 0 16 16" class="btn-ico" aria-hidden="true" fill="currentColor"><path d="M4 2.5v11l9-5.5-9-5.5z"/></svg>
+          <span id="btnDemoLabel">Play simulated feed</span>
+        </button>
+        <span class="demo-count" id="demoCount">0 simulated</span>
+      </div>
+    </section>
+
+    <section class="manual-block gate-officer" aria-label="Manual violation entry">
+      <h2 class="panel-title">Record manual violation <span class="badge badge-officer">Officer / Admin</span></h2>
+      <form id="manualForm" novalidate>
+        <div class="field">
+          <label for="mType">Violation type</label>
+          <select id="mType" name="type">
+            <option value="no_helmet">no_helmet</option>
+            <option value="seatbelt">seatbelt</option>
+            <option value="wrong_turn">wrong_turn</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="mCamera">Camera</label>
+            <select id="mCamera" name="camera">
+              <option value="1">CAM 1</option>
+              <option value="2">CAM 2</option>
+              <option value="3">CAM 3</option>
+              <option value="4">CAM 4</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="mConfidence">Confidence (0&ndash;1)</label>
+            <input type="number" id="mConfidence" name="confidence" min="0" max="1" step="0.01" placeholder="0.85" inputmode="decimal">
+          </div>
+        </div>
+        <div class="field">
+          <label for="mNote">Note <span class="opt">(optional)</span></label>
+          <input type="text" id="mNote" name="note" maxlength="140" placeholder="e.g. rider without helmet, scooter, plate partial">
+        </div>
+        <p class="form-error" id="manualError" role="alert" hidden></p>
+        <button type="submit" class="btn btn-red">Save violation</button>
+        <p class="field-hint">Stored client-side (localStorage) and labeled <strong>manual entry</strong>. The desktop app writes real rows to SQLite via <code>DatabaseManager.save_violation()</code>.</p>
+      </form>
+    </section>
+
+    <section class="feed-block" aria-label="Incident feed">
+      <h2 class="panel-title">Incident ticker <span class="feed-n" id="feedCount">0</span></h2>
+      <div class="feed" id="feedList" aria-live="polite"></div>
+      <p class="empty-note" id="feedEmpty">No incidents yet. Play the demo feed or record a manual violation.</p>
+    </section>
+
+    <details class="evidence">
+      <summary>What the desktop app records &mdash; <code>violation_dict</code> schema</summary>
+      <p>Extracted from <code>HelmetViolation.to_dict()</code> / <code>violations_to_dict()</code> in <code>helmet_detection_yolo8_max_accuracy.py</code>. The desktop app also saves evidence images via the <code>violation_images</code> table (<code>image_path</code>).</p>
+      <pre class="schema-pre">{
+  "violation_id": "CAM0_HELMET_000123",
+  "timestamp":   "2026-10-20T14:03:11.123456",
+  "camera_id":   1,
+  "rider_bbox":  [x, y, width, height],
+  "helmet_bbox": null,
+  "confidence":  0.87,
+  "detection_type": "no_helmet_detected"
+}</pre>
+      <p>Saved to SQLite <code>violations</code> with columns <code>violation_id, type, camera_id, timestamp, confidence, officer, details, image_path, processed</code>.</p>
+    </details>
+  </aside>
+</main>
+
+<footer class="foot">
+  <span>Companion UI only &mdash; no model runs in the browser.</span>
+  <span>Detection confidence threshold in repo: <strong>0.60</strong> (IoU 0.45) &middot; seatbelt &amp; roundabout detectors are commented stubs in <code>source/main_app.py</code>.</span>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

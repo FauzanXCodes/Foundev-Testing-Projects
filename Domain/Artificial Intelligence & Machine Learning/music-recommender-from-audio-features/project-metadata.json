@@ -1,0 +1,14 @@
+﻿{
+    "id":  "music-recommender-from-audio-features",
+    "name":  "Music Recommender from Audio Features",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/edenmhuang/Music-Recommender",
+    "stack":  "Python; Librosa; sklearn",
+    "goal":  "Extract tempo/spectral features, cluster songs, recommend by similarity.",
+    "license":  "Unknown",
+    "licenseWarning":  null,
+    "entry":  "src/main_cosine_similarity.py",
+    "expectedFileCount":  8,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  12
+}

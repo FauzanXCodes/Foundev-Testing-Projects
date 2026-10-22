@@ -1,0 +1,14 @@
+﻿{
+    "id":  "sign-language-to-text-translation",
+    "name":  "Sign Language to Text Translation",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/sign-language-translator/sign-language-translator",
+    "stack":  "Python; MediaPipe; LSTM",
+    "goal":  "Hand-landmark sequences → letters/words, live caption output.",
+    "license":  "Apache-2.0",
+    "licenseWarning":  null,
+    "entry":  "sign_language_translator/models/__init__.py",
+    "expectedFileCount":  63,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  125
+}

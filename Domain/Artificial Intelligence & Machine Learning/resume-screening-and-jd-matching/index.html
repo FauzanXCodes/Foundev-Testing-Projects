@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TalentMatch Lens — Recruiting Desk Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="40" height="40" fill="none">
+            <circle cx="17" cy="17" r="11" stroke="currentColor" stroke-width="3" />
+            <path d="M25 25l9 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+            <path d="M12 17h10M17 12v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </span>
+        <div class="brand-text">
+          <h1>TalentMatch Lens</h1>
+          <p class="brand-sub">Recruiting desk &middot; resume &harr; job-description matching</p>
+        </div>
+      </div>
+
+      <div class="topbar-side">
+        <button type="button" class="role-switch" id="roleSwitch" aria-pressed="true" aria-describedby="roleNote">
+          <span class="role-knob" aria-hidden="true"></span>
+          <span class="role-label" id="roleSwitchText">Preview UI &middot; real screening runs in Streamlit</span>
+        </button>
+        <p class="role-note" id="roleNote">This page is a static preview: the matching below is a labelled browser demo.</p>
+
+        <div class="run-cmd">
+          <code id="runCommand">streamlit run app.py</code>
+          <button type="button" class="icon-btn" id="copyRun" aria-label="Copy run command">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="9" y="9" width="12" height="12" rx="2" />
+              <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="demo-banner" role="note">
+    <span class="demo-badge">Demo heuristic</span>
+    <p><strong>Demo heuristic</strong> &mdash; the real system uses all-MiniLM-L6-v2 embeddings via Streamlit; results differ.</p>
+  </div>
+
+  <main class="layout">
+    <section class="workbench" id="workbench" aria-label="Screening workbench">
+      <section class="panel" id="jdPanel" aria-labelledby="jd-h">
+        <header class="panel-head">
+          <span class="panel-num" aria-hidden="true">1</span>
+          <h2 id="jd-h">Job description</h2>
+          <span class="panel-tag">Browser demo extraction</span>
+        </header>
+
+        <div class="tabs" role="tablist" aria-label="Job description input method">
+          <button type="button" class="tab is-active" id="tabPaste" role="tab" aria-selected="true" aria-controls="panePaste">Paste text</button>
+          <button type="button" class="tab" id="tabUpload" role="tab" aria-selected="false" aria-controls="paneUpload">Upload file</button>
+        </div>
+
+        <div class="tab-pane" id="panePaste" role="tabpanel" aria-labelledby="tabPaste">
+          <label class="field-label" for="jdText">Job description text</label>
+          <textarea id="jdText" rows="9" placeholder="Paste the job description here, e.g. We are looking for a Python developer with experience in machine learning, REST APIs, and SQL..."></textarea>
+          <p class="field-error" id="jdError" hidden></p>
+          <div class="row">
+            <button type="button" class="btn btn-soft" id="loadSample">Load sample JD (repo)</button>
+            <button type="button" class="btn btn-ghost" id="extractSkills">Re-extract skills</button>
+          </div>
+          <p class="hint" id="jdStatus">Empty &mdash; paste text, upload a .txt, or load the sample job description from the repo.</p>
+        </div>
+
+        <div class="tab-pane is-hidden" id="paneUpload" role="tabpanel" aria-labelledby="tabUpload">
+          <label class="field-label" for="jdFile">Upload job description</label>
+          <label class="file-drop" for="jdFile">
+            <span class="file-drop-title">Choose a file</span>
+            <span class="hint">.txt is parsed in the browser &middot; .pdf / .docx need the backend</span>
+            <input type="file" id="jdFile" accept=".txt,.pdf,.docx" />
+          </label>
+          <p class="hint" id="jdFileStatus">No file selected yet.</p>
+        </div>
+
+        <div class="skills-block">
+          <div class="skills-head">
+            <h3>Skills for this role</h3>
+            <span class="mini-tag">Browser demo extraction</span>
+          </div>
+          <p class="hint">Detected in your browser with the keyword dictionary from <code>src/preprocessor.py</code>. Add or remove chips to steer the demo.</p>
+          <ul class="chip-list" id="skillChips"></ul>
+          <p class="empty empty-sm" id="skillEmpty">No skills yet &mdash; add job-description text above, or add chips manually.</p>
+          <div class="row">
+            <label class="vh" for="skillInput">Add a skill</label>
+            <input type="text" id="skillInput" placeholder="Add a skill (e.g. kubernetes)" autocomplete="off" />
+            <button type="button" class="btn btn-soft" id="addSkill">Add skill</button>
+          </div>
+          <p class="field-error" id="skillError" hidden></p>
+        </div>
+      </section>
+
+      <section class="panel" id="candPanel" aria-labelledby="cand-h">
+        <header class="panel-head">
+          <span class="panel-num" aria-hidden="true">2</span>
+          <h2 id="cand-h">Candidates</h2>
+          <span class="panel-tag mono" id="candCount">0 / 8</span>
+        </header>
+
+        <div class="row row-between">
+          <label class="vh" for="candSearch">Search candidates</label>
+          <input type="search" id="candSearch" class="grow" placeholder="Search candidates by name or text..." autocomplete="off" />
+          <button type="button" class="btn btn-soft" id="addCand">+ Add candidate</button>
+        </div>
+
+        <div class="cand-list" id="candList"></div>
+
+        <p class="hint">.txt resumes are read in the browser; .pdf and .docx need the backend &mdash; paste their text instead.</p>
+
+        <p class="empty" id="candEmpty">No candidates yet &mdash; add a name and paste resume text (or upload a .txt resume).</p>
+        <p class="field-error" id="candError" hidden></p>
+      </section>
+    </section>
+
+    <section class="action-bar" aria-label="Screening actions">
+      <button type="button" class="btn btn-primary" id="runScreening">Run screening</button>
+      <button type="button" class="btn btn-ghost" id="clearAll">Clear all</button>
+
+      <div class="threshold">
+        <label for="threshold">Strong threshold <span class="mono" id="thresholdVal">75%</span></label>
+        <input type="range" id="threshold" min="50" max="95" step="1" value="75" />
+      </div>
+
+      <span class="kbd-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> runs screening</span>
+    </section>
+
+    <section class="results" id="results" aria-labelledby="res-h">
+      <div class="results-head">
+        <div>
+          <p class="eyebrow">Ranked shortlist &middot; demo heuristic</p>
+          <h2 id="res-h">Results</h2>
+        </div>
+        <div class="row">
+          <label class="vh" for="resSearch">Filter results</label>
+          <input type="search" id="resSearch" placeholder="Filter results..." autocomplete="off" />
+          <button type="button" class="btn btn-soft" id="exportCsv" disabled>Export CSV</button>
+          <button type="button" class="btn btn-ghost" id="clearResults" disabled>Clear results</button>
+        </div>
+      </div>
+
+      <p class="status-line" id="resultsStatus" role="status">Run screening to rank your candidates.</p>
+      <div class="results-list" id="resultsList"></div>
+      <p class="empty" id="resNoMatch" hidden>No candidates match your filter.</p>
+    </section>
+
+    <section class="compare" id="compareSection" aria-labelledby="cmp-h" hidden>
+      <div class="results-head">
+        <div>
+          <p class="eyebrow">Two candidates</p>
+          <h2 id="cmp-h">Side-by-side compare</h2>
+        </div>
+        <button type="button" class="btn btn-ghost" id="closeCompare">Close compare</button>
+      </div>
+      <div class="compare-grid" id="compareGrid"></div>
+    </section>
+
+    <section class="about" id="about" aria-labelledby="about-h">
+      <p class="eyebrow">About the real engine</p>
+      <h2 id="about-h">What actually runs in Streamlit</h2>
+      <div class="about-grid">
+        <ul class="facts">
+          <li><span class="fact-key mono">384-dim</span> Sentence embeddings from <code>all-MiniLM-L6-v2</code> (SentenceTransformers).</li>
+          <li><span class="fact-key mono">cosine_similarity</span> ranks every resume against the job description (<code>src/matcher.py</code>).</li>
+          <li><span class="fact-key mono">spaCy</span> <code>en_core_web_sm</code> + PhraseMatcher extracts matched / missing / extra skills (<code>src/preprocessor.py</code>).</li>
+          <li><span class="fact-key mono">PDF DOCX TXT</span> parsing with pdfplumber and python-docx (<code>src/extractor.py</code>).</li>
+          <li><span class="fact-key mono">cached load</span> models load once per session through <code>@st.cache_resource</code> (<code>app.py</code>).</li>
+          <li><span class="fact-key mono">explainable</span> output fields: <code>matched_skills</code>, <code>missing_skills</code>, <code>extra_skills</code>, <code>skill_match_percentage</code>, <code>summary</code>.</li>
+        </ul>
+
+        <div class="run-block" id="runBlock">
+          <h3>Run the real app</h3>
+          <ol class="run-steps">
+            <li><code>venv\Scripts\activate</code></li>
+            <li><code>pip install -r requirements.txt</code></li>
+            <li><code>python -m spacy download en_core_web_sm</code></li>
+            <li><code>streamlit run app.py</code> &rarr; opens at <code>http://localhost:8501</code></li>
+          </ol>
+          <p class="hint">On first run the model weights (~90MB) download from Hugging Face and are cached locally &mdash; later runs work offline.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="colophon">
+    <span>TalentMatch Lens &middot; static preview UI</span>
+    <span>Real pipeline: Streamlit + sentence-transformers + spaCy</span>
+  </footer>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

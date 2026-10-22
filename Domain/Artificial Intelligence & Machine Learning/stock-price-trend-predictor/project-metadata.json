@@ -1,0 +1,14 @@
+﻿{
+    "id":  "stock-price-trend-predictor",
+    "name":  "Stock Price Trend Predictor",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/cristianpjensen/stock-market-prediction-via-google-trends",
+    "stack":  "Python; LSTM; yfinance",
+    "goal":  "Predicting direction (not price claims), walk-forward validation, clear disclaimers.",
+    "license":  "MIT",
+    "licenseWarning":  null,
+    "entry":  "setup.py",
+    "expectedFileCount":  5,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  235
+}

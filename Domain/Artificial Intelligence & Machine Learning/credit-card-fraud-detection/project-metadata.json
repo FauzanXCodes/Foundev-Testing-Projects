@@ -1,0 +1,14 @@
+﻿{
+    "id":  "credit-card-fraud-detection",
+    "name":  "Credit Card Fraud Detection",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/cloudacademy/fraud-detection",
+    "stack":  "Python; imbalanced-learn",
+    "goal":  "SMOTE vs class weights, precision-recall tradeoff and cost-aware thresholding.",
+    "license":  "Apache-2.0",
+    "licenseWarning":  null,
+    "entry":  "src/flask_app.py",
+    "expectedFileCount":  4,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  12
+}

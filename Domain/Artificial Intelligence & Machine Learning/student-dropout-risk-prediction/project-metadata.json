@@ -1,0 +1,14 @@
+﻿{
+    "id":  "student-dropout-risk-prediction",
+    "name":  "Student Dropout Risk Prediction",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/BridgitD/school-dropout-predictions",
+    "stack":  "Python; LightGBM; SHAP",
+    "goal":  "Early-warning model with explainability and intervention thresholds.",
+    "license":  "MIT",
+    "licenseWarning":  null,
+    "entry":  "db_creation/add_dropout_column.sql",
+    "expectedFileCount":  18,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  0
+}

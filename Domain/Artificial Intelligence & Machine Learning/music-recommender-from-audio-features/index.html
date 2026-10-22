@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Groove Observatory - Music Recommender</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="noise-overlay"></div>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="brand">
+        <div class="brand-mark">◉</div>
+        <div>
+          <h1 class="brand-title">Groove Observatory</h1>
+          <p class="brand-subtitle">Retro record-crate recommender · cosine similarity over audio DNA</p>
+        </div>
+      </div>
+      <div class="masthead-meta">
+        <div class="dataset-badge" id="datasetBadge">Loading dataset…</div>
+        <div class="load-status" id="loadStatus">Initializing</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="load-panel" id="loadPanel">
+      <div class="load-card">
+        <h2>Load Spotify Audio Features</h2>
+        <p id="loadMessage">Fetching <code>data/best_songs_spotify_2000_2023.csv</code>…</p>
+        <div class="load-actions">
+          <button class="btn" id="retryBtn" style="display:none;">Retry</button>
+          <div class="server-hint" id="serverHint" style="display:none;">
+            <strong>Tip:</strong> If running from <code>file://</code>, start a local server in this project folder:<br>
+            <code>python -m http.server 8000</code> then open <code>http://localhost:8000/</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="appRoot" style="display:none;">
+      <section class="panel steps-panel">
+        <div class="panel-header">
+          <h2>Find Similar Tracks</h2>
+          <div class="panel-actions">
+            <button class="btn-ghost" id="resetAllBtn">Reset</button>
+            <label class="toggle">
+              <input type="checkbox" id="excludeSelfToggle" checked>
+              <span>Exclude self</span>
+            </label>
+            <label class="toggle">
+              <input type="checkbox" id="sortToggle">
+              <span>Sort ascending</span>
+            </label>
+          </div>
+        </div>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-label">Step 1 · Artist</div>
+            <div class="typeahead" id="artistTypeahead">
+              <input type="text" id="artistInput" class="typeahead-input" placeholder="Type artist name..." autocomplete="off">
+              <div class="typeahead-dropdown" id="artistDropdown"></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-label">Step 2 · Song</div>
+            <select id="songSelect" class="song-select">
+              <option value="">Select a song…</option>
+            </select>
+            <input type="text" id="songSearch" class="song-search" placeholder="Search songs..." autocomplete="off">
+          </div>
+        </div>
+        <div class="featured-match" id="featuredMatch" style="display:none;">
+          <div class="featured-label">Featured match (repo example)</div>
+          <button class="btn-featured" id="featuredBtn">Flowers → The Climb (≈0.996)</button>
+        </div>
+      </section>
+
+      <section class="hero-result" id="heroResult" style="display:none;">
+        <div class="hero-grid">
+          <div class="seed-card">
+            <div class="vinyl-disc" id="seedVinyl"></div>
+            <div class="seed-info">
+              <div class="seed-title" id="seedTitle"></div>
+              <div class="seed-meta" id="seedMeta"></div>
+              <div class="seed-genre" id="seedGenre"></div>
+            </div>
+          </div>
+          <div class="recs-panel">
+            <div class="recs-header">
+              <h2>Top Recommendations</h2>
+              <div class="recs-actions">
+                <button class="btn-small" id="copyListBtn">Copy list</button>
+                <button class="btn-small" id="downloadCsvBtn">Download CSV</button>
+              </div>
+            </div>
+            <div class="recs-list" id="recsList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="comparison-panel" id="comparisonPanel" style="display:none;">
+        <div class="panel-header">
+          <h2>Audio DNA Comparison</h2>
+          <button class="btn-ghost" id="closeComparisonBtn">Close</button>
+        </div>
+        <div class="comparison-meta">
+          <div><strong>Seed:</strong> <span id="compSeed"></span></div>
+          <div><strong>Match:</strong> <span id="compMatch"></span></div>
+          <div class="similarity-sentence" id="similaritySentence"></div>
+        </div>
+        <div class="dna-chart" id="dnaChart"></div>
+      </section>
+
+      <section class="explorer-tabs">
+        <div class="tabs-header">
+          <button class="tab-btn active" data-tab="crate">Crate explorer</button>
+          <button class="tab-btn" data-tab="how">How it works</button>
+        </div>
+        <div class="tab-content active" id="tab-crate">
+          <div class="filters-row">
+            <div class="filter-group">
+              <div class="filter-label">Genre (top genre)</div>
+              <div class="genre-chips" id="genreChips"></div>
+            </div>
+            <div class="filter-group">
+              <div class="filter-label">Year range</div>
+              <div class="year-range">
+                <select id="yearStart"></select>
+                <span>to</span>
+                <select id="yearEnd"></select>
+              </div>
+            </div>
+          </div>
+          <div class="explorer-grid">
+            <div class="explorer-card">
+              <h3>Top 20 Artists</h3>
+              <div class="bar-chart" id="artistBarChart"></div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-content" id="tab-how">
+          <div class="how-card">
+            <h3>Method (from repo)</h3>
+            <p>This UI replicates the exact algorithm from <code>src/main_cosine_similarity.py</code>:</p>
+            <ol>
+              <li><strong>Load CSV</strong> — semicolon-separated with quoted-field handling; columns include <code>danceability </code> and <code>speechiness </code> (trailing spaces).</li>
+              <li><strong>Features</strong> — exactly <code>['bpm','energy','danceability ','dB','liveness','valence','duration','acousticness','speechiness ','popularity']</code>.</li>
+              <li><strong>Min-max normalization</strong> — for each feature, scale to [0,1] over the full dataset: <code>(x - min)/(max - min)</code>.</li>
+              <li><strong>Cosine similarity</strong> — between selected song vector and every row; sort desc; top N.</li>
+            </ol>
+            <p class="note">All computations run client-side in vanilla JS over the repo's dataset — real functionality, deterministic.</p>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

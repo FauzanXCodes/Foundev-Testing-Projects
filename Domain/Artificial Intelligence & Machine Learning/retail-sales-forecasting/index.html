@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DemandSight - Retail Sales Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">DS</div>
+        <div>
+          <h1>DemandSight</h1>
+          <p>Executive retail analytics command center</p>
+        </div>
+      </div>
+      <div class="topbar-meta">
+        <div class="status-badge" id="dataStatus">Loading Superstore.csv…</div>
+        <div class="orders-readout" id="ordersReadout">—</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="filter-ribbon">
+    <div class="filter-inner">
+      <div class="filter-group">
+        <div class="filter-label">Date range</div>
+        <div class="chip-row" id="dateChips">
+          <button class="chip active" data-range="all">All</button>
+          <button class="chip" data-range="2020h1">2020 H1</button>
+          <button class="chip" data-range="2020h2">2020 H2</button>
+          <button class="chip" data-range="byyear">By year</button>
+        </div>
+        <div class="year-selects" id="yearSelects" style="display:none; margin-top:8px;">
+          <select id="yearFilter"></select>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Region</div>
+        <div class="chip-row" id="regionChips"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Category</div>
+        <div class="chip-row" id="categoryChips"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Segment</div>
+        <select id="segmentSelect">
+          <option value="all">All Segments</option>
+        </select>
+      </div>
+      <div class="filter-actions">
+        <button class="btn-ghost" id="resetFiltersBtn">Reset filters</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="canvas">
+    <section class="load-panel" id="loadPanel">
+      <div class="load-card">
+        <h2>Load Superstore Data</h2>
+        <p id="loadMsg">Fetching <code>dataset/Superstore.csv</code>…</p>
+        <div class="load-actions">
+          <button class="btn" id="retryBtn" style="display:none;">Retry</button>
+          <div class="hint" id="hint" style="display:none;">
+            <strong>Tip:</strong> If running from <code>file://</code>, run <code>python -m http.server 8000</code> in this project folder and open <code>http://localhost:8000/</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="appRoot" style="display:none;">
+      <section class="kpi-strip">
+        <article class="kpi-card">
+          <div class="kpi-label">Total Sales</div>
+          <div class="kpi-value" id="kpiSales">$—</div>
+          <div class="kpi-sub" id="kpiSalesSub">—</div>
+          <canvas class="spark" id="sparkSales" height="40"></canvas>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Total Profit</div>
+          <div class="kpi-value" id="kpiProfit">$—</div>
+          <div class="kpi-sub" id="kpiProfitSub">—</div>
+          <canvas class="spark" id="sparkProfit" height="40"></canvas>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Margin %</div>
+          <div class="kpi-value" id="kpiMargin">—%</div>
+          <div class="kpi-sub">Profit / Sales</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Orders</div>
+          <div class="kpi-value" id="kpiOrders">—</div>
+          <div class="kpi-sub" id="kpiOrdersSub">—</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Avg Discount</div>
+          <div class="kpi-value" id="kpiDiscount">—%</div>
+          <div class="kpi-sub">Weighted approx</div>
+        </article>
+      </section>
+
+      <section class="main-grid">
+        <article class="panel wide">
+          <header class="panel-header">
+            <div>
+              <h2>Monthly Sales</h2>
+              <p>With Profit overlay</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="profitToggle" checked>
+              <span>Show Profit</span>
+            </label>
+          </header>
+          <div class="panel-body">
+            <canvas id="salesChart"></canvas>
+          </div>
+        </article>
+
+        <article class="panel">
+          <header class="panel-header">
+            <div>
+              <h2>Sales by Category</h2>
+              <p>Horizontal bars</p>
+            </div>
+          </header>
+          <div class="panel-body">
+            <canvas id="catChart"></canvas>
+          </div>
+        </article>
+
+        <article class="panel">
+          <header class="panel-header">
+            <div>
+              <h2>Sales by Region</h2>
+              <p>Horizontal bars</p>
+            </div>
+          </header>
+          <div class="panel-body">
+            <canvas id="regionChart"></canvas>
+          </div>
+        </article>
+
+        <article class="panel wide">
+          <header class="panel-header">
+            <div>
+              <h2>Sub-category Profitability</h2>
+              <p>Diverging bars (positive/negative)</p>
+            </div>
+          </header>
+          <div class="panel-body">
+            <canvas id="subcatChart"></canvas>
+          </div>
+        </article>
+
+        <article class="panel wide">
+          <header class="panel-header">
+            <div>
+              <h2>Top 10 Products</h2>
+              <p>Sales, Profit, Margin · sort & search</p>
+            </div>
+            <div class="panel-actions">
+              <input type="text" id="productSearch" class="search-input" placeholder="Search products...">
+              <button class="btn-small" id="exportFilteredBtn">Export filtered CSV</button>
+              <button class="btn-small" id="copyInsightBtn">Copy insight summary</button>
+            </div>
+          </header>
+          <div class="panel-body table-wrap">
+            <table class="data-table" id="productsTable">
+              <thead>
+                <tr>
+                  <th data-sort="name">Product</th>
+                  <th data-sort="sales">Sales</th>
+                  <th data-sort="profit">Profit</th>
+                  <th data-sort="margin">Margin %</th>
+                  <th data-sort="qty">Qty</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="panel">
+          <header class="panel-header">
+            <div>
+              <h2>Forecast</h2>
+              <p class="badge-warn">Requires backend — no forecasting model implemented in this repo yet</p>
+            </div>
+          </header>
+          <div class="panel-body">
+            <div class="forecast-box">
+              <p><strong>What exists:</strong> <code>app.py</code> cleaning pipeline, <code>sql/retail_analysis.sql</code>, <code>run_all_queries.py</code></p>
+              <p><strong>What would be needed:</strong> Prophet/ARIMA service (e.g., FastAPI) that ingests cleaned data and returns forecasts; this UI makes no fabricated predictions.</p>
+              <ul>
+                <li>Expose endpoint like <code>/forecast?store=...&item=...&horizon=...</code></li>
+                <li>Train/save model artifacts or run on-demand</li>
+                <li>Return confidence intervals</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+        <article class="panel">
+          <header class="panel-header">
+            <div>
+              <h2>Data notes</h2>
+              <p>Source & glossary</p>
+            </div>
+          </header>
+          <div class="panel-body">
+            <div class="notes-grid">
+              <div><strong>Source:</strong> <code>dataset/Superstore.csv</code></div>
+              <div><strong>Rows:</strong> <span id="rowCount">—</span></div>
+              <div><strong>Columns:</strong> <span id="colCount">—</span></div>
+            </div>
+            <details class="glossary">
+              <summary>Column glossary</summary>
+              <table>
+                <thead><tr><th>Column</th><th>Description</th></tr></thead>
+                <tbody>
+                  <tr><td>Order Date</td><td>Transaction date</td></tr>
+                  <tr><td>Region/Category/Segment</td><td>Geography & customer/product segmentation</td></tr>
+                  <tr><td>Product Name</td><td>Product description (can contain commas)</td></tr>
+                  <tr><td>Sales</td><td>Revenue</td></tr>
+                  <tr><td>Quantity</td><td>Units sold</td></tr>
+                  <tr><td>Discount</td><td>Discount applied</td></tr>
+                  <tr><td>Profit</td><td>Net profit</td></tr>
+                </tbody>
+              </table>
+            </details>
+          </div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

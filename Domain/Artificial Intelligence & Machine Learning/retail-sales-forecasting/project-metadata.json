@@ -1,0 +1,14 @@
+﻿{
+    "id":  "retail-sales-forecasting",
+    "name":  "Retail Sales Forecasting",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/Madhuarvind/Retail_sales_analysis",
+    "stack":  "Python; Prophet/ARIMA",
+    "goal":  "Seasonality decomposition, backtesting and inventory recommendation.",
+    "license":  "MIT",
+    "licenseWarning":  null,
+    "entry":  "app.py",
+    "expectedFileCount":  3,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  9
+}

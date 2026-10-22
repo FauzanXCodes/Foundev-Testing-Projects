@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Virtual environments
+venv/
+.env/
+.quasar/
+.quasar_env/
+
+# VSCode
+.vscode/
+.settings/
+
+# Logs
+*.log
+
+# Models / Weights
+*.pt
+*.weights
+
+# OS files
+.DS_Store
+Thumbs.db

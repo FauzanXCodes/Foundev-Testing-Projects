@@ -1,0 +1,346 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ns1="http://www.w3.org/1999/xlink" id="a" width="816.3" height="435.29" viewBox="0 0 612.22 326.46" data-map-type="educational" data-zoom-level="1" data-topic="fission">
+	<defs>
+		<radialGradient id="b" cx="89.34" cy="110.49" fx="89.34" fy="110.49" r="18.47" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#dfdfdf" />
+			<stop offset="1" stop-color="#bfbfbf" />
+		</radialGradient>
+		<radialGradient id="f" cx="477.22" cy="204.47" fx="477.22" fy="204.47" r="18.47" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#e89595" />
+			<stop offset="1" stop-color="#e36d6e" />
+		</radialGradient>
+		<radialGradient id="c" cx="552.25" cy="114.52" fx="552.25" fy="114.52" ns1:href="#b" />
+		<radialGradient id="d" cx="552.25" cy="158.52" fx="552.25" fy="158.52" ns1:href="#b" />
+		<radialGradient id="e" cx="552.25" cy="202.52" fx="552.25" fy="202.52" ns1:href="#b" />
+		<radialGradient id="g" cx="390.98" cy="224.57" fx="390.98" fy="224.57" ns1:href="#f" />
+		<radialGradient id="h" cx="390.98" cy="281.06" fx="390.98" fy="281.06" ns1:href="#b" />
+		<radialGradient id="i" cx="405.89" cy="294.34" fx="405.89" fy="294.34" ns1:href="#f" />
+		<radialGradient id="j" cx="386.51" cy="244.30" fx="386.51" fy="244.30" ns1:href="#b" />
+		<radialGradient id="k" cx="459.55" cy="214.76" fx="459.55" fy="214.76" ns1:href="#b" />
+		<radialGradient id="l" cx="422.46" cy="303.12" fx="422.46" fy="303.12" ns1:href="#b" />
+		<radialGradient id="m" cx="439.20" cy="213.92" fx="439.20" fy="213.92" ns1:href="#b" />
+		<radialGradient id="n" cx="483.11" cy="249.46" fx="483.11" fy="249.46" ns1:href="#f" />
+		<radialGradient id="o" cx="483.11" cy="265.31" fx="483.11" fy="265.31" ns1:href="#b" />
+		<radialGradient id="p" cx="439.87" cy="206.54" fx="439.87" fy="206.54" ns1:href="#f" />
+		<radialGradient id="q" cx="472.29" cy="221.43" fx="472.29" fy="221.43" ns1:href="#f" />
+		<radialGradient id="r" cx="477.44" cy="284.15" fx="477.44" fy="284.15" ns1:href="#f" />
+		<radialGradient id="s" cx="464.27" cy="298.95" fx="464.27" fy="298.95" ns1:href="#b" />
+		<radialGradient id="t" cx="407.34" cy="214.76" fx="407.34" fy="214.76" ns1:href="#b" />
+		<radialGradient id="u" cx="386.51" cy="262.63" fx="386.51" fy="262.63" ns1:href="#f" />
+		<radialGradient id="v" cx="424.32" cy="211.39" fx="424.32" fy="211.39" ns1:href="#b" />
+		<radialGradient id="w" cx="443.29" cy="302.22" fx="443.29" fy="302.22" ns1:href="#f" />
+		<radialGradient id="x" cx="477.44" cy="236.28" fx="477.44" fy="236.28" ns1:href="#b" />
+		<radialGradient id="y" cx="400.48" cy="227.18" fx="400.48" fy="227.18" ns1:href="#b" />
+		<radialGradient id="z" cx="473.73" cy="251.53" fx="473.73" fy="251.53" ns1:href="#b" />
+		<radialGradient id="aa" cx="395.01" cy="244.30" fx="395.01" fy="244.30" ns1:href="#f" />
+		<radialGradient id="ab" cx="400.20" cy="270.74" fx="400.20" fy="270.74" ns1:href="#f" />
+		<radialGradient id="ac" cx="411.85" cy="280.79" fx="411.85" fy="280.79" ns1:href="#b" />
+		<radialGradient id="ad" cx="446.87" cy="221.01" fx="446.87" fy="221.01" ns1:href="#f" />
+		<radialGradient id="ae" cx="475.22" cy="267.61" fx="475.22" fy="267.61" ns1:href="#b" />
+		<radialGradient id="af" cx="464.27" cy="291.66" fx="464.27" fy="291.66" ns1:href="#b" />
+		<radialGradient id="ag" cx="468.35" cy="280.79" fx="468.35" fy="280.79" ns1:href="#f" />
+		<radialGradient id="ah" cx="419.06" cy="224.57" fx="419.06" fy="224.57" ns1:href="#f" />
+		<radialGradient id="ai" cx="399.68" cy="254.50" fx="399.68" fy="254.50" ns1:href="#b" />
+		<radialGradient id="aj" cx="410.71" cy="244.20" fx="410.71" fy="244.20" ns1:href="#b" />
+		<radialGradient id="ak" cx="437.49" cy="224.57" fx="437.49" fy="224.57" ns1:href="#b" />
+		<radialGradient id="al" cx="457.93" cy="231.13" fx="457.93" fy="231.13" ns1:href="#b" />
+		<radialGradient id="am" cx="426.03" cy="238.35" fx="426.03" fy="238.35" ns1:href="#f" />
+		<radialGradient id="an" cx="462.05" cy="256.04" fx="462.05" fy="256.04" ns1:href="#f" />
+		<radialGradient id="ao" cx="428.65" cy="256.04" fx="428.65" fy="256.04" ns1:href="#b" />
+		<radialGradient id="ap" cx="448.87" cy="241.11" fx="448.87" fy="241.11" ns1:href="#f" />
+		<radialGradient id="aq" cx="415.27" cy="265.31" fx="415.27" fy="265.31" ns1:href="#f" />
+		<radialGradient id="ar" cx="447.38" cy="293.96" fx="447.38" fy="293.96" ns1:href="#b" />
+		<radialGradient id="as" cx="429.18" cy="291.66" fx="429.18" fy="291.66" ns1:href="#f" />
+		<radialGradient id="at" cx="453.94" cy="278.49" fx="453.94" fy="278.49" ns1:href="#b" />
+		<radialGradient id="au" cx="435.70" cy="278.49" fx="435.70" fy="278.49" ns1:href="#b" />
+		<radialGradient id="av" cx="445.34" cy="262.63" fx="445.34" fy="262.63" ns1:href="#f" />
+		<radialGradient id="aw" cx="441.74" cy="41.57" fx="441.74" fy="41.57" ns1:href="#f" />
+		<radialGradient id="ax" cx="393.83" cy="36.81" fx="393.83" fy="36.81" ns1:href="#f" />
+		<radialGradient id="ay" cx="390.36" cy="88.44" fx="390.36" fy="88.44" ns1:href="#f" />
+		<radialGradient id="az" cx="416.70" cy="110.50" fx="416.70" fy="110.50" ns1:href="#f" />
+		<radialGradient id="ba" cx="385.89" cy="51.68" fx="385.89" fy="51.68" ns1:href="#b" />
+		<radialGradient id="bb" cx="458.93" cy="22.14" fx="458.93" fy="22.14" ns1:href="#b" />
+		<radialGradient id="bc" cx="435.08" cy="114.78" fx="435.08" fy="114.78" ns1:href="#b" />
+		<radialGradient id="bd" cx="400.48" cy="101.61" fx="400.48" fy="101.61" ns1:href="#b" />
+		<radialGradient id="be" cx="482.48" cy="56.84" fx="482.48" fy="56.84" ns1:href="#b" />
+		<radialGradient id="bf" cx="482.48" cy="72.69" fx="482.48" fy="72.69" ns1:href="#b" />
+		<radialGradient id="bg" cx="439.25" cy="13.93" fx="439.25" fy="13.93" ns1:href="#f" />
+		<radialGradient id="bh" cx="471.67" cy="28.81" fx="471.67" fy="28.81" ns1:href="#f" />
+		<radialGradient id="bi" cx="476.82" cy="91.53" fx="476.82" fy="91.53" ns1:href="#f" />
+		<radialGradient id="bj" cx="463.65" cy="106.33" fx="463.65" fy="106.33" ns1:href="#b" />
+		<radialGradient id="bk" cx="406.72" cy="22.14" fx="406.72" fy="22.14" ns1:href="#b" />
+		<radialGradient id="bl" cx="385.89" cy="70.01" fx="385.89" fy="70.01" ns1:href="#b" />
+		<radialGradient id="bm" cx="423.70" cy="18.78" fx="423.70" fy="18.78" ns1:href="#f" />
+		<radialGradient id="bn" cx="448.25" cy="110.50" fx="448.25" fy="110.50" ns1:href="#f" />
+		<radialGradient id="bo" cx="476.82" cy="43.66" fx="476.82" fy="43.66" ns1:href="#b" />
+		<radialGradient id="bp" cx="405.26" cy="32.52" fx="405.26" fy="32.52" ns1:href="#b" />
+		<radialGradient id="bq" cx="400.48" cy="79.52" fx="400.48" fy="79.52" ns1:href="#b" />
+		<radialGradient id="br" cx="394.38" cy="51.68" fx="394.38" fy="51.68" ns1:href="#f" />
+		<radialGradient id="bs" cx="474.60" cy="55.01" fx="474.60" fy="55.01" ns1:href="#f" />
+		<radialGradient id="bt" cx="412.23" cy="88.17" fx="412.23" fy="88.17" ns1:href="#f" />
+		<radialGradient id="bu" cx="433.35" cy="23.63" fx="433.35" fy="23.63" ns1:href="#b" />
+		<radialGradient id="bv" cx="474.60" cy="75.00" fx="474.60" fy="75.00" ns1:href="#b" />
+		<radialGradient id="bw" cx="463.65" cy="99.04" fx="463.65" fy="99.04" ns1:href="#b" />
+		<radialGradient id="bx" cx="467.73" cy="88.17" fx="467.73" fy="88.17" ns1:href="#f" />
+		<radialGradient id="by" cx="454.56" cy="28.81" fx="454.56" fy="28.81" ns1:href="#f" />
+		<radialGradient id="bz" cx="399.06" cy="61.88" fx="399.06" fy="61.88" ns1:href="#f" />
+		<radialGradient id="ca" cx="410.09" cy="51.58" fx="410.09" fy="51.58" ns1:href="#b" />
+		<radialGradient id="cb" cx="419.89" cy="31.95" fx="419.89" fy="31.95" ns1:href="#b" />
+		<radialGradient id="cc" cx="457.31" cy="35.32" fx="457.31" fy="35.32" ns1:href="#b" />
+		<radialGradient id="cd" cx="424.47" cy="48.49" fx="424.47" fy="48.49" ns1:href="#f" />
+		<radialGradient id="ce" cx="461.43" cy="63.42" fx="461.43" fy="63.42" ns1:href="#f" />
+		<radialGradient id="cf" cx="438.58" cy="44.45" fx="438.58" fy="44.45" ns1:href="#b" />
+		<radialGradient id="cg" cx="455.59" cy="53.18" fx="455.59" fy="53.18" ns1:href="#f" />
+		<radialGradient id="ch" cx="414.65" cy="72.69" fx="414.65" fy="72.69" ns1:href="#b" />
+		<radialGradient id="ci" cx="446.76" cy="101.34" fx="446.76" fy="101.34" ns1:href="#b" />
+		<radialGradient id="cj" cx="428.56" cy="99.04" fx="428.56" fy="99.04" ns1:href="#f" />
+		<radialGradient id="ck" cx="453.32" cy="85.87" fx="453.32" fy="85.87" ns1:href="#b" />
+		<radialGradient id="cl" cx="435.08" cy="85.87" fx="435.08" fy="85.87" ns1:href="#b" />
+		<radialGradient id="cm" cx="433.06" cy="59.52" fx="433.06" fy="59.52" ns1:href="#f" />
+		<radialGradient id="cn" cx="439.98" cy="72.69" fx="439.98" fy="72.69" ns1:href="#b" />
+		<radialGradient id="co" cx="89.28" cy="208.38" fx="89.28" fy="208.38" ns1:href="#b" />
+		<radialGradient id="cp" cx="87.32" cy="232.64" fx="87.32" fy="232.64" ns1:href="#f" />
+		<radialGradient id="cq" cx="94.18" cy="253.32" fx="94.18" fy="253.32" ns1:href="#b" />
+		<radialGradient id="cr" cx="107.35" cy="273.98" fx="107.35" fy="273.98" ns1:href="#b" />
+		<radialGradient id="cs" cx="124.24" cy="288.98" fx="124.24" fy="288.98" ns1:href="#f" />
+		<radialGradient id="ct" cx="100.89" cy="186.35" fx="100.89" fy="186.35" ns1:href="#f" />
+		<radialGradient id="cu" cx="216.77" cy="199.04" fx="216.77" fy="199.04" ns1:href="#f" />
+		<radialGradient id="cv" cx="218.91" cy="239.58" fx="218.91" fy="239.58" ns1:href="#f" />
+		<radialGradient id="cw" cx="185.11" cy="285.65" fx="185.11" fy="285.65" ns1:href="#f" />
+		<radialGradient id="cx" cx="137.41" cy="159.52" fx="137.41" fy="159.52" ns1:href="#b" />
+		<radialGradient id="cy" cx="118.93" cy="171.39" fx="118.93" fy="171.39" ns1:href="#b" />
+		<radialGradient id="cz" cx="183.76" cy="163.45" fx="183.76" fy="163.45" ns1:href="#b" />
+		<radialGradient id="da" cx="161.26" cy="156.89" fx="161.26" fy="156.89" ns1:href="#f" />
+		<radialGradient id="db" cx="203.60" cy="177.82" fx="203.60" fy="177.82" ns1:href="#f" />
+		<radialGradient id="dc" cx="220.59" cy="219.80" fx="220.59" fy="219.80" ns1:href="#b" />
+		<radialGradient id="dd" cx="212.51" cy="261.78" fx="212.51" fy="261.78" ns1:href="#b" />
+		<radialGradient id="de" cx="202.05" cy="273.98" fx="202.05" fy="273.98" ns1:href="#b" />
+		<radialGradient id="df" cx="170.58" cy="292.27" fx="170.58" fy="292.27" ns1:href="#b" />
+		<radialGradient id="dg" cx="146.23" cy="293.50" fx="146.23" fy="293.50" ns1:href="#b" />
+		<radialGradient id="dh" cx="105.51" cy="262.37" fx="105.51" fy="262.37" ns1:href="#f" />
+		<radialGradient id="di" cx="207.42" cy="189.80" fx="207.42" fy="189.80" ns1:href="#b" />
+		<radialGradient id="dj" cx="97.89" cy="244.44" fx="97.89" fy="244.44" ns1:href="#b" />
+		<radialGradient id="dk" cx="161.26" cy="164.64" fx="161.26" fy="164.64" ns1:href="#b" />
+		<radialGradient id="dl" cx="177.25" cy="170.07" fx="177.25" fy="170.07" ns1:href="#f" />
+		<radialGradient id="dm" cx="137.41" cy="167.26" fx="137.41" fy="167.26" ns1:href="#f" />
+		<radialGradient id="dn" cx="112.42" cy="185.87" fx="112.42" fy="185.87" ns1:href="#f" />
+		<radialGradient id="do" cx="198.32" cy="204.87" fx="198.32" fy="204.87" ns1:href="#f" />
+		<radialGradient id="dp" cx="202.05" cy="256.12" fx="202.05" fy="256.12" ns1:href="#f" />
+		<radialGradient id="dq" cx="157.41" cy="288.22" fx="157.41" fy="288.22" ns1:href="#f" />
+		<radialGradient id="dr" cx="100.50" cy="209.64" fx="100.50" fy="209.64" ns1:href="#f" />
+		<radialGradient id="ds" cx="125.60" cy="180.43" fx="125.60" fy="180.43" ns1:href="#b" />
+		<radialGradient id="dt" cx="113.67" cy="201.98" fx="113.67" fy="201.98" ns1:href="#b" />
+		<radialGradient id="du" cx="99.25" cy="221.55" fx="99.25" fy="221.55" ns1:href="#b" />
+		<radialGradient id="dv" cx="203.60" cy="234.73" fx="203.60" fy="234.73" ns1:href="#b" />
+		<radialGradient id="dw" cx="187.61" cy="180.43" fx="187.61" fy="180.43" ns1:href="#b" />
+		<radialGradient id="dx" cx="119.39" cy="273.98" fx="119.39" fy="273.98" ns1:href="#b" />
+		<radialGradient id="dy" cx="181.07" cy="273.98" fx="181.07" fy="273.98" ns1:href="#b" />
+		<radialGradient id="dz" cx="170.58" cy="279.10" fx="170.58" fy="279.10" ns1:href="#f" />
+		<radialGradient id="ea" cx="140.02" cy="281.44" fx="140.02" fy="281.44" ns1:href="#f" />
+		<radialGradient id="eb" cx="109.12" cy="238.07" fx="109.12" fy="238.07" ns1:href="#f" />
+		<radialGradient id="ec" cx="154.68" cy="274.81" fx="154.68" fy="274.81" ns1:href="#b" />
+		<radialGradient id="ed" cx="187.61" cy="267.72" fx="187.61" fy="267.72" ns1:href="#b" />
+		<radialGradient id="ee" cx="205.74" cy="219.47" fx="205.74" fy="219.47" ns1:href="#f" />
+		<radialGradient id="ef" cx="167.36" cy="263.37" fx="167.36" fy="263.37" ns1:href="#f" />
+		<radialGradient id="eg" cx="192.56" cy="246.72" fx="192.56" fy="246.72" ns1:href="#b" />
+		<radialGradient id="eh" cx="149.80" cy="176.62" fx="149.80" fy="176.62" ns1:href="#b" />
+		<radialGradient id="ei" cx="188.88" cy="222.82" fx="188.88" fy="222.82" ns1:href="#b" />
+		<radialGradient id="ej" cx="137.41" cy="193.60" fx="137.41" fy="193.60" ns1:href="#f" />
+		<radialGradient id="ek" cx="166.36" cy="180.43" fx="166.36" fy="180.43" ns1:href="#f" />
+		<radialGradient id="el" cx="111.07" cy="219.84" fx="111.07" fy="219.84" ns1:href="#f" />
+		<radialGradient id="em" cx="118.93" cy="256.12" fx="118.93" fy="256.12" ns1:href="#b" />
+		<radialGradient id="en" cx="134.28" cy="265.28" fx="134.28" fy="265.28" ns1:href="#f" />
+		<radialGradient id="eo" cx="185.80" cy="194.35" fx="185.80" fy="194.35" ns1:href="#b" />
+		<radialGradient id="ep" cx="125.60" cy="207.52" fx="125.60" fy="207.52" ns1:href="#b" />
+		<radialGradient id="eq" cx="128.80" cy="235.99" fx="128.80" fy="235.99" ns1:href="#b" />
+		<radialGradient id="er" cx="143.06" cy="209.64" fx="143.06" fy="209.64" ns1:href="#b" />
+		<radialGradient id="es" cx="156.24" cy="195.81" fx="156.24" fy="195.81" ns1:href="#b" />
+		<radialGradient id="et" cx="176.15" cy="253.32" fx="176.15" fy="253.32" ns1:href="#b" />
+		<radialGradient id="eu" cx="179.39" cy="232.96" fx="179.39" fy="232.96" ns1:href="#f" />
+		<radialGradient id="ev" cx="141.50" cy="245.81" fx="141.50" fy="245.81" ns1:href="#f" />
+		<radialGradient id="ew" cx="170.50" cy="202.97" fx="170.50" fy="202.97" ns1:href="#f" />
+		<radialGradient id="ex" cx="153.19" cy="226.40" fx="153.19" fy="226.40" ns1:href="#f" />
+		<radialGradient id="ey" cx="134.95" cy="224.08" fx="134.95" fy="224.08" ns1:href="#b" />
+		<radialGradient id="ez" cx="155.14" cy="254.55" fx="155.14" fy="254.55" ns1:href="#b" />
+		<radialGradient id="fa" cx="177.72" cy="218.05" fx="177.72" fy="218.05" ns1:href="#b" />
+		<radialGradient id="fb" cx="152.17" cy="216.36" fx="152.17" fy="216.36" ns1:href="#f" />
+		<radialGradient id="fc" cx="158.77" cy="235.44" fx="158.77" fy="235.44" ns1:href="#f" />
+		<style>.fd{fill:url(#ct)}.fd,.fe,.ff,.fg,.fh,.fi,.fj,.fk,.fl,.fm,.fn,.fo,.fp,.fq,.fr,.fs,.ft,.fu,.fv,.fw,.fx,.fy,.fz,.ga,.gb,.gc,.gd,.ge,.gf,.gg,.gh,.gi,.gj,.gk,.gl,.gm,.gn,.go,.gp,.gq,.gr,.gs,.gt,.gu,.gv,.gw,.gx,.gy,.gz,.ha,.hb,.hc,.hd,.he,.hf,.hg,.hh,.hi,.hj,.hk,.hl,.hm,.hn,.ho,.hp,.hq,.hr,.hs,.ht,.hu,.hv,.hw,.hx,.hy,.hz,.ia,.ib,.ic,.id,.ie,.if,.ig,.ih,.ii,.ij,.ik,.il,.im,.in,.io,.ip,.iq,.ir,.is,.it,.iu,.iv,.iw,.ix,.iy,.iz,.ja,.jb,.jc,.jd,.je,.jf,.jg,.jh,.ji,.jj,.jk,.jl,.jm,.jn,.jo,.jp,.jq,.jr,.jt,.ju,.jv,.jw,.jx,.jy,.jz,.ka,.kb,.kc,.kd,.ke,.kf,.kg,.kh,.ki,.kj,.kk,.kl,.km,.kn,.ko,.kp,.kq,.kr,.ks,.kt,.ku,.kv,.kw,.kx,.ky,.kz,.la,.lb,.lc,.ld,.le,.lf,.lg,.lh,.li,.lj,.lk{stroke-width:0}.fe{fill:url(#ao)}.ff{fill:url(#bh)}.fg{fill:url(#ei)}.fh{fill:url(#bb)}.fi{fill:url(#v)}.fj{fill:url(#cr)}.fk{fill:url(#w)}.fl{fill:url(#c)}.fm{fill:url(#cb)}.fn{fill:url(#el)}.fo{fill:url(#by)}.fp{fill:url(#cy)}.fq{fill:url(#cv)}.fr{fill:url(#dy)}.fs{fill:url(#eg)}.ft{fill:url(#bo)}.fu{fill:url(#es)}.fv{fill:url(#s)}.fw{fill:url(#fb)}.fx{fill:url(#ag)}.fy{fill:url(#br)}.fz{fill:url(#dq)}.ga{fill:url(#y)}.gb{fill:url(#ey)}.gc{fill:url(#fa)}.gd{fill:url(#bk)}.ge{fill:url(#dt)}.gf{fill:url(#en)}.gg{fill:url(#ca)}.gh{fill:url(#dg)}.gi{fill:url(#bi)}.gj{fill:url(#fc)}.gk{fill:url(#ad)}.gl{fill:url(#cf)}.gm{fill:url(#co)}.gn{fill:url(#e)}.go{fill:url(#bn)}.gp{fill:url(#an)}.gq{fill:url(#cl)}.gr{fill:url(#dc)}.gs{fill:url(#g)}.gt{fill:url(#ar)}.gu{fill:#e83929}.gv{fill:url(#i)}.gw{fill:url(#dv)}.gx{fill:url(#db)}.gy{fill:url(#bu)}.gz{fill:url(#dp)}.ha{fill:url(#ah)}.hb{fill:url(#au)}.hc{fill:url(#cn)}.hd{fill:url(#l)}.he{fill:url(#b)}.hf{fill:url(#dw)}.hg{fill:url(#ef)}.hh{fill:url(#du)}.hi{fill:url(#cq)}.hj{fill:url(#dh)}.hk{fill:url(#at)}.hl{fill:url(#bz)}.hm{fill:url(#dl)}.hn{fill:url(#eb)}.ho{fill:url(#q)}.hp{fill:url(#cp)}.hq{fill:url(#t)}.hr{fill:#231916}.hs{fill:url(#ay)}.ht{fill:url(#ex)}.hu{fill:url(#ch)}.hv{fill:url(#av)}.hw{fill:url(#bj)}.hx{fill:url(#u)}.hy{fill:url(#as)}.hz{fill:url(#az)}.ia{fill:url(#n)}.ib{fill:url(#bv)}.ic{fill:url(#bl)}.id{fill:url(#bt)}.ie{fill:url(#cd)}.if{fill:url(#di)}.ig{fill:url(#z)}.ih{fill:url(#dj)}.ll{fill:none;stroke:#595857;stroke-miterlimit:10;stroke-width:2px}.ii{fill:url(#ci)}.ij{fill:url(#cg)}.ik{fill:url(#eo)}.il{fill:url(#bf)}.im{fill:url(#dz)}.in{fill:#f39800}.io{fill:url(#h)}.ip{fill:url(#dk)}.iq{fill:url(#bp)}.ir{fill:url(#bx)}.is{fill:url(#ev)}.it{fill:url(#j)}.iu{fill:url(#bm)}.iv{fill:url(#bc)}.iw{fill:url(#cx)}.ix{fill:url(#da)}.iy{fill:url(#bw)}.iz{fill:url(#al)}.ja{fill:url(#cu)}.jb{fill:url(#cz)}.jc{fill:url(#aw)}.jd{fill:url(#d)}.je{fill:url(#eh)}.jf{fill:url(#af)}.jg{fill:url(#aq)}.jh{fill:url(#ej)}.ji{fill:url(#aj)}.jj{fill:url(#am)}.jk{fill:url(#ds)}.jl{fill:url(#ap)}.jm{fill:url(#ez)}.jn{fill:url(#bd)}.jo{fill:url(#dr)}.jp{fill:url(#ew)}.jq{fill:url(#de)}.jr{fill:url(#em)}.jt{fill:url(#dn)}.ju{fill:url(#ba)}.jv{fill:url(#dx)}.jw{fill:url(#eu)}.jx{fill:url(#ax)}.jy{fill:url(#ce)}.jz{fill:url(#bq)}.ka{fill:url(#m)}.kb{fill:#f8b62d}.kc{fill:#595857}.kd{fill:url(#cw)}.ke{fill:url(#ed)}.kf{fill:url(#cs)}.kg{fill:url(#ab)}.kh{fill:url(#ai)}.ki{fill:url(#dd)}.kj{fill:url(#cm)}.kk{fill:url(#ek)}.kl{fill:url(#er)}.km{fill:url(#ck)}.kn{fill:url(#r)}.ko{fill:url(#cj)}.kp{fill:url(#ak)}.kq{fill:url(#ae)}.kr{fill:url(#aa)}.ks{fill:url(#bg)}.kt{fill:url(#eq)}.ku{fill:url(#do)}.kv{fill:url(#bs)}.kw{fill:url(#ec)}.kx{fill:url(#ee)}.ky{fill:#fff100}.kz{fill:url(#be)}.la{fill:url(#k)}.lb{fill:url(#df)}.lc{fill:url(#cc)}.ld{fill:url(#p)}.le{fill:url(#ac)}.lf{fill:url(#dm)}.lg{fill:url(#ea)}.lh{fill:url(#x)}.li{fill:url(#et)}.lj{fill:url(#o)}.lk{fill:url(#ep)}</style>
+	</defs>
+	<circle class="he" cx="87.26" cy="115.47" r="13.17" />
+	<circle class="fl" cx="550.18" cy="119.5" r="13.17" />
+	<circle class="jd" cx="550.18" cy="163.5" r="13.17" />
+	<circle class="gn" cx="550.18" cy="207.49" r="13.17" />
+	<circle class="gs" cx="388.91" cy="229.54" r="13.17" />
+	<circle class="io" cx="388.91" cy="286.03" r="13.17" />
+	<circle class="gv" cx="403.81" cy="299.32" r="13.17" />
+	<circle class="it" cx="384.43" cy="249.27" r="13.17" />
+	<circle class="la" cx="457.48" cy="219.74" r="13.17" />
+	<circle class="hd" cx="420.39" cy="308.09" r="13.17" />
+	<circle class="ka" cx="437.13" cy="218.9" r="13.17" />
+	<circle class="ia" cx="481.03" cy="254.43" r="13.17" />
+	<circle class="lj" cx="481.03" cy="270.29" r="13.17" />
+	<circle class="ld" cx="437.79" cy="211.52" r="13.17" />
+	<circle class="ho" cx="470.22" cy="226.4" r="13.17" />
+	<circle class="kn" cx="475.37" cy="289.12" r="13.17" />
+	<circle class="fv" cx="462.19" cy="303.92" r="13.17" />
+	<circle class="hq" cx="405.26" cy="219.74" r="13.17" />
+	<circle class="hx" cx="384.43" cy="267.6" r="13.17" />
+	<circle class="fi" cx="422.24" cy="216.37" r="13.17" />
+	<circle class="fk" cx="441.22" cy="307.2" r="13.17" />
+	<circle class="lh" cx="475.37" cy="241.26" r="13.17" />
+	<circle class="ga" cx="398.41" cy="232.16" r="13.17" />
+	<circle class="ig" cx="471.66" cy="256.5" r="13.17" />
+	<circle class="kr" cx="392.93" cy="249.27" r="13.17" />
+	<circle class="kg" cx="398.13" cy="275.71" r="13.17" />
+	<circle class="le" cx="409.78" cy="285.76" r="13.17" />
+	<circle class="gk" cx="444.8" cy="225.99" r="13.17" />
+	<circle class="kq" cx="473.15" cy="272.59" r="13.17" />
+	<circle class="jf" cx="462.19" cy="296.63" r="13.17" />
+	<circle class="fx" cx="466.28" cy="285.76" r="13.17" />
+	<circle class="ha" cx="416.98" cy="229.54" r="13.17" />
+	<circle class="kh" cx="397.61" cy="259.47" r="13.17" />
+	<circle class="ji" cx="408.64" cy="249.17" r="13.17" />
+	<circle class="kp" cx="435.42" cy="229.54" r="13.17" />
+	<circle class="iz" cx="455.85" cy="236.1" r="13.17" />
+	<circle class="jj" cx="423.95" cy="243.33" r="13.17" />
+	<circle class="gp" cx="459.97" cy="261.02" r="13.17" />
+	<circle class="fe" cx="426.58" cy="261.02" r="13.17" />
+	<circle class="jl" cx="446.8" cy="246.08" r="13.17" />
+	<circle class="jg" cx="413.2" cy="270.29" r="13.17" />
+	<circle class="gt" cx="445.31" cy="298.93" r="13.17" />
+	<circle class="hy" cx="427.11" cy="296.63" r="13.17" />
+	<circle class="hk" cx="451.87" cy="283.46" r="13.17" />
+	<circle class="hb" cx="433.63" cy="283.46" r="13.17" />
+	<circle class="hv" cx="443.26" cy="267.6" r="13.17" />
+	<circle class="jc" cx="439.66" cy="46.54" r="13.17" />
+	<circle class="jx" cx="391.75" cy="41.78" r="13.17" />
+	<circle class="hs" cx="388.28" cy="93.41" r="13.17" />
+	<circle class="hz" cx="414.63" cy="115.47" r="13.17" />
+	<circle class="ju" cx="383.81" cy="56.65" r="13.17" />
+	<circle class="fh" cx="456.86" cy="27.12" r="13.17" />
+	<circle class="iv" cx="433.01" cy="119.76" r="13.17" />
+	<circle class="jn" cx="398.41" cy="106.59" r="13.17" />
+	<circle class="kz" cx="480.41" cy="61.81" r="13.17" />
+	<circle class="il" cx="480.41" cy="77.67" r="13.17" />
+	<circle class="ks" cx="437.17" cy="18.9" r="13.17" />
+	<circle class="ff" cx="469.59" cy="33.79" r="13.17" />
+	<circle class="gi" cx="474.74" cy="96.5" r="13.17" />
+	<circle class="hw" cx="461.57" cy="111.3" r="13.17" />
+	<circle class="gd" cx="404.64" cy="27.12" r="13.17" />
+	<circle class="ic" cx="383.81" cy="74.98" r="13.17" />
+	<circle class="iu" cx="421.62" cy="23.75" r="13.17" />
+	<circle class="go" cx="446.18" cy="115.47" r="13.17" />
+	<circle class="ft" cx="474.74" cy="48.64" r="13.17" />
+	<circle class="iq" cx="403.19" cy="37.49" r="13.17" />
+	<circle class="jz" cx="398.41" cy="84.5" r="13.17" />
+	<circle class="fy" cx="392.31" cy="56.65" r="13.17" />
+	<circle class="kv" cx="472.52" cy="59.98" r="13.17" />
+	<circle class="id" cx="410.16" cy="93.14" r="13.17" />
+	<circle class="gy" cx="431.27" cy="28.61" r="13.17" />
+	<circle class="ib" cx="472.52" cy="79.97" r="13.17" />
+	<circle class="iy" cx="461.57" cy="104.01" r="13.17" />
+	<circle class="ir" cx="465.65" cy="93.14" r="13.17" />
+	<circle class="fo" cx="452.48" cy="33.79" r="13.17" />
+	<circle class="hl" cx="396.99" cy="66.85" r="13.17" />
+	<circle class="gg" cx="408.02" cy="56.55" r="13.17" />
+	<circle class="fm" cx="417.81" cy="36.92" r="13.17" />
+	<circle class="lc" cx="455.23" cy="40.29" r="13.17" />
+	<circle class="ie" cx="422.4" cy="53.46" r="13.17" />
+	<circle class="jy" cx="459.35" cy="68.4" r="13.17" />
+	<circle class="gl" cx="436.5" cy="49.43" r="13.17" />
+	<circle class="ij" cx="453.51" cy="58.15" r="13.17" />
+	<circle class="hu" cx="412.58" cy="77.67" r="13.17" />
+	<circle class="ii" cx="444.69" cy="106.32" r="13.17" />
+	<circle class="ko" cx="426.49" cy="104.01" r="13.17" />
+	<circle class="km" cx="451.25" cy="90.84" r="13.17" />
+	<circle class="gq" cx="433.01" cy="90.84" r="13.17" />
+	<circle class="kj" cx="430.99" cy="64.5" r="13.17" />
+	<circle class="hc" cx="437.91" cy="77.67" r="13.17" />
+	<circle class="gm" cx="87.21" cy="213.36" r="13.17" />
+	<circle class="hp" cx="85.25" cy="237.61" r="13.17" />
+	<circle class="hi" cx="92.11" cy="258.29" r="13.17" />
+	<circle class="fj" cx="105.28" cy="278.95" r="13.17" />
+	<circle class="kf" cx="122.16" cy="293.96" r="13.17" />
+	<circle class="fd" cx="98.81" cy="191.33" r="13.17" />
+	<circle class="ja" cx="214.7" cy="204.01" r="13.17" />
+	<circle class="fq" cx="216.84" cy="244.55" r="13.17" />
+	<circle class="kd" cx="183.04" cy="290.63" r="13.17" />
+	<circle class="iw" cx="135.34" cy="164.5" r="13.17" />
+	<circle class="fp" cx="116.85" cy="176.37" r="13.17" />
+	<circle class="jb" cx="181.68" cy="168.43" r="13.17" />
+	<circle class="ix" cx="159.19" cy="161.87" r="13.17" />
+	<circle class="gx" cx="201.52" cy="182.79" r="13.17" />
+	<circle class="gr" cx="218.52" cy="224.77" r="13.17" />
+	<circle class="ki" cx="210.44" cy="266.76" r="13.17" />
+	<circle class="jq" cx="199.98" cy="278.95" r="13.17" />
+	<circle class="lb" cx="168.51" cy="297.24" r="13.17" />
+	<circle class="gh" cx="144.16" cy="298.47" r="13.17" />
+	<circle class="hj" cx="103.44" cy="267.34" r="13.17" />
+	<circle class="if" cx="205.34" cy="194.77" r="13.17" />
+	<circle class="ih" cx="95.82" cy="249.41" r="13.17" />
+	<circle class="ip" cx="159.19" cy="169.62" r="13.17" />
+	<circle class="hm" cx="175.18" cy="175.04" r="13.17" />
+	<circle class="lf" cx="135.34" cy="172.23" r="13.17" />
+	<circle class="jt" cx="110.35" cy="190.84" r="13.17" />
+	<circle class="ku" cx="196.24" cy="209.85" r="13.17" />
+	<circle class="gz" cx="199.98" cy="261.09" r="13.17" />
+	<circle class="fz" cx="155.34" cy="293.2" r="13.17" />
+	<circle class="jo" cx="98.42" cy="214.62" r="13.17" />
+	<circle class="jk" cx="123.52" cy="185.4" r="13.17" />
+	<circle class="ge" cx="111.6" cy="206.95" r="13.17" />
+	<circle class="hh" cx="97.18" cy="226.53" r="13.17" />
+	<circle class="gw" cx="201.52" cy="239.7" r="13.17" />
+	<circle class="hf" cx="185.53" cy="185.4" r="13.17" />
+	<circle class="jv" cx="117.31" cy="278.95" r="13.17" />
+	<circle class="fr" cx="179" cy="278.95" r="13.17" />
+	<circle class="im" cx="168.51" cy="284.07" r="13.17" />
+	<circle class="lg" cx="137.94" cy="286.42" r="13.17" />
+	<circle class="hn" cx="107.05" cy="243.05" r="13.17" />
+	<circle class="kw" cx="152.6" cy="279.78" r="13.17" />
+	<circle class="ke" cx="185.53" cy="272.7" r="13.17" />
+	<circle class="kx" cx="203.66" cy="224.44" r="13.17" />
+	<circle class="hg" cx="165.29" cy="268.34" r="13.17" />
+	<circle class="fs" cx="190.49" cy="251.7" r="13.17" />
+	<circle class="je" cx="147.73" cy="181.6" r="13.17" />
+	<circle class="fg" cx="186.81" cy="227.79" r="13.17" />
+	<circle class="jh" cx="135.34" cy="198.58" r="13.17" />
+	<circle class="kk" cx="164.29" cy="185.4" r="13.17" />
+	<circle class="fn" cx="108.99" cy="224.81" r="13.17" />
+	<circle class="jr" cx="116.85" cy="261.09" r="13.17" />
+	<circle class="gf" cx="132.21" cy="270.25" r="13.17" />
+	<circle class="ik" cx="183.73" cy="199.32" r="13.17" />
+	<circle class="lk" cx="123.52" cy="212.49" r="13.17" />
+	<circle class="kt" cx="126.72" cy="240.96" r="13.17" />
+	<circle class="kl" cx="140.99" cy="214.62" r="13.17" />
+	<circle class="fu" cx="154.16" cy="200.78" r="13.17" />
+	<circle class="li" cx="174.07" cy="258.29" r="13.17" />
+	<circle class="jw" cx="177.32" cy="237.94" r="13.17" />
+	<circle class="is" cx="139.43" cy="250.79" r="13.17" />
+	<circle class="jp" cx="168.43" cy="207.94" r="13.17" />
+	<circle class="ht" cx="151.11" cy="231.38" r="13.17" />
+	<circle class="gb" cx="132.88" cy="229.06" r="13.17" />
+	<circle class="jm" cx="153.07" cy="259.52" r="13.17" />
+	<circle class="gc" cx="175.64" cy="223.02" r="13.17" />
+	<circle class="fw" cx="150.09" cy="221.33" r="13.17" />
+	<circle class="gj" cx="156.69" cy="240.41" r="13.17" />
+	<path class="ll" d="m105.99 117.61 136.81 27.38" />
+	<path class="kc" d="M253.88 147.21 237 150.46l4.98-5.64-2.43-7.11 14.33 9.5z" />
+	<path class="ll" d="m229.69 191.61 16.87-7.51" />
+	<path class="kc" d="m256.88 179.5-11.89 12.42.8-7.48-6.1-4.4 17.19-.54z" />
+	<path class="gu" d="m242.71 159.72 41.69.42-16.42-30.73 29.18 24.57 21.69-30.59-8.18 36.27 35.76-22.55s-26.96 29.33-26.21 29.26 23.63 14.06 23.63 14.06l-28.55-1.22 8.92 29.07-20.75-24.36-11.86 22.3.2-20.42-20.24 3.6 8.58-18.16-37.44-11.51Z" />
+	<path class="in" d="m266.82 141.72 27.43 12.82 4.25-24.3 6.61 22.38 36.1-16.12-25.79 27.81 12.22 4.39-11.78 5.52 9.77 15.46-16.92-6.37-2.53 27.59-9.34-26.55-18.09 13.12s4.92-18.63 4.17-18.93-26.39-4.62-26.39-4.62l25.34-10.73-15.06-21.47Z" />
+	<path class="kb" d="m301.68 148.13 10.46-23.86-.9 32.05 31.75-9.39-24.01 14.91 31.17 6.18-34.44 5.33 22.07 24.12-31.01-19.98 3.13 20.87-11.4-23.2-20.65 28.87 9.39-30.68-23.85-5.17 20.5-6.34-23.18-18.11 31.75 13.19-.62-23.91 9.84 15.12z" />
+	<path class="ky" d="m289.01 137.62 2.3 22.39-16.2 4.09 13.32 4.43-5.52 20.04s14.16-14.43 14.16-14.29 18.24 27.61 18.24 27.61l-7.51-27.61 29.94 3.97-29.94-14.28 4.85-11.4-12.29 4.06-11.35-19.01Z" />
+	<path class="ll" d="m346.42 136.83 23.17-17.61" />
+	<path class="kc" d="m378.58 112.39-8.74 14.81-.93-7.47-6.94-2.89 16.61-4.45z" />
+	<path class="ll" d="m350.15 156.68 169.81-33.04" />
+	<path class="kc" d="m531.05 121.49-14.38 9.42 2.46-7.1-4.94-5.67 16.86 3.35z" />
+	<path class="ll" d="M352.29 163.15h167.69" />
+	<path class="kc" d="m531.28 163.15-15.92 6.5 3.78-6.5-3.78-6.51 15.92 6.51z" />
+	<path class="ll" d="m350.15 169.56 169.81 33.03" />
+	<path class="kc" d="m531.05 204.75-16.87 3.34 4.95-5.66-2.46-7.11 14.38 9.43z" />
+	<path class="ll" d="m346.42 190.18 23.17 17.6" />
+	<path class="kc" d="m378.58 214.62-16.61-4.45 6.94-2.9.93-7.46 8.74 14.81z" />
+	<path class="hr" d="M29.64 110.91h.88l3.95 6.02c.43.65.85 1.42.85 1.42h.02v-7.44h.77v8.58h-.84l-3.93-5.95c-.4-.6-.9-1.45-.9-1.45h-.02v7.4h-.77v-8.58Zm7.54 5.48c0-1.86 1.12-3.25 2.83-3.25 1.99 0 2.67 1.64 2.66 3.38h-4.73c.04 1.39.71 2.48 2.12 2.48 1.03 0 1.57-.55 1.81-1.39h.72a2.42 2.42 0 0 1-2.53 2.03c-1.86 0-2.89-1.39-2.89-3.25Zm4.71-.45c-.04-1.22-.61-2.18-1.88-2.18s-1.92.95-2.05 2.18h3.93Zm1.66 1.72v-4.38h.74v4.33c0 .94.56 1.39 1.46 1.39 1.06 0 1.8-.79 1.8-1.85v-3.87h.73v6.2h-.73v-.91h-.02c-.43.6-.96 1.06-1.94 1.06-1.2 0-2.04-.72-2.04-1.97Zm6.5.76v-4.52h-.94v-.61h.94v-1.91h.74v1.91h1.15v.61h-1.15v4.4c0 .44.2.59.6.59.17 0 .38-.05.49-.1h.04v.64c-.2.07-.42.11-.68.11-.71 0-1.19-.32-1.19-1.12Zm2.87-5.13h.74v1.15h.02a2.1 2.1 0 0 1 2.1-1.18v.73c-.44-.07-.94.02-1.32.3-.48.36-.8.94-.8 1.67v3.53h-.74v-6.2Zm3.37 3.1c0-1.85 1.09-3.25 2.88-3.25s2.85 1.4 2.85 3.25-1.07 3.25-2.85 3.25-2.88-1.4-2.88-3.25Zm4.98 0c0-1.45-.72-2.63-2.1-2.63s-2.11 1.18-2.11 2.63.72 2.63 2.11 2.63 2.1-1.18 2.1-2.63Zm1.69-3.1h.74v.95h.02a2.4 2.4 0 0 1 2.08-1.08c1.15 0 1.98.68 1.98 1.93v4.4h-.74v-4.33c0-.94-.54-1.37-1.42-1.37-1.06 0-1.92.74-1.92 1.76v3.93h-.74v-6.2ZM5.31 234.89v-5.85h.8v5.78c0 1.58.85 2.23 2.35 2.23s2.34-.65 2.34-2.23v-5.78h.8v5.85c0 1.99-1.32 2.85-3.18 2.85s-3.12-.89-3.12-2.85Zm7.58-3.48h.74v1.15h.02a2.1 2.1 0 0 1 2.1-1.18v.73c-.44-.07-.94.02-1.32.3-.48.36-.8.94-.8 1.67v3.53h-.74v-6.2Zm3.35 4.62c0-1.48 1.15-1.78 2.55-1.94 1.22-.14 1.67-.22 1.67-.84v-.12c0-.84-.53-1.25-1.49-1.25-1.1 0-1.68.46-1.74 1.38h-.73c.08-1.2.88-1.98 2.47-1.98 1.36 0 2.19.56 2.19 1.92v3.37c0 .37.14.53.41.54.08 0 .17-.02.28-.05h.04v.54c-.11.05-.26.1-.5.1-.54 0-.88-.28-.91-.88v-.13h-.04c-.35.49-.98 1.07-2.17 1.07s-2.03-.58-2.03-1.73Zm4.23-.66v-1.12c-.4.22-1.01.32-1.61.41-1.04.14-1.85.3-1.85 1.37 0 .86.65 1.13 1.38 1.13 1.36 0 2.08-.94 2.08-1.79Zm2.1-3.96h.74v.95h.02a2.4 2.4 0 0 1 2.08-1.08c1.15 0 1.98.68 1.98 1.93v4.4h-.74v-4.33c0-.93-.54-1.37-1.42-1.37-1.06 0-1.92.74-1.92 1.76v3.93h-.74v-6.2Zm6.05-2.37h.74v1.06h-.74v-1.06Zm0 2.37h.74v6.2h-.74v-6.2Zm1.96 4.38v-4.38h.74v4.33c0 .94.56 1.39 1.46 1.39 1.06 0 1.8-.79 1.8-1.85v-3.87h.73v6.2h-.73v-.91h-.02c-.43.6-.96 1.05-1.94 1.05-1.2 0-2.04-.72-2.04-1.97Zm5.99-4.38h.74v.94h.02c.4-.62 1-1.07 1.88-1.07.76 0 1.4.38 1.65 1.13h.02a2.22 2.22 0 0 1 1.99-1.13c1.06 0 1.87.68 1.87 1.93v4.4h-.73v-4.34c0-.92-.55-1.36-1.31-1.36-.91 0-1.68.65-1.68 1.75v3.95h-.74v-4.34c0-.92-.53-1.36-1.25-1.36-.89 0-1.74.74-1.74 1.75v3.95h-.74v-6.2Zm9.2 2.51h3.07v.67h-3.07v-.67Zm6.63 0c1.12-.67 1.88-1.08 1.88-2.28 0-1.1-.7-1.75-1.78-1.75a1.8 1.8 0 0 0-1.37.53c-.32.36-.5.86-.52 1.62h-.79c0-.92.26-1.59.73-2.06a2.78 2.78 0 0 1 1.99-.74c1.55 0 2.52 1.03 2.52 2.39 0 1.64-1.18 2.22-2.39 2.94-.95.56-1.99 1.2-2.16 2.34h4.44v.72h-5.33c.04-2.11 1.46-2.91 2.76-3.69Zm3.39 1.15h.78c.05 1.32.89 2.03 2.12 2.03s1.97-.68 1.97-1.8-.74-1.73-2.03-1.73h-.58v-.64h.56c1.13 0 1.76-.6 1.76-1.52 0-1-.73-1.56-1.7-1.56-1.19 0-1.86.85-1.86 1.97h-.77c.01-1.51.98-2.6 2.65-2.6 1.38 0 2.45.83 2.45 2.2 0 .94-.5 1.5-1.24 1.79v.04a2.05 2.05 0 0 1 1.54 2.12c0 1.5-1.13 2.42-2.75 2.42s-2.9-1.02-2.91-2.71Zm6.37.33h.77c.13 1.03.74 1.68 1.93 1.68s1.94-.86 1.94-2.11-.79-2.04-1.9-2.04c-.92 0-1.48.37-1.8.84h-.74l.73-4.37h4.09v.7h-3.53l-.46 2.81h.02c.46-.42.98-.66 1.81-.66 1.33 0 2.55.95 2.55 2.75 0 1.66-1.09 2.79-2.72 2.79s-2.67-.98-2.71-2.39ZM500 61.15h3.83c1.55 0 2.43.89 2.43 2.31 0 1.06-.46 1.75-1.44 2.06v.04c.89.3 1.18.95 1.24 2.28.06 1.38.22 1.73.37 1.83v.05h-.86c-.19-.13-.24-.46-.31-1.92-.07-1.49-.59-1.91-1.83-1.91h-2.61v3.83h-.8v-8.58Zm3.55 4.07c1.25 0 1.88-.61 1.88-1.68s-.48-1.68-1.77-1.68h-2.85v3.36h2.75Zm3.83 2.68v-4.38h.74v4.33c0 .94.56 1.39 1.46 1.39 1.06 0 1.8-.79 1.8-1.85v-3.87h.73v6.2h-.73v-.91h-.02c-.43.6-.96 1.06-1.94 1.06-1.2 0-2.04-.72-2.04-1.97Zm6.75.89h-.02v.94h-.74v-8.58h.74v3.44h.02a2.34 2.34 0 0 1 2.1-1.2c1.49 0 2.55 1.19 2.55 3.25 0 1.91-.97 3.25-2.6 3.25-.95 0-1.57-.37-2.05-1.1Zm3.9-2.14c0-1.55-.66-2.64-1.89-2.64-1.37 0-2.09 1.16-2.09 2.64 0 1.55.72 2.61 2.1 2.61 1.27 0 1.88-1.16 1.88-2.61Zm1.72-5.5h.74v1.06h-.74v-1.06Zm0 2.37h.74v6.2h-.74v-6.2Zm1.68 3.12c0-2.06 1.18-3.25 2.65-3.25.95 0 1.64.44 2.04 1.16h.02v-3.41h.74v8.58h-.74v-.92h-.02a2.21 2.21 0 0 1-2.01 1.09c-1.67 0-2.67-1.34-2.67-3.25Zm4.78.01c0-1.52-.73-2.64-2.08-2.64-1.22 0-1.93 1.09-1.93 2.64 0 1.45.62 2.61 1.93 2.61s2.08-1.07 2.08-2.61Zm1.95-5.5h.74v1.06h-.74v-1.06Zm0 2.37h.74v6.2h-.74v-6.2Zm1.96 4.38v-4.38h.74v4.33c0 .94.56 1.39 1.46 1.39 1.06 0 1.8-.79 1.8-1.85v-3.87h.73v6.2h-.73v-.91h-.02c-.43.6-.96 1.06-1.94 1.06-1.2 0-2.04-.72-2.04-1.97Zm5.99-4.38h.74v.94h.02c.4-.62 1-1.07 1.88-1.07.75 0 1.4.38 1.66 1.13h.02a2.22 2.22 0 0 1 1.99-1.13c1.06 0 1.87.68 1.87 1.93v4.4h-.73v-4.34c0-.92-.55-1.35-1.31-1.35-.91 0-1.68.65-1.68 1.75v3.95h-.74v-4.34c0-.92-.53-1.35-1.25-1.35-.89 0-1.74.74-1.74 1.75v3.95h-.74v-6.2Zm9.2 2.51h3.07v.67h-3.07v-.67Zm4.06 1.68h.79c.07.91.71 1.51 1.69 1.51.61 0 1.08-.18 1.42-.54.6-.61.84-1.68.85-3.18h-.02a2.48 2.48 0 0 1-2.24 1.28 2.56 2.56 0 0 1-2.61-2.67 2.66 2.66 0 0 1 2.69-2.78c.79 0 1.37.25 1.83.65.85.7 1.12 1.92 1.12 3.68 0 1.54-.31 2.76-1.08 3.51-.48.47-1.14.72-1.92.72-1.44 0-2.42-.86-2.51-2.18Zm4.55-3.63c0-1.26-.83-2.1-1.99-2.1s-1.94.89-1.94 2.11.78 2.05 1.92 2.05 2.01-.85 2.01-2.06Zm2.96 5.12c-.82-.73-1.1-1.93-1.1-3.63 0-2.45 1.04-4.23 3.06-4.23 1.44 0 2.23.95 2.36 2.13h-.78c-.07-.84-.65-1.46-1.57-1.46-1.61 0-2.32 1.5-2.3 3.77h.02a2.49 2.49 0 0 1 2.24-1.33c1.51 0 2.6 1.14 2.6 2.67.01 1.56-1.08 2.78-2.63 2.78-.84 0-1.43-.26-1.91-.7Zm3.78-2.07c0-1.22-.78-2.05-1.89-2.05s-2.02.85-2.02 2.08.83 2.09 2.02 2.09 1.89-.89 1.89-2.11Zm-60.23 195.46c0-2.59 1.48-4.47 3.9-4.47 1.81 0 3.01 1.01 3.3 2.6h-.79c-.23-1.12-1.12-1.91-2.52-1.91-2.01 0-3.05 1.67-3.05 3.78s1.07 3.73 3.03 3.73c1.66 0 2.55-1.15 2.69-2.57h.78a3.68 3.68 0 0 1-.89 2.24c-.6.67-1.5 1.03-2.59 1.03-2.39 0-3.86-1.81-3.86-4.44Zm7.97 2.7c0-1.48 1.15-1.78 2.55-1.94 1.22-.14 1.67-.22 1.67-.84v-.12c0-.84-.53-1.25-1.49-1.25-1.1 0-1.68.46-1.74 1.38h-.73c.08-1.2.88-1.98 2.47-1.98 1.35 0 2.19.56 2.19 1.92v3.37c0 .37.14.53.41.54.08 0 .17-.02.28-.05h.04v.54c-.11.05-.26.1-.5.1-.54 0-.88-.28-.91-.88v-.13h-.04c-.35.49-.98 1.07-2.17 1.07s-2.03-.58-2.03-1.73Zm4.23-.66v-1.12c-.4.22-1.01.32-1.61.41-1.04.14-1.85.3-1.85 1.37 0 .86.65 1.13 1.38 1.13 1.36 0 2.08-.94 2.08-1.79Zm1.78-.86c0-1.86 1.12-3.25 2.83-3.25 1.99 0 2.67 1.64 2.66 3.38h-4.73c.04 1.39.71 2.48 2.12 2.48 1.03 0 1.57-.55 1.81-1.39h.72a2.42 2.42 0 0 1-2.53 2.03c-1.86 0-2.89-1.39-2.89-3.25Zm4.72-.45c-.04-1.22-.61-2.18-1.88-2.18s-1.92.95-2.05 2.18h3.93Zm1.3 1.62h.76c.11 1.04.83 1.46 1.82 1.46s1.57-.48 1.57-1.2-.38-.91-1.66-1.2c-1.26-.29-2.27-.59-2.27-1.79 0-1.03.89-1.68 2.16-1.68 1.48 0 2.16.74 2.3 1.84h-.74c-.08-.8-.64-1.22-1.56-1.22s-1.42.46-1.42 1.03c0 .71.59.88 1.78 1.15 1.25.26 2.15.58 2.15 1.86 0 1.1-.89 1.85-2.33 1.85-1.66 0-2.5-.9-2.57-2.1Zm5.84-6.65h.74v1.06h-.74v-1.06Zm0 2.38h.74v6.2h-.74v-6.2Zm1.95 4.38v-4.38h.74V265c0 .94.56 1.39 1.46 1.39 1.06 0 1.8-.79 1.8-1.85v-3.87h.73v6.2h-.73v-.91h-.02c-.43.6-.96 1.05-1.94 1.05-1.2 0-2.04-.72-2.04-1.97Zm5.99-4.38h.74v.94h.02c.4-.62 1-1.07 1.88-1.07.75 0 1.4.38 1.66 1.13h.02a2.22 2.22 0 0 1 1.99-1.13c1.06 0 1.87.68 1.87 1.93v4.4h-.73v-4.34c0-.92-.55-1.36-1.31-1.36-.91 0-1.68.65-1.68 1.75v3.95h-.74v-4.34c0-.92-.53-1.36-1.25-1.36-.89 0-1.74.74-1.74 1.75v3.95h-.74v-6.2Zm9.21 2.51h3.07v.67h-3.07v-.67Zm5.61-2.49h-1.73v-.53c1.21-.06 1.78-.34 1.92-1.56h.59v8.26h-.78v-6.18Zm2.09 3.64h.78c.05 1.32.89 2.03 2.12 2.03s1.97-.68 1.97-1.8-.74-1.73-2.03-1.73h-.58v-.64h.56c1.13 0 1.76-.6 1.76-1.52 0-1-.73-1.56-1.7-1.56-1.19 0-1.86.85-1.86 1.97h-.77c.01-1.51.98-2.6 2.65-2.6 1.38 0 2.45.83 2.45 2.2 0 .94-.5 1.5-1.23 1.79v.04a2.05 2.05 0 0 1 1.54 2.12c0 1.5-1.13 2.42-2.75 2.42s-2.9-1.02-2.91-2.71Zm10.91-4.96v-.02h-4.57v-.7h5.37v.67a12.06 12.06 0 0 0-3.27 7.54h-.84c.23-2.87 1.59-5.84 3.31-7.5Zm6.48-144.56h.88l3.95 6.02c.43.65.85 1.42.85 1.42h.02v-7.44h.77v8.58h-.84l-3.93-5.95c-.4-.6-.9-1.45-.9-1.45h-.02v7.4h-.77v-8.58Zm7.54 5.48c0-1.86 1.12-3.25 2.83-3.25 1.99 0 2.67 1.64 2.66 3.38h-4.73c.04 1.39.71 2.48 2.12 2.48 1.03 0 1.57-.55 1.81-1.39h.72a2.42 2.42 0 0 1-2.53 2.03c-1.86 0-2.89-1.39-2.89-3.25Zm4.71-.45c-.04-1.22-.61-2.18-1.88-2.18s-1.92.95-2.05 2.18h3.93Zm1.66 1.72v-4.38h.74v4.33c0 .94.56 1.39 1.46 1.39 1.06 0 1.8-.79 1.8-1.85v-3.87h.73v6.2h-.73v-.91h-.02c-.43.6-.96 1.06-1.94 1.06-1.2 0-2.04-.72-2.04-1.97Zm6.51.76v-4.52h-.94v-.61h.94v-1.91h.74v1.91h1.15v.61h-1.15v4.4c0 .44.2.59.6.59.17 0 .38-.05.49-.1h.04v.64c-.2.07-.42.11-.68.11-.71 0-1.19-.32-1.19-1.12Zm2.86-5.13h.74v1.15h.02a2.1 2.1 0 0 1 1.89-1.2l.2.02v.73c-.44-.07-.94.02-1.32.3-.48.36-.8.94-.8 1.67v3.53h-.74v-6.2Zm3.38 3.1c0-1.85 1.09-3.25 2.88-3.25s2.85 1.4 2.85 3.25-1.07 3.25-2.85 3.25-2.88-1.4-2.88-3.25Zm4.97 0c0-1.45-.72-2.63-2.1-2.63s-2.11 1.18-2.11 2.63.72 2.63 2.11 2.63 2.1-1.18 2.1-2.63Zm1.7-3.1h.74v.95h.02a2.39 2.39 0 0 1 2.07-1.08c1.15 0 1.98.68 1.98 1.93v4.4h-.74v-4.33c0-.94-.54-1.37-1.42-1.37-1.06 0-1.92.74-1.92 1.76v3.93h-.74v-6.2Zm-33.33 40.51h.88l3.95 6.02c.43.65.85 1.42.85 1.42h.02v-7.44h.77v8.58h-.84l-3.93-5.95c-.4-.6-.9-1.45-.9-1.45h-.02v7.4h-.77v-8.58Zm7.54 5.48c0-1.86 1.12-3.25 2.83-3.25 1.99 0 2.67 1.64 2.66 3.38h-4.73c.04 1.39.71 2.48 2.12 2.48 1.03 0 1.57-.55 1.81-1.39h.72a2.42 2.42 0 0 1-2.53 2.03c-1.86 0-2.89-1.39-2.89-3.25Zm4.71-.45c-.04-1.22-.61-2.18-1.88-2.18s-1.92.95-2.05 2.18h3.93Zm1.66 1.72v-4.38h.74v4.33c0 .94.56 1.39 1.46 1.39 1.06 0 1.8-.79 1.8-1.85v-3.87h.73v6.2h-.73v-.91h-.02c-.43.6-.96 1.06-1.94 1.06-1.2 0-2.04-.72-2.04-1.97Zm6.51.76v-4.52h-.94v-.61h.94v-1.91h.74v1.91h1.15v.61h-1.15v4.4c0 .44.2.59.6.59.17 0 .38-.05.49-.1h.04v.64c-.2.07-.42.11-.68.11-.71 0-1.19-.32-1.19-1.12Zm2.86-5.13h.74v1.15h.02a2.1 2.1 0 0 1 1.89-1.2l.2.02v.73c-.44-.07-.94.02-1.32.3-.48.36-.8.94-.8 1.67v3.53h-.74v-6.2Zm3.38 3.1c0-1.85 1.09-3.25 2.88-3.25s2.85 1.4 2.85 3.25-1.07 3.25-2.85 3.25-2.88-1.4-2.88-3.25Zm4.97 0c0-1.45-.72-2.63-2.1-2.63s-2.11 1.18-2.11 2.63.72 2.63 2.11 2.63 2.1-1.18 2.1-2.63Zm1.7-3.1h.74v.95h.02a2.39 2.39 0 0 1 2.07-1.08c1.15 0 1.98.68 1.98 1.93v4.4h-.74v-4.33c0-.94-.54-1.37-1.42-1.37-1.06 0-1.92.74-1.92 1.76v3.93h-.74v-6.2Zm-32.56 43.16h.88l3.95 6.02c.43.65.85 1.42.85 1.42h.02v-7.44h.77v8.58h-.84l-3.93-5.95c-.4-.6-.9-1.45-.9-1.45h-.02v7.4h-.77v-8.58Zm7.54 5.48c0-1.86 1.12-3.25 2.83-3.25 1.99 0 2.67 1.64 2.66 3.38h-4.73c.04 1.39.71 2.48 2.12 2.48 1.03 0 1.57-.55 1.81-1.39h.72a2.42 2.42 0 0 1-2.53 2.03c-1.86 0-2.89-1.39-2.89-3.25Zm4.71-.46c-.04-1.22-.61-2.18-1.88-2.18s-1.92.95-2.05 2.18h3.93Zm1.66 1.73v-4.38h.74v4.33c0 .94.56 1.39 1.46 1.39 1.06 0 1.8-.79 1.8-1.85v-3.87h.73v6.2h-.73v-.91h-.02c-.43.6-.96 1.05-1.94 1.05-1.2 0-2.04-.72-2.04-1.97Zm6.5.76v-4.52h-.94v-.61h.94v-1.91h.74v1.91h1.15v.61h-1.15v4.4c0 .44.2.59.6.59.17 0 .38-.05.49-.1h.04v.64c-.2.07-.42.11-.68.11-.71 0-1.19-.32-1.19-1.12Zm2.87-5.14h.74v1.15h.02a2.1 2.1 0 0 1 1.89-1.2l.2.02v.73c-.44-.07-.94.02-1.32.3-.48.36-.8.94-.8 1.67v3.53h-.74v-6.2Zm3.37 3.11c0-1.85 1.09-3.25 2.88-3.25s2.85 1.4 2.85 3.25-1.07 3.25-2.85 3.25-2.88-1.4-2.88-3.25Zm4.98 0c0-1.45-.72-2.63-2.1-2.63s-2.11 1.17-2.11 2.63.72 2.63 2.11 2.63 2.1-1.18 2.1-2.63Zm1.7-3.11h.74v.95h.02a2.39 2.39 0 0 1 2.07-1.08c1.15 0 1.98.68 1.98 1.93v4.4h-.74v-4.33c0-.93-.54-1.37-1.42-1.37-1.06 0-1.92.74-1.92 1.76v3.93h-.74v-6.2Z" />
+<title>Educational Diagram: Fission</title><metadata><dc:title>Fission</dc:title><dc:description>Educational diagram about Fission</dc:description></metadata></svg>

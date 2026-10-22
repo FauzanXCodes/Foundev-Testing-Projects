@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEWS — Dropout Early-Warning System (policy tool preview)</title>
+<meta name="description" content="DEWS risk register: a civic policy-tool preview for the UChicago student-dropout-risk-prediction project. Synthetic demo cohort; real scoring needs the Python pipeline.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to risk register</a>
+
+<header class="dews-top guilloche">
+  <div class="top-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="40" height="40">
+          <rect x="2" y="2" width="36" height="36" rx="6" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          <path d="M10 27 L16 19 L21 23 L30 12" fill="none" stroke="#e0a02c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="30" cy="12" r="3" fill="#e0a02c"/>
+        </svg>
+      </span>
+      <div>
+        <p class="kicker">Dropout Early-Warning System &middot; policy tool preview</p>
+        <h1>DEWS Risk Register</h1>
+        <p class="brand-sub">Target dropout interventions where they matter most &mdash; UChicago ML in Public Policy project preview.</p>
+      </div>
+    </div>
+    <p class="top-chip">
+      <span class="chip-dot" aria-hidden="true"></span>
+      Policy tool preview &mdash; risk scoring requires the Python pipeline
+    </p>
+  </div>
+
+  <div class="kpis" role="group" aria-label="Cohort summary">
+    <div class="kpi">
+      <span class="kpi-label">Cohort size</span>
+      <strong class="kpi-num" id="kpiCohort">24</strong>
+      <span class="kpi-note">synthetic rows</span>
+    </div>
+    <div class="kpi kpi-high">
+      <span class="kpi-label">High risk</span>
+      <strong class="kpi-num" id="kpiHigh">0</strong>
+      <span class="kpi-note">band &ge; 65</span>
+    </div>
+    <div class="kpi kpi-med">
+      <span class="kpi-label">Medium risk</span>
+      <strong class="kpi-num" id="kpiMed">0</strong>
+      <span class="kpi-note">band 40&ndash;64</span>
+    </div>
+    <div class="kpi kpi-interv">
+      <span class="kpi-label">Interventions logged</span>
+      <strong class="kpi-num" id="kpiInterv">0</strong>
+      <span class="kpi-note">this browser</span>
+    </div>
+  </div>
+</header>
+
+<div class="synth-banner" role="note">
+  <span class="tag">SYNTHETIC</span>
+  <span><strong>Synthetic demo cohort &mdash; not real student records.</strong> Enrollment IDs, grades, absences and outcomes on this page are illustrative rows written for this UI preview. The repository&rsquo;s real data is school-level aggregate, held on a secure server and not published (see <span class="mono">pipeline/data/Data_Readme.md</span>).</span>
+</div>
+
+<nav class="tabs" role="tablist" aria-label="DEWS sections">
+  <button class="tab" role="tab" id="tab-register" aria-controls="panel-register" aria-selected="true" type="button">
+    <span class="tab-ico" aria-hidden="true">
+      <svg viewBox="0 0 16 16" width="14" height="14"><path fill="currentColor" d="M2 2h12v2H2V2zm0 4h12v2H2V6zm0 4h8v2H2v-2zm0 4h8v2H2v-2z"/></svg>
+    </span>Risk register
+  </button>
+  <button class="tab" role="tab" id="tab-lab" aria-controls="panel-lab" aria-selected="false" tabindex="-1" type="button">
+    <span class="tab-ico" aria-hidden="true">
+      <svg viewBox="0 0 16 16" width="14" height="14"><path fill="currentColor" d="M6 1h4v5l4 8H2l4-8V1z"/></svg>
+    </span>Policy lab
+  </button>
+  <button class="tab" role="tab" id="tab-pipeline" aria-controls="panel-pipeline" aria-selected="false" tabindex="-1" type="button">
+    <span class="tab-ico" aria-hidden="true">
+      <svg viewBox="0 0 16 16" width="14" height="14"><path fill="currentColor" d="M2 3h5v4H2V3zm7 0h5v4H9V3zM2 9h5v4H2V9zm7 0h5v4H9V9z"/></svg>
+    </span>Pipeline
+  </button>
+</nav>
+
+<main id="main">
+
+<!-- ============================ RISK REGISTER ============================ -->
+<section id="panel-register" role="tabpanel" aria-labelledby="tab-register" class="panel">
+  <div class="toolbar-band">
+    <div class="filter-group">
+      <label class="search-box" for="registerSearch">
+        <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M7 2a5 5 0 103.9 8.1L14 13.2 14.7 12.5 10.1 8A5 5 0 007 2zm0 1.5A3.5 3.5 0 113.5 7 3.5 3.5 0 017 3.5z"/></svg>
+        <span class="sr-only">Search by enrollment ID</span>
+        <input type="search" id="registerSearch" placeholder="Search enrollment…  (press /)" autocomplete="off">
+      </label>
+    </div>
+
+    <div class="chip-row" role="group" aria-label="Filter by grade">
+      <span class="chip-label">Grade</span>
+      <button class="chip active" type="button" data-grade="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-grade="9" aria-pressed="false">9</button>
+      <button class="chip" type="button" data-grade="10" aria-pressed="false">10</button>
+      <button class="chip" type="button" data-grade="11" aria-pressed="false">11</button>
+      <button class="chip" type="button" data-grade="12" aria-pressed="false">12</button>
+    </div>
+
+    <div class="chip-row" role="group" aria-label="Filter by risk band">
+      <span class="chip-label">Band</span>
+      <button class="chip active" type="button" data-band="all" aria-pressed="true">All</button>
+      <button class="chip chip-high" type="button" data-band="HIGH" aria-pressed="false">High</button>
+      <button class="chip chip-med" type="button" data-band="MED" aria-pressed="false">Med</button>
+      <button class="chip chip-low" type="button" data-band="LOW" aria-pressed="false">Low</button>
+    </div>
+
+    <div class="band-actions">
+      <span class="result-count mono" id="resultCount">24 shown</span>
+      <button class="btn ghost" id="exportRegisterCsv" type="button">Export register CSV</button>
+      <button class="btn ghost" id="exportInterventionsCsv" type="button">Export interventions CSV</button>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <table class="register" id="registerTable">
+      <caption class="sr-only">Synthetic student risk register. Column headers sort the table; rows open a profile drawer.</caption>
+      <thead>
+        <tr>
+          <th scope="col" data-col="id"><button class="sort-btn" type="button" data-sort="id">Enrollment</button></th>
+          <th scope="col" data-col="grade"><button class="sort-btn" type="button" data-sort="grade">Grade</button></th>
+          <th scope="col" class="num" data-col="absences"><button class="sort-btn" type="button" data-sort="absences">Absences</button></th>
+          <th scope="col" class="num" data-col="gpa"><button class="sort-btn" type="button" data-sort="gpa">GPA trend</button></th>
+          <th scope="col" class="num" data-col="credits"><button class="sort-btn" type="button" data-sort="credits">Credits %</button></th>
+          <th scope="col" class="num" data-col="score"><button class="sort-btn" type="button" data-sort="score">Risk score</button></th>
+          <th scope="col">Band</th>
+          <th scope="col">Last intervention</th>
+        </tr>
+      </thead>
+      <tbody id="registerBody"></tbody>
+    </table>
+
+    <div class="empty" id="registerEmpty" hidden>
+      <p class="empty-title">No rows match these filters</p>
+      <p>Clear the grade or band chips, or empty the search box to see the full synthetic cohort of 24 rows.</p>
+      <button class="btn ghost" id="clearFiltersBtn" type="button">Reset filters</button>
+    </div>
+  </div>
+
+  <p class="footnote">Scores are a <strong>demo heuristic</strong> (absence rate, GPA decline, credit shortfall, behavior flags &mdash; weights shown in each profile). Model-based scoring lives in the repository&rsquo;s Python pipeline; see the <em>Pipeline</em> tab.</p>
+</section>
+
+<!-- ============================== POLICY LAB ============================== -->
+<section id="panel-lab" role="tabpanel" aria-labelledby="tab-lab" class="panel" hidden>
+  <div class="lab-grid">
+    <div class="card">
+      <h2>Intervention capacity</h2>
+      <p class="card-sub">How much can a school actually reach? Set the share of the cohort you could serve, and see who targeting would catch.</p>
+
+      <label class="slider-row" for="capSlider">
+        <span>Capacity: top <output class="mono" id="capPct">25%</output> of cohort</span>
+        <input type="range" id="capSlider" min="5" max="100" step="5" value="25"
+               aria-describedby="capHelp">
+      </label>
+      <p class="micro" id="capHelp">Flags the highest-risk rows until the capacity budget is filled.</p>
+
+      <div class="metric-row">
+        <div class="metric">
+          <span class="metric-label">Flagged</span>
+          <strong class="mono" id="mFlagged">6</strong>
+          <span class="metric-note" id="mFlaggedNote">of 24 rows</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Precision@k</span>
+          <strong class="mono" id="mPrecision">0.00</strong>
+          <span class="metric-note">of flagged, later drop out*</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Recall@k</span>
+          <strong class="mono" id="mRecall">0.00</strong>
+          <span class="metric-note">of all dropouts* captured</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Missed</span>
+          <strong class="mono" id="mMissed">0</strong>
+          <span class="metric-note">dropouts* outside capacity</span>
+        </div>
+      </div>
+
+      <p class="interp" id="labInterpretation"></p>
+      <p class="micro honesty">* Computed live on the <strong>synthetic cohort</strong>: demo risk scores ranked against the illustrative outcome labels. Real precision&ndash;recall evaluation happens in <span class="mono">pipeline/__6_Evaluate.py</span> on the confidential school data.</p>
+    </div>
+
+    <div class="card">
+      <h2>Precision&ndash;recall across the ranked cohort</h2>
+      <p class="card-sub">Each point is a cutoff: everything ranked at or above it gets an intervention.</p>
+      <div class="canvas-box">
+        <canvas id="prCanvas" width="560" height="360" aria-label="Precision recall curve over the ranked synthetic cohort"></canvas>
+        <p class="empty inline" id="prEmpty" hidden>Canvas drawing is unavailable in this browser.</p>
+      </div>
+      <div class="legend">
+        <span class="lg"><i class="sw sw-pr"></i> precision &amp; recall vs. share of cohort flagged</span>
+        <span class="lg"><i class="lg-dash"></i> random-targeting baseline (share of dropouts in cohort)</span>
+        <span class="lg"><i class="sw sw-point"></i> your operating point (<span id="lgCap" class="mono">25%</span>)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="prose card">
+    <h2>Targeting vs. universal programs</h2>
+    <p>The project&rsquo;s stated goal is a <strong>scalable ranking system</strong> that lets a school system &ldquo;target their interventions to individuals who are most immediately at risk for dropping out&rdquo; (README). A ranking is not a yes/no classifier: it answers &ldquo;if we can only reach <span class="mono">k</span> students this term, whom do we start with?&rdquo;</p>
+    <ul>
+      <li><strong>Small capacity, high yield.</strong> Serving only the top slice gives the highest precision &mdash; most seats go to students who show the same signals as the illustrative dropouts.</li>
+      <li><strong>Expanding capacity dilutes yield.</strong> As <span class="mono">k</span> grows, precision slides toward the cohort&rsquo;s base rate while recall climbs toward 1.0 &mdash; more true cases caught, but more false alarms per seat.</li>
+      <li><strong>Universal programs trade precision for coverage.</strong> School-wide attendance or tutoring programs reach the hidden cases a ranking can miss (students whose risk signals never spiked), but at far higher cost per student reached.</li>
+      <li><strong>Policy read:</strong> precision@k is a budgeting number. Pick <span class="mono">k</span> from the intervention capacity you can actually fund, then judge the system at that operating point &mdash; not at an arbitrary 0.5 threshold.</li>
+    </ul>
+    <p class="micro">Evaluation method mirrors the repository: precision/recall/F1 plus precision&ndash;recall curves versus population share (<span class="mono">pipeline/__6_Evaluate.py</span>, <span class="mono">graphs/*precision_recall_n.png</span>).</p>
+  </div>
+</section>
+
+<!-- =============================== PIPELINE =============================== -->
+<section id="panel-pipeline" role="tabpanel" aria-labelledby="tab-pipeline" class="panel" hidden>
+  <div class="pipeline-lead card">
+    <h2>What this preview does &mdash; and does not &mdash; run</h2>
+    <p>DEWS in this folder is a static front-end. The project&rsquo;s real system is a <strong>SQL + Python ranking pipeline</strong> built for a Machine Learning in Public Policy course (UChicago, with the Center for Data Science in Public Policy). There is no server, no saved model weights, and <strong>no single command that runs end to end</strong> &mdash; the training data was kept on a secure server and is not published.</p>
+    <p class="callout">Needs: the cohort CSVs (not in repo) + scikit-learn + pandas. The code targets a legacy scikit-learn era (<span class="mono">sklearn.cross_validation</span> was removed in scikit-learn 0.20) and hardcodes server paths such as <span class="mono">/mnt/data2/education_data/…</span>, so expect to port before running.</p>
+  </div>
+
+  <div class="step-grid">
+    <section class="card">
+      <span class="step-no mono">01</span>
+      <h3>SQL &mdash; database construction</h3>
+      <p class="micro">Real files in <span class="mono">db_creation/</span>:</p>
+      <ul class="file-list">
+        <li><span class="file mono">upload_data.sql</span> raw cohort tables (grade 6&ndash;12 yearly records)</li>
+        <li><span class="file mono">create_new_tables.sql</span> cohort joins across grades</li>
+        <li><span class="file mono">add_school_data.sql</span> attach school-level attributes</li>
+        <li><span class="file mono">add_dropout_column.sql</span> derive <span class="mono">g6…g12_dropout</span> labels from withdrawal codes</li>
+        <li><span class="file mono">school_data_small.csv</span> small school-level reference extract</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <span class="step-no mono">02</span>
+      <h3>Python &mdash; pipeline steps</h3>
+      <p class="micro">Real files in <span class="mono">pipeline/</span> (run in order):</p>
+      <ul class="file-list">
+        <li><span class="file mono">__1_and_2_Read_and_Describe_Data.py</span> ingest + summary stats</li>
+        <li><span class="file mono">__3_Missing_Data_Processing.py</span> imputation</li>
+        <li><span class="file mono">__4_Generate_Features.py</span> discretization, dummies</li>
+        <li><span class="file mono">__5_Classifier.py</span> classifier suite</li>
+        <li><span class="file mono">__6_Evaluate.py</span> precision/recall, PR curves</li>
+        <li><span class="file mono">final_pipeline.py</span> consolidated entry (cohorts 1/2)</li>
+        <li><span class="file mono">mcps_pipeline.py</span> + <span class="mono">__5_MCPS_Classifier.py</span>, <span class="mono">__6_MCPS__Evaluate.py</span> MCPS variants</li>
+        <li><span class="file mono">precision_recall_population graph.py</span> graph generation</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <span class="step-no mono">03</span>
+      <h3>Models evaluated</h3>
+      <ul class="model-list">
+        <li><strong>Logistic Regression</strong> <span class="micro">— one of the two best-model picks in <span class="mono">final_pipeline.py</span></span></li>
+        <li><strong>Random Forest</strong> <span class="micro">— class-weighted {0:1, 1:10}; other best-model pick</span></li>
+        <li><strong>Decision Tree</strong> <span class="micro">max_depth=5</span></li>
+        <li><strong>AdaBoost</strong></li>
+        <li><strong>Bagging</strong></li>
+        <li><strong>Stochastic Gradient Descent</strong> <span class="micro">modified_huber, class-weighted</span></li>
+        <li><strong>k-Nearest Neighbours</strong> <span class="micro">k=3</span></li>
+        <li><span class="micro">Also in <span class="mono">__5_Classifier.py</span>: linear/ANOVA SVMs and gradient boosting. Evaluation uses 5-fold CV with precision, recall, F1, accuracy and precision&ndash;recall curves.</span></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <span class="step-no mono">04</span>
+      <h3>Outputs in this repo</h3>
+      <p class="micro"><span class="mono">graphs/</span> precision-recall vs. population PNGs:</p>
+      <div class="graph-grid">
+        <figure><a href="graphs/Logistic%20Regression_precision_recall_n.png" target="_blank" rel="noopener"><img src="graphs/Logistic%20Regression_precision_recall_n.png" alt="Precision-recall vs population — Logistic Regression" loading="lazy"></a><figcaption class="mono">Logistic Regression</figcaption></figure>
+        <figure><a href="graphs/Random%20Forest_precision_recall_n.png" target="_blank" rel="noopener"><img src="graphs/Random%20Forest_precision_recall_n.png" alt="Precision-recall vs population — Random Forest" loading="lazy"></a><figcaption class="mono">Random Forest</figcaption></figure>
+        <figure><a href="graphs/Decision%20Tree_precision_recall_n.png" target="_blank" rel="noopener"><img src="graphs/Decision%20Tree_precision_recall_n.png" alt="Precision-recall vs population — Decision Tree" loading="lazy"></a><figcaption class="mono">Decision Tree</figcaption></figure>
+        <figure><a href="graphs/AdaBoost_precision_recall_n.png" target="_blank" rel="noopener"><img src="graphs/AdaBoost_precision_recall_n.png" alt="Precision-recall vs population — AdaBoost" loading="lazy"></a><figcaption class="mono">AdaBoost</figcaption></figure>
+        <figure><a href="graphs/Bagging_precision_recall_n.png" target="_blank" rel="noopener"><img src="graphs/Bagging_precision_recall_n.png" alt="Precision-recall vs population — Bagging" loading="lazy"></a><figcaption class="mono">Bagging</figcaption></figure>
+        <figure><a href="graphs/Nearest%20Neighbors_precision_recall_n.png" target="_blank" rel="noopener"><img src="graphs/Nearest%20Neighbors_precision_recall_n.png" alt="Precision-recall vs population — Nearest Neighbors" loading="lazy"></a><figcaption class="mono">Nearest Neighbors</figcaption></figure>
+        <figure><a href="graphs/Stochastic%20Gradient%20Descent_precision_recall_n.png" target="_blank" rel="noopener"><img src="graphs/Stochastic%20Gradient%20Descent_precision_recall_n.png" alt="Precision-recall vs population — Stochastic Gradient Descent" loading="lazy"></a><figcaption class="mono">SGD</figcaption></figure>
+      </div>
+      <p class="micro"><span class="mono">pipeline/output/</span> additionally holds <span class="mono">evaluation/</span>, <span class="mono">histograms/</span> and an output readme.</p>
+    </section>
+  </div>
+
+  <section class="card">
+    <h3>How to run (honest version)</h3>
+    <p class="micro">There is no single command. Rough order of operations:</p>
+<pre class="code" id="runCmd"># 1. Build the database with the SQL in db_creation/ against the secured
+#    cohort data (upload_data.sql, create_new_tables.sql,
+#    add_school_data.sql, add_dropout_column.sql).
+#    Training CSVs are NOT in this repo — see pipeline/data/Data_Readme.md.
+# 2. Install a legacy-era stack (pandas + scikit-learn with sklearn.cross_validation).
+# 3. Run the steps, e.g.:
+python pipeline/__1_and_2_Read_and_Describe_Data.py
+python pipeline/__3_Missing_Data_Processing.py
+python pipeline/__4_Generate_Features.py
+python pipeline/__5_Classifier.py
+python pipeline/__6_Evaluate.py
+# consolidated entry (argv: pred_grade, ready_to_test):
+python pipeline/final_pipeline.py 9 False
+# NOTE: data paths inside the scripts point at the authors' server
+# (/mnt/data2/education_data/...) and must be edited first.</pre>
+    <button class="btn ghost copy-btn" type="button" data-copy="runCmd">Copy</button>
+  </section>
+
+  <section class="card ferpa">
+    <h3>FERPA-conscious notes</h3>
+    <ul>
+      <li>The original student data was withheld for confidentiality (<span class="mono">pipeline/data/Data_Readme.md</span>); only school-level reference data (<span class="mono">db_creation/school_data_small.csv</span>) ships with the repo.</li>
+      <li>This preview therefore runs entirely on a <strong>synthetic cohort</strong>. Do not paste real student records into this page &mdash; everything you type stays in your browser&rsquo;s localStorage, but this is a demo, not an approved system of record.</li>
+      <li>Risk bands here are triage prompts for humans, not determinations about any individual student. Any real deployment needs the district&rsquo;s data-governance and family-notification processes.</li>
+    </ul>
+  </section>
+</section>
+
+</main>
+
+<!-- ================================ DRAWER ================================ -->
+<div class="drawer-overlay" id="drawerOverlay" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true" inert>
+  <header class="drawer-head">
+    <div>
+      <p class="drawer-id mono" id="drawerId">SYN-0000</p>
+      <h2 id="drawerTitle">Student profile <span class="drawer-synth">synthetic</span></h2>
+    </div>
+    <button class="icon-btn" id="drawerClose" type="button" aria-label="Close profile (Esc)">
+      <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3.3 2 2 3.3 6.7 8 2 12.7 3.3 14 8 9.3 12.7 14 14 12.7 9.3 8 14 3.3 12.7 2 8 6.7z"/></svg>
+    </button>
+  </header>
+
+  <div class="drawer-body">
+    <dl class="profile" id="drawerProfile"></dl>
+
+    <section class="drawer-sec">
+      <h3>Risk factors</h3>
+      <p class="micro">Demo heuristic weights: absence rate 30%, GPA decline 25%, credit shortfall 25%, behavior flags 20% &rarr; score 0&ndash;100.</p>
+      <div id="factorBars" class="factor-bars"></div>
+      <p class="score-line">Overall risk: <strong class="mono" id="drawerScore">0</strong> <span class="band-chip" id="drawerBand">LOW</span></p>
+    </section>
+
+    <section class="drawer-sec">
+      <h3>Suggested interventions</h3>
+      <p class="micro">Templates &mdash; generic, evidence-informed starting points, not individualized recommendations.</p>
+      <ul class="suggest-list" id="suggestionList"></ul>
+    </section>
+
+    <section class="drawer-sec">
+      <h3 id="formTitle">Log an intervention</h3>
+      <form id="intervForm" novalidate>
+        <div class="frow">
+          <label for="intervType">Type</label>
+          <select id="intervType" required>
+            <option value="">Choose a type…</option>
+            <option>Tutoring check-in</option>
+            <option>Mentor assignment</option>
+            <option>Attendance contract</option>
+            <option>Credit recovery plan</option>
+            <option>Family outreach</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="frow two">
+          <div>
+            <label for="intervDate">Date</label>
+            <input type="date" id="intervDate" required>
+          </div>
+          <div>
+            <label for="intervOwner">Owner / note</label>
+            <input type="text" id="intervOwner" maxlength="60" placeholder="e.g. Counselor Reyes" autocomplete="off">
+          </div>
+        </div>
+        <div class="frow">
+          <label for="intervNote">Note <span class="opt">(optional)</span></label>
+          <textarea id="intervNote" rows="2" maxlength="240" placeholder="What was agreed, next checkpoint…"></textarea>
+        </div>
+        <p class="form-err" id="intervErr" role="alert" hidden></p>
+        <div class="frow actions">
+          <button class="btn primary" type="submit" id="intervSave">Save intervention</button>
+          <button class="btn ghost" type="button" id="intervCancel" hidden>Cancel edit</button>
+        </div>
+        <p class="msg" id="intervMsg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="drawer-sec">
+      <h3>History</h3>
+      <ul class="history" id="intervHistory"></ul>
+      <p class="empty inline" id="historyEmpty">No interventions logged for this student yet.</p>
+    </section>
+  </div>
+</aside>
+
+<footer class="dews-footer">
+  <p>DEWS preview &middot; static vanilla HTML/CSS/JS &middot; no backend, no model weights, no real student data</p>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

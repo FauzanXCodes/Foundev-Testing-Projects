@@ -1,0 +1,7 @@
+# Modern dependency set for Python 3.10+ (the original requirements.txt
+# pins 2017-era versions that no longer install on current Python).
+# Functionality is identical: flask serving POST /predict, sklearn training.
+flask>=2.3
+scikit-learn>=1.3
+pandas>=2.0
+joblib>=1.3

@@ -1,0 +1,14 @@
+﻿{
+    "id":  "question-paper-generator-from-syllabus",
+    "name":  "Question Paper Generator from Syllabus",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/Gautam4620/python_flask_ai_question_paper_generator",
+    "stack":  "Python; NLP; Flask",
+    "goal":  "Bloom-level tagging, difficulty distribution, blueprint-based paper assembly.",
+    "license":  "AGPL-3.0",
+    "licenseWarning":  null,
+    "entry":  "app_fib.py",
+    "expectedFileCount":  32,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  241
+}

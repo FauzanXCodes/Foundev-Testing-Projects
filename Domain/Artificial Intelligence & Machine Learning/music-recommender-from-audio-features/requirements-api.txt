@@ -1,0 +1,5 @@
+# Dependencies for the backend API (src/api.py).
+# The browser UI (index.html + js/app.js) needs none of these.
+flask>=2.3
+pandas>=2.0
+scikit-learn>=1.3

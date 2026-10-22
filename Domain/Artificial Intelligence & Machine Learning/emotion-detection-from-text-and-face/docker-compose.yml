@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # Redis service for backend caching
+  redis:
+    image: redis:alpine
+    container_name: moodtunes-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - moodtunes-network
+
+  # FastAPI Backend service
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: moodtunes-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+    networks:
+      - moodtunes-network
+
+  # Next.js Frontend service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: moodtunes-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - moodtunes-network
+
+networks:
+  moodtunes-network:
+    driver: bridge

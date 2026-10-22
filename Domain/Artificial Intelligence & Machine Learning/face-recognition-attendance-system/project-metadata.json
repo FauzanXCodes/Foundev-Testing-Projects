@@ -1,0 +1,14 @@
+﻿{
+    "id":  "face-recognition-attendance-system",
+    "name":  "Face Recognition Attendance System",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/Spidy20/Attendace_management_system",
+    "stack":  "Python; OpenCV/face_recognition; SQLite",
+    "goal":  "Enrol faces, live recognition, attendance log and anti-spoof basic check.",
+    "license":  "MIT",
+    "licenseWarning":  null,
+    "entry":  "AMS_Run.py",
+    "expectedFileCount":  3,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  23
+}

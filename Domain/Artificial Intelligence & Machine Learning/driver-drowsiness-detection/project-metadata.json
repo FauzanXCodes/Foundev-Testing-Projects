@@ -1,0 +1,14 @@
+﻿{
+    "id":  "driver-drowsiness-detection",
+    "name":  "Driver Drowsiness Detection",
+    "domain":  "Artificial Intelligence \u0026 Machine Learning",
+    "repository":  "https://github.com/Gagandeep-2003/driver-drowsiness-detection-system",
+    "stack":  "Python; OpenCV; dlib",
+    "goal":  "EAR/MAR eye-mouth ratio, alarm trigger and trip report.",
+    "license":  "MIT",
+    "licenseWarning":  null,
+    "entry":  "main.py",
+    "expectedFileCount":  12,
+    "downloadStatus":  "success",
+    "downloadedFileCount":  45
+}

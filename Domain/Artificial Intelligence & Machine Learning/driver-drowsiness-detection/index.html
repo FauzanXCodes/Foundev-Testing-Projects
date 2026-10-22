@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cockpit — Fatigue Monitor · Driver Drowsiness Detection</title>
+<meta name="description" content="Cockpit — an automotive-HUD instrument view for the driver drowsiness detection project. Simulated EAR signal, gauge, strip chart and real thresholds from the backend code.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Chakra+Petch:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#ear-value">Skip to EAR gauge</a>
+
+<div class="cockpit">
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 44 44" role="img" aria-label="Cockpit mark">
+        <circle cx="22" cy="22" r="18" fill="none" stroke="currentColor" stroke-width="2.4"/>
+        <circle cx="22" cy="22" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+        <path d="M22 4v11M22 29v11M4 22h11M29 22h11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-text">
+        <h1>Cockpit<span> · Fatigue Monitor</span></h1>
+        <p>Driver drowsiness detection — instrument view</p>
+      </div>
+    </div>
+
+    <div class="topbar-status">
+      <div class="state-led" id="state-led" data-state="standby">
+        <span class="led-dot" aria-hidden="true"></span>
+        <span class="led-text" id="state-led-text">STANDBY</span>
+      </div>
+      <div class="hud-cell">
+        <span class="hud-label">Session</span>
+        <span class="hud-value" id="session-timer">00:00:00</span>
+      </div>
+      <div class="hud-cell">
+        <span class="hud-label">Local</span>
+        <span class="hud-value" id="clock">--:--</span>
+        <button type="button" class="hud-btn" id="clock-toggle" aria-label="Switch clock between 24-hour and 12-hour format">24H</button>
+      </div>
+    </div>
+
+    <div class="alarm-deck">
+      <button type="button" class="arm-toggle is-armed" id="alarm-arm" aria-pressed="true">
+        <span class="arm-led" aria-hidden="true"></span>
+        <span id="alarm-arm-text">Alarm armed</span>
+      </button>
+      <div class="vol-group">
+        <label for="volume" class="hud-label">Vol</label>
+        <input type="range" id="volume" min="0" max="100" value="60">
+      </div>
+      <button type="button" class="hud-btn" id="mute-btn" aria-pressed="false">Mute</button>
+      <button type="button" class="btn-test" id="alarm-test">Alarm test</button>
+    </div>
+  </header>
+
+  <div class="sim-bar">
+    <p class="sim-chip" id="sim-chip">
+      <span class="sim-tri" aria-hidden="true">▲</span>
+      Simulated signal — live webcam EAR requires the backend
+    </p>
+    <p class="sim-bar-note" id="alarm-note" role="status"></p>
+  </div>
+
+  <main class="cluster">
+
+    <section class="rail rail-left" aria-label="Session metrics">
+      <h2 class="rail-title">Session metrics</h2>
+
+      <div class="metric">
+        <span class="metric-label">Blinks <span class="tag">simulated</span></span>
+        <span class="metric-value" id="metric-blinks">0</span>
+        <span class="metric-note">Zero-crossings below EAR 0.27</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Drowsiness alerts <span class="tag">simulated</span></span>
+        <span class="metric-value" id="metric-alerts">0</span>
+        <span class="metric-note">Sustained-closure events</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Average EAR <span class="tag">simulated</span></span>
+        <span class="metric-value" id="metric-avg">—</span>
+        <span class="metric-note">Mean of samples this session</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Longest closure <span class="tag">simulated</span></span>
+        <span class="metric-value" id="metric-closure">0.00 s</span>
+        <span class="metric-note">Longest run below EAR 0.27</span>
+      </div>
+
+      <div class="session-card">
+        <button type="button" class="btn-run" id="session-btn">Start session</button>
+        <p class="session-hint">Keyboard: <kbd>Space</kbd> starts / stops the simulated session.</p>
+        <p class="session-note" id="session-note" role="status">Idle — press start to run the simulated EAR signal.</p>
+      </div>
+
+      <div class="ctrl-card">
+        <h3>Signal controls</h3>
+        <label class="ctrl-label" for="baseline">Baseline EAR <output id="baseline-val">0.300</output></label>
+        <input type="range" id="baseline" min="0.20" max="0.45" step="0.005" value="0.30">
+        <label class="ctrl-label" for="profile">Signal profile (simulated)</label>
+        <select id="profile">
+          <option value="steady">Steady — rare blinks</option>
+          <option value="normal" selected>Normal — blinks, mild closures</option>
+          <option value="drowsy">Drowsy — frequent deep closures</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="stage" aria-label="EAR gauge and strip chart">
+      <div class="gauge-wrap">
+        <svg class="gauge" id="gauge" viewBox="0 0 440 280" role="img" aria-label="Eye Aspect Ratio gauge, scale 0.00 to 0.45, redline below 0.27">
+          <path class="gauge-track" d="M 50 240 A 170 170 0 0 1 390 240"/>
+          <path class="gauge-redline" d="M 50 240 A 170 170 0 0 1 272.53 78.32"/>
+          <path class="gauge-normal" d="M 272.53 78.32 A 170 170 0 0 1 390 240"/>
+          <g id="gauge-ticks"></g>
+          <text class="gauge-zone" x="122" y="206">REDLINE</text>
+          <text class="gauge-zone-sub" x="122" y="224">EAR &lt; 0.27</text>
+          <g id="gauge-needle">
+            <polygon class="needle-body" points="220,240 380,236 380,244"/>
+            <circle class="needle-hub" cx="220" cy="240" r="10"/>
+            <circle class="needle-cap" cx="220" cy="240" r="4"/>
+          </g>
+          <text class="gauge-scale-label" x="50" y="262" text-anchor="middle">0.00</text>
+          <text class="gauge-scale-label" x="390" y="262" text-anchor="middle">0.45</text>
+        </svg>
+
+        <div class="readout-block">
+          <div class="ear-readout"><span id="ear-value">0.000</span></div>
+          <p class="ear-caption">Eye Aspect Ratio · (A+B) / (2·C)</p>
+          <div class="state-plate" id="state-plate" data-state="idle">STANDBY</div>
+          <p class="state-detail" id="state-detail">Start the session to drive the simulated signal.</p>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <h2>EAR strip chart</h2>
+            <p class="chart-sub">Simulation mode — live webcam EAR requires the backend. Trace scrolls right to left at 20 samples/s.</p>
+          </div>
+          <button type="button" class="hud-btn" id="snapshot-btn">Snapshot PNG</button>
+        </div>
+        <div class="chart-frame">
+          <canvas id="strip-chart" width="900" height="170" role="img" aria-label="Scrolling strip chart of the simulated Eye Aspect Ratio signal with threshold lines at 0.27 and 0.25"></canvas>
+          <p class="chart-watermark" aria-hidden="true">SIMULATED SIGNAL</p>
+        </div>
+        <div class="legend" id="threshold-legend">
+          <span class="lg lg-green"><i></i>NORMAL · EAR ≥ 0.27 (blinkDetect.py thresh)</span>
+          <span class="lg lg-amber"><i></i>DROWSY WARNING · &lt; 0.27 past the 0.15 s blink window</span>
+          <span class="lg lg-orange"><i></i>DROWSY · &lt; 0.27 sustained ≥ 1.5 s (drowsyTime)</span>
+          <span class="lg lg-red"><i></i>ALERT · &lt; 0.25 sustained ≈ 20 frames (streamlit_app.py)</span>
+          <span class="lg lg-line"><i></i>Dashed lines: 0.27 (red) and 0.25 (amber) thresholds</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="rail rail-right" aria-label="Engine panel">
+      <h2 class="rail-title">Engine</h2>
+
+      <div class="panel-card">
+        <h3>Eye Aspect Ratio</h3>
+        <div class="formula" aria-label="EAR equals A plus B, divided by 2 times C">
+          <span class="formula-name">EAR</span>
+          <span class="formula-eq">=</span>
+          <span class="frac">
+            <span class="frac-num">A + B</span>
+            <span class="frac-den">2 · C</span>
+          </span>
+        </div>
+        <svg class="eye-diagram" viewBox="0 0 240 130" role="img" aria-label="Diagram of an eye showing vertical distances A and B and horizontal distance C">
+          <path class="eye-outline" d="M18 66 C60 20 180 20 222 66 C180 112 60 112 18 66 Z"/>
+          <circle class="eye-iris" cx="120" cy="66" r="26"/>
+          <circle class="eye-pupil" cx="120" cy="66" r="11"/>
+          <line class="eye-guide" x1="18" y1="66" x2="222" y2="66"/>
+          <line class="eye-guide dim" x1="64" y1="38" x2="64" y2="94"/>
+          <line class="eye-guide dim" x1="176" y1="38" x2="176" y2="94"/>
+          <circle class="eye-pt" cx="64" cy="38" r="4"/>
+          <circle class="eye-pt" cx="64" cy="94" r="4"/>
+          <circle class="eye-pt" cx="176" cy="38" r="4"/>
+          <circle class="eye-pt" cx="176" cy="94" r="4"/>
+          <circle class="eye-pt" cx="18" cy="66" r="4"/>
+          <circle class="eye-pt" cx="222" cy="66" r="4"/>
+          <text class="eye-lbl" x="46" y="70">A</text>
+          <text class="eye-lbl" x="186" y="70">B</text>
+          <text class="eye-lbl" x="116" y="124">C</text>
+          <line class="eye-dim" x1="18" y1="112" x2="222" y2="112"/>
+        </svg>
+        <p class="panel-note">A and B are the vertical landmark pairs, C the horizontal width — the exact distances used by <code>eye_aspect_ratio()</code> in <code>blinkDetect.py</code>.</p>
+      </div>
+
+      <div class="panel-card">
+        <h3>Thresholds in the backend</h3>
+        <dl class="th-list">
+          <dt>EAR &lt; 0.27</dt>
+          <dd>Eye counted as closed — <code>thresh = 0.27</code> in <code>blinkDetect.py</code>.</dd>
+          <dt>0.15 s / 1.5 s</dt>
+          <dd><code>blinkTime</code> ignores short closures as false blinks; <code>drowsyTime</code> fires the alarm after a sustained closure.</dd>
+          <dt>0.25 · 20 frames</dt>
+          <dd><code>EAR_THRESHOLD</code> + <code>CONSEC_FRAMES</code> in <code>streamlit_app/streamlit_app.py</code> → DROWSY in the web app.</dd>
+        </dl>
+      </div>
+
+      <div class="panel-card">
+        <h3>Run the real backend</h3>
+        <div class="cmd">
+          <code>streamlit run streamlit_app/streamlit_app.py</code>
+          <button type="button" class="copy-btn" data-cmd="streamlit run streamlit_app/streamlit_app.py">Copy</button>
+        </div>
+        <div class="cmd">
+          <code>python blinkDetect.py</code>
+          <button type="button" class="copy-btn" data-cmd="python blinkDetect.py">Copy</button>
+        </div>
+        <div class="cmd">
+          <code>python main.py</code>
+          <button type="button" class="copy-btn" data-cmd="python main.py">Copy</button>
+        </div>
+        <ul class="honesty-list">
+          <li>The dlib 68-landmark model <code>shape_predictor_68_face_landmarks.dat</code> is <strong>not shipped</strong> — download it from dlib.net and place it in <code>models/</code> (see README).</li>
+          <li><code>models/haarcascade_frontalface_default.xml</code> <strong>is</strong> present in this repository.</li>
+          <li>Webcam frames are processed locally by OpenCV/dlib or MediaPipe via streamlit-webrtc — no video leaves the machine, and neither backend exposes a JSON API.</li>
+          <li>This page therefore simulates the EAR signal in the browser; it does not read your camera.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <p>Cockpit · static instrument UI for driver-drowsiness-detection · thresholds read from <code>blinkDetect.py</code> and <code>streamlit_app/streamlit_app.py</code> · signal on this page is simulated.</p>
+  </footer>
+
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

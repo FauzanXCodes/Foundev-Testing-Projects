@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAMS Roll-Call Kiosk — Face Recognition Attendance Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="mast-inner">
+    <div class="mast-brand">
+      <svg class="lanyard" viewBox="0 0 40 64" aria-hidden="true">
+        <path d="M20 2 C8 14, 8 26, 20 34 C32 26, 32 14, 20 2 Z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <rect x="10" y="34" width="20" height="8" rx="2" fill="currentColor"/>
+        <rect x="6" y="44" width="28" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <circle cx="20" cy="52" r="4" fill="currentColor"/>
+      </svg>
+      <div>
+        <h1 class="wordmark">FAMS</h1>
+        <p class="mast-sub">Face recognition attendance &mdash; kiosk preview</p>
+      </div>
+    </div>
+    <div class="mast-side">
+      <span class="chip-soft">Desktop app companion UI</span>
+      <span class="mast-date" id="mastDate">&nbsp;</span>
+    </div>
+  </div>
+  <p class="mast-note">This page never runs face recognition. It mirrors the flows of the Tkinter app (<code>AMS_Run.py</code>) &mdash; enrollment, roll-call, CSV export &mdash; in the browser with honest limits labeled everywhere.</p>
+</header>
+
+<main class="split">
+
+  <section class="pane pane-wizard" aria-label="Enrollment wizard">
+    <div class="pane-head">
+      <h2>Enrollment wizard</h2>
+      <span class="step-pip" id="stepPip">Step 1 / 3</span>
+    </div>
+
+    <ol class="stepper" id="stepper">
+      <li class="step active" data-step="1"><span class="step-n">1</span> Student details</li>
+      <li class="step" data-step="2"><span class="step-n">2</span> Capture samples</li>
+      <li class="step" data-step="3"><span class="step-n">3</span> Train model</li>
+    </ol>
+
+    <div class="step-panel" id="stepPanel1">
+      <p class="panel-copy">Mirrors the Take Images inputs of the desktop app: enrollment (digits only, like its <code>testVal</code> validator) plus student name.</p>
+      <form id="enrollForm" novalidate>
+        <div class="field">
+          <label for="enEnrollment">Enrollment number</label>
+          <input type="text" id="enEnrollment" inputmode="numeric" autocomplete="off" placeholder="e.g. 15624031" maxlength="12">
+        </div>
+        <div class="field">
+          <label for="enName">Student name</label>
+          <input type="text" id="enName" autocomplete="off" placeholder="e.g. Aditi Sharma" maxlength="60">
+        </div>
+        <p class="form-error" id="enrollError" role="alert" hidden></p>
+        <div class="btn-row">
+          <button type="submit" class="btn btn-blue">Continue to capture</button>
+        </div>
+      </form>
+      <p class="field-hint">Enrollment + name are also the keys written to <code>StudentDetails/StudentDetails.csv</code> by the desktop app after capture.</p>
+    </div>
+
+    <div class="step-panel" id="stepPanel2" hidden>
+      <div class="banner">
+        <strong>Demo walkthrough</strong> &mdash; the ring below animates sample counts only. Real capture needs a webcam and the desktop app.
+      </div>
+      <div class="ring-wrap">
+        <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="Sample capture progress">
+          <circle cx="60" cy="60" r="52" class="ring-track"/>
+          <circle cx="60" cy="60" r="52" class="ring-prog" id="ringProg"/>
+        </svg>
+        <div class="ring-center">
+          <span class="ring-count" id="ringCount">0</span>
+          <span class="ring-of">/ 100 samples</span>
+        </div>
+      </div>
+      <p class="panel-copy" id="captureState"><strong>Not capturing.</strong> The desktop app opens the webcam in <code>take_img()</code> and saves grayscale face crops to <code>TrainingImage/</code> until the sample counter passes <strong>70</strong> (README suggests 70&ndash;200 samples for reliable training).</p>
+      <div class="btn-row">
+        <button type="button" class="btn btn-amber" id="btnDemoCapture">Run demo walkthrough</button>
+        <button type="button" class="btn btn-ghost" id="btnToTrain">I already captured &mdash; next step</button>
+      </div>
+      <p class="field-hint">Real command: run <code>python AMS_Run.py</code>, enter enrollment + name, press <strong>Take Images</strong>.</p>
+    </div>
+
+    <div class="step-panel" id="stepPanel3" hidden>
+      <div class="train-card">
+        <div class="train-top">
+          <svg viewBox="0 0 24 24" class="train-ico" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4M8 13h8M8 17h5"/></svg>
+          <div>
+            <h3>Trainner.yml &mdash; present in repo</h3>
+            <p class="train-size"><code>TrainingImageLabel/Trainner.yml</code> &middot; 50,332,718 bytes (~48&nbsp;MiB)</p>
+          </div>
+        </div>
+        <p class="panel-copy">Training happens offline in the desktop app: <code>trainimg()</code> runs LBPH over <code>TrainingImage/</code> and overwrites <code>TrainingImageLabel/Trainner.yml</code>. A 10-person set takes roughly 5&ndash;10 minutes (per README).</p>
+        <div class="cmd-line"><code>python AMS_Run.py</code><span class="cmd-hint">&rarr; press &ldquo;Train Images&rdquo;</span></div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-blue" id="btnFinishWizard">Finish enrollment</button>
+        <button type="button" class="btn btn-ghost" id="btnRestartWizard">Start over</button>
+      </div>
+      <p class="field-hint">This kiosk stores the enrollment in your browser only. Faces and model weights stay in the desktop app.</p>
+    </div>
+  </section>
+
+  <section class="pane pane-register" aria-label="Today's roll-call">
+    <div class="pane-head">
+      <h2>Today&rsquo;s roll-call</h2>
+      <div class="subject-wrap">
+        <label for="subjectInput">Subject</label>
+        <input type="text" id="subjectInput" placeholder="e.g. OOP" maxlength="24" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="roster-block">
+      <div class="roster-head">
+        <h3>Enrolled roster</h3>
+        <span class="roster-n" id="rosterCount">0 students</span>
+      </div>
+      <div class="id-cards" id="rosterCards"></div>
+      <p class="empty-note" id="rosterEmpty">Roster is empty. Finish the enrollment wizard, or serve this folder over HTTP so <code>StudentDetails/StudentDetails.csv</code> can be read: run <code>python -m http.server 8000</code> in this project folder and open <code>http://localhost:8000/</code>.</p>
+      <p class="fetch-state" id="rosterFetchState" role="status"></p>
+    </div>
+
+    <div class="manual-block">
+      <h3>Mark attendance <span class="soft-tag">Manually Fill Attendance flow</span></h3>
+      <form id="manualForm" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="maEnrollment">Enrollment</label>
+            <input type="text" id="maEnrollment" inputmode="numeric" autocomplete="off" placeholder="digits only" maxlength="12">
+          </div>
+          <div class="field">
+            <label for="maName">Name</label>
+            <input type="text" id="maName" autocomplete="off" placeholder="student name" maxlength="60">
+          </div>
+        </div>
+        <p class="form-error" id="manualError" role="alert" hidden></p>
+        <div class="btn-row">
+          <button type="submit" class="btn btn-blue">Add to register</button>
+          <button type="button" class="btn btn-ghost" id="btnMarkAll">Mark all present</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="register-toolbar">
+      <div class="field field-inline grow">
+        <label for="regSearch">Filter</label>
+        <input type="search" id="regSearch" placeholder="enrollment or name&hellip;" autocomplete="off">
+      </div>
+      <button type="button" class="btn btn-ghost" id="btnExportCsv">Export CSV</button>
+      <button type="button" class="btn btn-ghost" id="btnCopyCsv">Copy CSV</button>
+      <button type="button" class="btn btn-ghost" id="btnPrint">Print</button>
+      <button type="button" class="btn btn-ghost danger" id="btnClearRegister">Clear register</button>
+    </div>
+
+    <div class="register-sheet">
+      <table class="register-table" id="registerTable">
+        <thead>
+          <tr><th>Enrollment</th><th>Name</th><th>Time</th><th>Status</th></tr>
+        </thead>
+        <tbody id="registerBody"></tbody>
+      </table>
+      <p class="empty-note" id="registerEmpty">Register is empty. Add students via the manual form or load the roster CSV over HTTP.</p>
+    </div>
+  </section>
+</main>
+
+<section class="how" aria-label="How recognition works">
+  <h2 class="section-title">How recognition works</h2>
+  <div class="how-grid">
+    <article class="how-card">
+      <span class="how-n">01</span>
+      <h3>Haar detect</h3>
+      <p><code>haarcascade_frontalface_default.xml</code> locates faces &mdash; <code>detectMultiScale(gray, 1.2&ndash;1.3, 5)</code> in both <code>take_img()</code> and the attendance loop. The <code>_alt</code> cascade is also shipped in the repo.</p>
+    </article>
+    <article class="how-card">
+      <span class="how-n">02</span>
+      <h3>LBPH predict</h3>
+      <p><code>cv2.face.LBPHFaceRecognizer</code> compares the face crop against <code>Trainner.yml</code>. A match is accepted when <strong>conf &lt; 70</strong> (lower distance = closer match); otherwise the face is drawn as <em>Unknown</em>.</p>
+    </article>
+    <article class="how-card">
+      <span class="how-n">03</span>
+      <h3>Write CSV</h3>
+      <p>Accepted faces land in <code>Attendance/Subject_YYYY-MM-DD_HH-MM-SS.csv</code> with columns <code>Enrollment,Name,Date,Time</code>. If MySQL is up, a mirrored table is created in the <code>Face_reco_fill</code> schema.</p>
+    </article>
+  </div>
+</section>
+
+<section class="runpanel" aria-label="Run the desktop app">
+  <div class="run-inner">
+    <div class="run-col">
+      <h2 class="section-title">Run the desktop app</h2>
+      <div class="cmd-line"><code>python AMS_Run.py</code><button type="button" class="btn-copy" data-copy="python AMS_Run.py">Copy</button></div>
+      <p class="cmd-desc">Main Tkinter app &mdash; Take Images, Train Images, Automatic Attendance, Manually Fill Attendance.</p>
+      <div class="cmd-line"><code>python testing.py</code><button type="button" class="btn-copy" data-copy="python testing.py">Copy</button></div>
+      <p class="cmd-desc">Standalone webcam predict (LBPH, no accept threshold, no CSV write) &mdash; handy for quick model checks.</p>
+    </div>
+    <div class="run-col">
+      <h2 class="section-title">Dependencies &amp; honest notes</h2>
+      <ul class="notes-list">
+        <li><strong>opencv-contrib-python</strong> is required &mdash; <code>cv2.face</code> (LBPH) is not in the base <code>opencv-python</code> wheel.</li>
+        <li><strong>pymysql</strong> is optional; without MySQL the app still writes CSVs. Schemas used: <code>Face_reco_fill</code> (auto) and <code>manually_fill_attendance</code> (manual), user <code>root</code> on localhost.</li>
+        <li><code>AMS_Run.py</code> contains <strong>hardcoded absolute paths</strong> (attendance CSV targets point at the original author&rsquo;s machine) &mdash; edit them before relying on file outputs.</li>
+        <li>The &ldquo;Check Register students&rdquo; panel uses a <strong>hardcoded demo admin login in <code>AMS_Run.py</code></strong> (credentials live in that file &mdash; not repeated here).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <span>Companion UI for <code>face-recognition-attendance-system</code> &mdash; no camera, model, or server access from this page.</span>
+  <span>Register data persists in your browser (localStorage) only.</span>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
